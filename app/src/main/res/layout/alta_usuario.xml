@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editText1"
+                android:id="@+id/nombre"
                 android:hint="Ingrese su nombre"/>
 
             <EditText
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editText2"
+                android:id="@+id/apellido"
                 android:hint="Ingrese su apellido" />
 
             <EditText
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editText3"
+                android:id="@+id/nombreUsuario"
                 android:hint="Ingrese su nombre de usuario" />
 
             <EditText
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editText4"
+                android:id="@+id/dni"
                 android:hint="Ingrese su DNI" />
 
             <TextView
@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editText5"
+                android:id="@+id/localidad"
                 android:hint="Ingrese su localidad" />
 
             <EditText
@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editText6"
+                android:id="@+id/direccion"
                 android:hint="Ingrese su dirección" />
 
             <TextView
@@ -169,7 +169,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editText7"
+                android:id="@+id/correo"
                 android:hint="Ingrese su correo" />
 
             <TextView
@@ -184,7 +184,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:ems="10"
-                android:id="@+id/editText8" />
+                android:id="@+id/contrasenia" />
 
             <TextView
                 android:text="Repita su contraseña"
@@ -198,19 +198,19 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:ems="10"
-                android:id="@+id/editText9" />
+                android:id="@+id/contrasenia2" />
 
             <Button
                 android:text="Guardar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/botonGuardar" />
+                android:id="@+id/buttonGuardar" />
 
             <Button
                 android:text="Volver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/botonVolver"
+                android:id="@+id/buttonVolver"
                 android:onClick="volver"/>
         </LinearLayout>
 

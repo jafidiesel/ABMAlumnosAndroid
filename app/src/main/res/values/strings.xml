@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">ABM Alumnos</string>
+    <string-array name="arraySpinnerNacionalidad">
+        <item>Ingrese su nacionalidad de origen</item>
+        <item>argentino/a</item>
+        <item>peruano/a</item>
+        <item>venezolano/a</item>
+    </string-array>
+
+    <string-array name="arraySpinnerPais">
+        <item>Ingrese su pais de residencia</item>
+        <item>Argentina</item>
+        <item>Angola</item>
+        <item>África</item>
+    </string-array>
+
+    <string-array name="arraySpinnerProvincia">
+        <item>Ingrese su provincia de residencia</item>
+        <item>Mendoza</item>
+        <item>Buenos Aires</item>
+        <item>Cordoba</item>
+    </string-array>
+
+    <string-array name="arraySpinnerCarrera">
+        <item>Ingrese su carrera</item>
+        <item>Ing. en Sistemas de Información</item>
+        <item>Ing. Civil</item>
+        <item>Ing. Electromecánica</item>
+        <item>Ing. Electrónica</item>
+        <item>Ing. Quimica</item>
+    </string-array>
 </resources>
