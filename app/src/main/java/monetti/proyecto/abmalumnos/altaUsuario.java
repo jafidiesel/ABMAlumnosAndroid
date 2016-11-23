@@ -16,7 +16,7 @@ import android.widget.Spinner;
 
 import static java.sql.Types.VARCHAR;
 
-public class altaUsuario extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+public class altaUsuario extends AppCompatActivity /*implements View.OnClickListener, AdapterView.OnItemSelectedListener*/{
 
     EditText editNombre, editApellido, editNombreUsuario, editDni, editLocalidad, editDireccion, editCorreo, editContrasenia, editContrasenia2;
     Spinner spinnerNacionalidad, spinnerPais, spinnerProvincia, spinnerCarrera;
@@ -27,7 +27,8 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alta_usuario);
-        editDni             = (EditText)findViewById(R.id.dni);
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+         /* editDni             = (EditText)findViewById(R.id.dni);
         editNombre          = (EditText)findViewById(R.id.nombre);
         editApellido        = (EditText)findViewById(R.id.apellido);
         editNombreUsuario   = (EditText)findViewById(R.id.nombreUsuario);
@@ -44,7 +45,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         buttonGuardar.setOnClickListener(this);
         db=openOrCreateDatabase("DBAlumnos", Context.MODE_PRIVATE, null);
         db.execSQL("CREATE TABLE IF NOT EXISTS alumno(dni VARCHAR, nombre VARCHAR, apellido VARCHAR,nombreUsuario VARCHAR,correo VARCHAR, contrasenia VARCHAR, nacionalidad VARCHAR, pais VARCHAR, provincia VARCHAR, localidad VARCHAR, direccion VARCHAR, carrera VARCHAR);");
-        armarSpinners();
+        //armarSpinners();
 
         /*
         editDni
@@ -62,6 +63,10 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         spinnerCarrera
         */
     }
+
+
+}
+/*
 
     private void armarSpinners(){
         //Armamos spinner nacionalidad
@@ -108,9 +113,51 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    public void mostrarInformacionGuardada(EditText editText1){
-        Cursor c = db.rawQuery(armarQuerySelect(editText1));
+    public void mostrarInformacionGuardada(EditText editTextDni){
+        Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni =" + editTextDni.getText().toString(),null);
+        if(c.getCount() == 0){
+            showMessage("Error","No se almaceno ningun estudiante");
+            return;
+        }
+
+        StringBuffer bufferAlumno = new StringBuffer();
+        while (c.moveToNext()) {
+            bufferAlumno.append("DNI: " + c.getString(0) + "\n");
+            bufferAlumno.append("Nombre: " + c.getString(1) + "\n");
+            bufferAlumno.append("Apellido: " + c.getString(2) + "\n");
+            bufferAlumno.append("Nombre Usuario: " + c.getString(3) + "\n");
+            bufferAlumno.append("Correo: " + c.getString(4) + "\n");
+            bufferAlumno.append("Contraseña: " + c.getString(5) + "\n");
+            bufferAlumno.append("Nacionalidad: " + c.getString(6) + "\n");
+            bufferAlumno.append("País: " + c.getString(7) + "\n");
+            bufferAlumno.append("Provincia: " + c.getString(8) + "\n");
+            bufferAlumno.append("Localidad: " + c.getString(9) + "\n");
+            bufferAlumno.append("Dirección: " + c.getString(10) + "\n");
+            bufferAlumno.append("Carrera: " + c.getString(11) + "\n");
+            bufferAlumno.append("___________________" + "\n");
+        }
+        showMessage("Alumno ingresado", bufferAlumno.toString());
+        //Cursor c = db.rawQuery(armarQuerySelect(editTextDni));
+
     }
+            */
+/*
+        editDni
+        editNombre
+        editApellido
+        editNombreUsuario
+        editCorreo
+        editContrasenia
+        editContrasenia2
+        spinnerNacionalidad
+        spinnerPais
+        spinnerProvincia
+        editLocalidad
+        editDireccion
+        spinnerCarrera
+        *//*
+
+
 
     public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, Spinner spinnerNacionalidad,Spinner spinnerPais, Spinner spinnerProvincia, EditText editLocalidad, EditText editDireccion, Spinner spinnerCarrera ){
 
@@ -118,11 +165,6 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         return queryInsert;
     }
 
-    public String armarQuerySelect(EditText editTextDni){
-        String resultado = " ";
-
-        return resultado;
-    }
 
     public void clearText(){
         editDni.setText("");
@@ -169,10 +211,11 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         builder.show();
     }
 
-    public void volver(View view){
+
+ public void volver(View view){
         Intent i = new Intent(this, MainActivity.class );
         startActivity(i);
     }
 
-
 }
+*/

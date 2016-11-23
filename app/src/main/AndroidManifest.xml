@@ -17,6 +17,8 @@
         </activity>
         <activity android:name=".altaUsuario"></activity>
         <activity android:name=".bajaUsuario"></activity>
+        <activity android:name=".crashReport"></activity>
+        <activity android:name=".forceClose"></activity>
     </application>
 
 </manifest>

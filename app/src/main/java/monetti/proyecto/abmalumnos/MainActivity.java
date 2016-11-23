@@ -10,37 +10,34 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Override
+    @Override //Constructor por defecto
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+
         setContentView(R.layout.activity_main);
+
     }
 
+    //Cambio de MainActivity a altaUsuario
     public void altaUsuario(View view) {
-        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-        alertDialog.setTitle("Alert");
-        alertDialog.setMessage("Alert message to be shown");
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
-        try {
-            Intent intent = new Intent(this, altaUsuario.class);
-            startActivity(intent);
-        } catch (Exception e){
-            messageBox("Do Stuff", e.getMessage());
-        }
+        Intent intent = new Intent(this, altaUsuario.class);
+        startActivity(intent);
     }
 
+    //Cambio de MainActivity a bajaUsuario
     public void bajaUsuario(View view) {
         Intent i = new Intent(this, bajaUsuario.class );
         startActivity(i);
     }
 
-    public void imprimirMensaje(View view){
+    public void forceClose(View view) {
+        Intent i = new Intent(this, forceClose.class );
+        startActivity(i);
+    }
+
+    public void imprimirMensaje(View view){ //Funcion para imprimir una alerta (mensaje sobre la pantalla)
         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
         alertDialog.setTitle("Alert");
         alertDialog.setMessage("Alert message to be shown");
@@ -67,4 +64,5 @@ public class MainActivity extends AppCompatActivity {
         messageBox.setNeutralButton("OK", null);
         messageBox.show();
     }
+
 }
