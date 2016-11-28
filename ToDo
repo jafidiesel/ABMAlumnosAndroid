@@ -1,0 +1,14 @@
+# To Do:
+
+## Alta
+- Funcion de agregar alumno
+- Mensaje de comprobacion de agregacion de alumno
+
+## Ver
+- Funcion de mostrar alumno por DNI
+
+## Baja
+- Baja de alumno por DNI
+
+## Otros
+- Funcion de DROP TABLE que se realice con un boton manual. Esto es para evitar que tengamos que borrar la cache de la app desde el Administrador de aplicaciones.

@@ -19,26 +19,26 @@ public class ExceptionHandler implements java.lang.Thread.UncaughtExceptionHandl
         StringWriter stackTrace = new StringWriter();
         exception.printStackTrace(new PrintWriter(stackTrace));
         StringBuilder errorReport = new StringBuilder();
-        errorReport.append("************ CAUSE OF ERROR ************\n\n");
+        errorReport.append("* Causas del error *\n\n");
         errorReport.append(stackTrace.toString());
 
-        errorReport.append("\n************ DEVICE INFORMATION ***********\n");
-        errorReport.append("Brand: ");
+        errorReport.append("\n* Informacion del dispositivo *\n");
+        errorReport.append("Marca: ");
         errorReport.append(Build.BRAND);
         errorReport.append(LINE_SEPARATOR);
-        errorReport.append("Device: ");
+        errorReport.append("Dispositivo: ");
         errorReport.append(Build.DEVICE);
         errorReport.append(LINE_SEPARATOR);
-        errorReport.append("Model: ");
+        errorReport.append("Modelo: ");
         errorReport.append(Build.MODEL);
         errorReport.append(LINE_SEPARATOR);
         errorReport.append("Id: ");
         errorReport.append(Build.ID);
         errorReport.append(LINE_SEPARATOR);
-        errorReport.append("Product: ");
+        errorReport.append("Producto: ");
         errorReport.append(Build.PRODUCT);
         errorReport.append(LINE_SEPARATOR);
-        errorReport.append("\n************ FIRMWARE ************\n");
+        errorReport.append("\n* FIRMWARE *\n");
         errorReport.append("SDK: ");
         errorReport.append(Build.VERSION.SDK);
         errorReport.append(LINE_SEPARATOR);
@@ -50,7 +50,7 @@ public class ExceptionHandler implements java.lang.Thread.UncaughtExceptionHandl
         errorReport.append(LINE_SEPARATOR);
 
         Intent intent = new Intent(myContext, crashReport.class);
-        intent.putExtra("error", errorReport.toString());
+        intent.putExtra("Error", errorReport.toString());
         myContext.startActivity(intent);
 
         android.os.Process.killProcess(android.os.Process.myPid());

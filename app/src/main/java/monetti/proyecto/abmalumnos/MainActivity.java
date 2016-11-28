@@ -32,10 +32,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void forceClose(View view) {
-        Intent i = new Intent(this, forceClose.class );
-        startActivity(i);
-    }
 
     public void imprimirMensaje(View view){ //Funcion para imprimir una alerta (mensaje sobre la pantalla)
         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();

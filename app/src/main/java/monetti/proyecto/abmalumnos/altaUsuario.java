@@ -13,13 +13,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import static java.sql.Types.VARCHAR;
 
-public class altaUsuario extends AppCompatActivity /*implements View.OnClickListener, AdapterView.OnItemSelectedListener*/{
+public class altaUsuario extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
     EditText editNombre, editApellido, editNombreUsuario, editDni, editLocalidad, editDireccion, editCorreo, editContrasenia, editContrasenia2;
-    Spinner spinnerNacionalidad, spinnerPais, spinnerProvincia, spinnerCarrera;
+    //Hasta que se solucone lo del llenado de Spinners se trataran como EditText
+    //Spinner spinnerNacionalidad, spinnerPais, spinnerProvincia, spinnerCarrera;
+    EditText spinnerNacionalidad, spinnerPais, spinnerProvincia, spinnerCarrera;
     Button buttonGuardar;
     SQLiteDatabase db;
 
@@ -27,27 +30,46 @@ public class altaUsuario extends AppCompatActivity /*implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alta_usuario);
+
+        //Con esta linea aseguramos que nos muestre el mensaje de error sin que se cierre la aplicacion
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
-         /* editDni             = (EditText)findViewById(R.id.dni);
+
+        editDni             = (EditText)findViewById(R.id.dni);
         editNombre          = (EditText)findViewById(R.id.nombre);
         editApellido        = (EditText)findViewById(R.id.apellido);
         editNombreUsuario   = (EditText)findViewById(R.id.nombreUsuario);
         editCorreo          = (EditText)findViewById(R.id.correo);
         editContrasenia     = (EditText)findViewById(R.id.contrasenia);
         editContrasenia2    = (EditText)findViewById(R.id.contrasenia2);
-        spinnerNacionalidad = (Spinner) findViewById(R.id.spinnerNacionalidad);
-        spinnerPais         = (Spinner) findViewById(R.id.spinnerPais);
-        spinnerProvincia    = (Spinner) findViewById(R.id.spinnerProvincia);
+        //spinnerNacionalidad = (Spinner) findViewById(R.id.spinnerNacionalidad);
+        //spinnerPais         = (Spinner) findViewById(R.id.spinnerPais);
+        //spinnerProvincia    = (Spinner) findViewById(R.id.spinnerProvincia);
+
+        spinnerNacionalidad.setText("spinnerNacionalidad", TextView.BufferType.EDITABLE);
+        spinnerPais.setText("spinnerPais", TextView.BufferType.EDITABLE);;
+        spinnerProvincia.setText("spinnerProvincia", TextView.BufferType.EDITABLE);;
+
         editLocalidad       = (EditText)findViewById(R.id.localidad);
         editDireccion       = (EditText)findViewById(R.id.direccion);
-        spinnerCarrera      = (Spinner) findViewById(R.id.spinnerCarrera);
+
+        //spinnerCarrera      = (Spinner) findViewById(R.id.spinnerCarrera);
+        spinnerCarrera.setText("spinnerCarrera", TextView.BufferType.EDITABLE);
+
         buttonGuardar       = (Button) findViewById(R.id.botonGuardar);
+        //Se le indica al boton guardar que este escuchando en la activity designada
         buttonGuardar.setOnClickListener(this);
+
+        //Creacion de la BD
         db=openOrCreateDatabase("DBAlumnos", Context.MODE_PRIVATE, null);
+        //<<A agregar>>
+        // Se podria agregar una linea que si exite la DB DBAlumnos la dropee.
+        //Esto se deberia hacer con un boton, cosa de no estar borrando la cache desde el administrador de aplicaciones
         db.execSQL("CREATE TABLE IF NOT EXISTS alumno(dni VARCHAR, nombre VARCHAR, apellido VARCHAR,nombreUsuario VARCHAR,correo VARCHAR, contrasenia VARCHAR, nacionalidad VARCHAR, pais VARCHAR, provincia VARCHAR, localidad VARCHAR, direccion VARCHAR, carrera VARCHAR);");
+        //Hasta que no definamos como trabajar con hilos y llenar los spinners  el llamado sigue comentado.
         //armarSpinners();
 
         /*
+        Este bloque es para tener los nombres de las variables en una lista, me ha servido bastante tenerlo asi para copypastear jaja
         editDni
         editNombre
         editApellido
@@ -65,9 +87,9 @@ public class altaUsuario extends AppCompatActivity /*implements View.OnClickList
     }
 
 
-}
-/*
 
+
+/* Seccion comentada hasta realizar la correccion de Spinners
     private void armarSpinners(){
         //Armamos spinner nacionalidad
         ArrayAdapter<CharSequence> adapterNacionalidad = ArrayAdapter.createFromResource(this, R.array.arraySpinnerNacionalidad, android.R.layout.simple_spinner_item);
@@ -93,11 +115,13 @@ public class altaUsuario extends AppCompatActivity /*implements View.OnClickList
         this.spinnerCarrera.setAdapter(adapterCarrera);
         this.spinnerCarrera.setOnItemSelectedListener(this);
     }
+*/
 
     public void onItemSelected(AdapterView <? > parent, View view, int pos, long id) {}
     public void onNothingSelected(AdapterView <? > parent) {}
 
     public void onClick(View view) {
+        showMessage("Titulo","Entro en onClick");
         if(view  == buttonGuardar) {
             if (comprobarCamposVacios()) {
                 showMessage("Error", "Todos los campos deben estar completos");
@@ -140,7 +164,7 @@ public class altaUsuario extends AppCompatActivity /*implements View.OnClickList
         //Cursor c = db.rawQuery(armarQuerySelect(editTextDni));
 
     }
-            */
+
 /*
         editDni
         editNombre
@@ -155,13 +179,14 @@ public class altaUsuario extends AppCompatActivity /*implements View.OnClickList
         editLocalidad
         editDireccion
         spinnerCarrera
-        *//*
+        */
 
 
 
-    public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, Spinner spinnerNacionalidad,Spinner spinnerPais, Spinner spinnerProvincia, EditText editLocalidad, EditText editDireccion, Spinner spinnerCarrera ){
+    public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, EditText spinnerNacionalidad,EditText spinnerPais, EditText spinnerProvincia, EditText editLocalidad, EditText editDireccion, EditText spinnerCarrera ){
 
-        String queryInsert = "INSERT INTO alumno VALUES('" +','+ this.editDni.getText().toString() +','+ this.editNombre.getText().toString() +','+ this.editApellido.getText().toString() +','+ this.editNombreUsuario.getText().toString() +','+ this.editContrasenia.getText().toString() +','+ getSpinnerValue(this.spinnerNacionalidad) +','+ getSpinnerValue(this.spinnerPais) +','+ getSpinnerValue(this.spinnerProvincia) +','+ this.editLocalidad.getText().toString() +','+ this.editDireccion.getText().toString() +','+ getSpinnerValue(this.spinnerCarrera) +','+ ')';
+       // String queryInsert = "INSERT INTO alumno VALUES('" +','+ this.editDni.getText().toString() +','+ this.editNombre.getText().toString() +','+ this.editApellido.getText().toString() +','+ this.editNombreUsuario.getText().toString() +','+ this.editContrasenia.getText().toString() +','+ getSpinnerValue(this.spinnerNacionalidad) +','+ getSpinnerValue(this.spinnerPais) +','+ getSpinnerValue(this.spinnerProvincia) +','+ this.editLocalidad.getText().toString() +','+ this.editDireccion.getText().toString() +','+ getSpinnerValue(this.spinnerCarrera) +','+ ')';
+        String queryInsert = "INSERT INTO alumno VALUES('" +','+ this.editDni.getText().toString() +','+ this.editNombre.getText().toString() +','+ this.editApellido.getText().toString() +','+ this.editNombreUsuario.getText().toString() +','+ this.editContrasenia.getText().toString() +','+ this.spinnerNacionalidad +','+ this.spinnerPais +','+ this.spinnerProvincia +','+ this.editLocalidad.getText().toString() +','+ this.editDireccion.getText().toString() +','+ this.spinnerCarrera +','+ ')';
         return queryInsert;
     }
 
@@ -174,12 +199,13 @@ public class altaUsuario extends AppCompatActivity /*implements View.OnClickList
         editCorreo.setText("");
         editContrasenia.setText("");
         editContrasenia2.setText("");
-        spinnerNacionalidad.setSelection(0);
-        spinnerPais.setSelection(0);
-        spinnerProvincia.setSelection(0);
+        spinnerNacionalidad.setText("");
+        spinnerPais.setText("");
+        spinnerProvincia.setText("");
         editLocalidad.setText("");
         editDireccion.setText("");
-        spinnerCarrera.setSelection(0);
+        spinnerCarrera.setText("");
+        //spinnerCarrera.setSelection(0);
 
     }
 
@@ -199,6 +225,7 @@ public class altaUsuario extends AppCompatActivity /*implements View.OnClickList
                             editCorreo.getText().toString().trim().length() == 0 ||
                             editContrasenia.getText().toString().trim().length() == 0 ||
                             editContrasenia2.getText().toString().trim().length() == 0;
+                            //Por mas que los spinners sean EditText no se ha agregado la comprobacion
                             //Falta la comprobacion de los spinners por el estado "vacio"
         return result;
     }
@@ -218,4 +245,4 @@ public class altaUsuario extends AppCompatActivity /*implements View.OnClickList
     }
 
 }
-*/
+
