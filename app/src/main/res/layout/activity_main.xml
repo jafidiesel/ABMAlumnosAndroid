@@ -3,6 +3,18 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <Button
+        android:text="Dar de alta alumno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button1"
+        android:layout_marginBottom="53dp"
+        android:layout_above="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="altaUsuario" />
+
     <Button
         android:text="Dar de baja alumno"
         android:layout_width="wrap_content"
@@ -16,21 +28,10 @@
         android:onClick="bajaUsuario" />
 
     <Button
-        android:text="Dar de alta alumno"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:layout_marginBottom="53dp"
-        android:layout_above="@+id/button2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="altaUsuario" />
-
-    <Button
         android:text="Imprimir Mensaje"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button3"
+        android:id="@+id/button4"
         android:layout_marginBottom="47dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
@@ -38,6 +39,5 @@
         android:layout_marginRight="12dp"
         android:layout_marginEnd="12dp"
         android:onClick="imprimirMensaje" />
-
 
 </RelativeLayout>

@@ -15,10 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".altaUsuario"></activity>
-        <activity android:name=".bajaUsuario"></activity>
-        <activity android:name=".crashReport"></activity>
-        <activity android:name=".forceClose"></activity>
+        <activity android:name=".altaUsuario" />
+        <activity android:name=".bajaUsuario" />
+        <activity android:name=".crashReport" />
+        <activity android:name=".forceClose" />
     </application>
 
 </manifest>

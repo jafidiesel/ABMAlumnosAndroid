@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     //Cambio de MainActivity a bajaUsuario
     public void bajaUsuario(View view) {
         Intent i = new Intent(this, bajaUsuario.class );
