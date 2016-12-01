@@ -1,14 +1,18 @@
 # To Do:
 
 ## Alta
-- Funcion de agregar alumno
-- Mensaje de comprobacion de agregacion de alumno
+- Funcion de agregar alumno (falta testear)
+- Mensaje de comprobacion de agregacion de alumno (mostrar en pantalla los dato$
+- Limpiar los datos de los campos.
+- Agregar verificacion de datos (verificacion de contrasenia, correo, etc)
 
 ## Ver
 - Funcion de mostrar alumno por DNI
 
 ## Baja
-- Baja de alumno por DNI
+- Baja de alumno por DNI (cambiar el nombre, dice "Legajo")
 
 ## Otros
-- Funcion de DROP TABLE que se realice con un boton manual. Esto es para evitar que tengamos que borrar la cache de la app desde el Administrador de aplicaciones.
+- Funcion de DROP TABLE que se realice con un boton manual. Esto es para evitar$
+- Efecto visual slide entre activity y activity
+- Llenar spinners mediante hilos, o manejar spinners mediante hilos.

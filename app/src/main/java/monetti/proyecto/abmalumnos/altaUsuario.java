@@ -54,9 +54,9 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
         //spinnerCarrera      = (Spinner) findViewById(R.id.spinnerCarrera);
 
-        buttonGuardar       = (Button) findViewById(R.id.botonGuardar);
+        buttonGuardar       = (Button) findViewById(R.id.buttonGuardar);
         //Se le indica al boton guardar que este escuchando en la activity designada
-        //buttonGuardar.setOnClickListener(this);
+        buttonGuardar.setOnClickListener(this);
 
         //Creacion de la BD
         db=openOrCreateDatabase("DBAlumnos", Context.MODE_PRIVATE, null);
@@ -80,23 +80,28 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 //En este mensaje seria mejor mostrar cual o cuales campos no estan completados
 
             } else {
-
-                showMessage("Exito", "Registro agregado");
+                showMessage("<Titulo>", "Los campos no estan vacios");
+                showMessage("<Los valores recibidos son>", "DNI " + editDni.getText().toString() + "\n"+ " Nombre " + editNombre.getText().toString() + "\n" + "Apellido " + editApellido.getText().toString() + "\n" +  "Nombre Usuario " + editNombreUsuario.getText().toString() + "\n" +  "Correo " + editCorreo.getText().toString() + "\n" +  "Contrasenia " + editContrasenia.getText().toString() + "\n" +  "Contrasenia2 " + editContrasenia2.getText().toString() + "\n" +  "Localidad " + editLocalidad.getText().toString() + "\n" +  "Direccion " + editApellido.getText().toString() + "\n" );
+                db.execSQL("INSERT INTO alumno VALUES('" + this.editDni.getText().toString()  +',' + this.editNombre.getText().toString()  +',' +  this.editDni.getText().toString()  +',' + + + + + ")");
+                        //db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, "spinnerNacionalidad", "spinnerPais", "spinnerProvincia", editLocalidad, editDireccion, "spinnerCarrera"));
+                //clearText();
                 //mostrarInformacionGuardada(editDni);
             }
         }
 
     }
 
-
-
-
-
-
     public String getSpinnerValue(Spinner spinner1){
         String resultado = spinner1.getSelectedItem().toString();
 
         return resultado ;
+    }
+
+    public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, String spinnerNacionalidad,String spinnerPais, String spinnerProvincia, EditText editLocalidad, EditText editDireccion, String spinnerCarrera ){
+
+        // String queryInsert = "INSERT INTO alumno VALUES('" +','+ this.editDni.getText().toString() +','+ this.editNombre.getText().toString() +','+ this.editApellido.getText().toString() +','+ this.editNombreUsuario.getText().toString() +','+ this.editContrasenia.getText().toString() +','+ getSpinnerValue(this.spinnerNacionalidad) +','+ getSpinnerValue(this.spinnerPais) +','+ getSpinnerValue(this.spinnerProvincia) +','+ this.editLocalidad.getText().toString() +','+ this.editDireccion.getText().toString() +','+ getSpinnerValue(this.spinnerCarrera) +','+ ')';
+        String queryInsert = "INSERT INTO alumno VALUES('" + editDni.getText().toString() +','+ editNombre.getText().toString() +','+ editApellido.getText().toString() +','+ editNombreUsuario.getText().toString() +','+ editContrasenia.getText().toString() +','+ spinnerNacionalidad +','+ spinnerPais +','+ spinnerProvincia +','+ editLocalidad.getText().toString() +','+ editDireccion.getText().toString() +','+ spinnerCarrera + ')';
+        return queryInsert;
     }
 
     public boolean comprobarCamposVacios(){
@@ -157,6 +162,25 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         this.spinnerCarrera.setOnItemSelectedListener(this);
     }
 */
+
+    public void clearText(){
+        editDni.setText("");
+        editNombre.setText("");
+        editApellido.setText("");
+        editNombreUsuario.setText("");
+        editCorreo.setText("");
+        editContrasenia.setText("");
+        editContrasenia2.setText("");
+        //spinnerNacionalidad.setText("");
+        //spinnerPais.setText("");
+        //spinnerProvincia.setText("");
+        editLocalidad.setText("");
+        editDireccion.setText("");
+        //spinnerCarrera.setText("");
+        //spinnerCarrera.setSelection(0);
+
+    }
+
 
 }
 
