@@ -26,7 +26,6 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
     EditText editNombre, editApellido, editNombreUsuario, editDni, editLocalidad, editDireccion, editCorreo, editContrasenia, editContrasenia2;
     //Hasta que se solucone lo del llenado de Spinners se trataran como EditText
     //Spinner spinnerNacionalidad, spinnerPais, spinnerProvincia, spinnerCarrera;
-    //EditText spinnerNacionalidad, spinnerPais, spinnerProvincia, spinnerCarrera;
     Button buttonGuardar;
     SQLiteDatabase db;
 
@@ -73,19 +72,22 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
     public void onNothingSelected(AdapterView <? > parent) {}
 
     public void onClick(View view) {
-        showMessage("Titulo","Entro en onClick");
+
         if(view  == buttonGuardar) {
             if (comprobarCamposVacios()) {
                 showMessage("Error", "Todos los campos deben estar completos");
                 //En este mensaje seria mejor mostrar cual o cuales campos no estan completados
 
             } else {
-                showMessage("<Titulo>", "Los campos no estan vacios");
-                showMessage("<Los valores recibidos son>", "DNI " + editDni.getText().toString() + "\n"+ " Nombre " + editNombre.getText().toString() + "\n" + "Apellido " + editApellido.getText().toString() + "\n" +  "Nombre Usuario " + editNombreUsuario.getText().toString() + "\n" +  "Correo " + editCorreo.getText().toString() + "\n" +  "Contrasenia " + editContrasenia.getText().toString() + "\n" +  "Contrasenia2 " + editContrasenia2.getText().toString() + "\n" +  "Localidad " + editLocalidad.getText().toString() + "\n" +  "Direccion " + editApellido.getText().toString() + "\n" );
-                db.execSQL("INSERT INTO alumno VALUES('" + this.editDni.getText().toString()  +',' + this.editNombre.getText().toString()  +',' +  this.editDni.getText().toString()  +',' + + + + + ")");
-                        //db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, "spinnerNacionalidad", "spinnerPais", "spinnerProvincia", editLocalidad, editDireccion, "spinnerCarrera"));
-                //clearText();
-                //mostrarInformacionGuardada(editDni);
+
+                try {
+                    db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, "spinnerNacionalidad", "spinnerPais", "spinnerProvincia", editLocalidad, editDireccion, "spinnerCarrera"));
+                }catch(Exception e){
+                    showMessage("Title","Error en la Query Insert");
+                }
+
+                mostrarInformacionGuardada(editDni);
+                clearText();
             }
         }
 
@@ -97,12 +99,41 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         return resultado ;
     }
 
+
     public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, String spinnerNacionalidad,String spinnerPais, String spinnerProvincia, EditText editLocalidad, EditText editDireccion, String spinnerCarrera ){
 
-        // String queryInsert = "INSERT INTO alumno VALUES('" +','+ this.editDni.getText().toString() +','+ this.editNombre.getText().toString() +','+ this.editApellido.getText().toString() +','+ this.editNombreUsuario.getText().toString() +','+ this.editContrasenia.getText().toString() +','+ getSpinnerValue(this.spinnerNacionalidad) +','+ getSpinnerValue(this.spinnerPais) +','+ getSpinnerValue(this.spinnerProvincia) +','+ this.editLocalidad.getText().toString() +','+ this.editDireccion.getText().toString() +','+ getSpinnerValue(this.spinnerCarrera) +','+ ')';
-        String queryInsert = "INSERT INTO alumno VALUES('" + editDni.getText().toString() +','+ editNombre.getText().toString() +','+ editApellido.getText().toString() +','+ editNombreUsuario.getText().toString() +','+ editContrasenia.getText().toString() +','+ spinnerNacionalidad +','+ spinnerPais +','+ spinnerProvincia +','+ editLocalidad.getText().toString() +','+ editDireccion.getText().toString() +','+ spinnerCarrera + ')';
+        String queryInsert = "INSERT INTO alumno VALUES('" + editDni.getText() + "','" + editNombre.getText() + "','" + editApellido.getText() + "','" + editNombreUsuario.getText() + "','" + editCorreo.getText() + "','" + editContrasenia.getText() + "','" + spinnerNacionalidad + "','" + spinnerPais + "','" + spinnerProvincia + "','" + editLocalidad.getText() + "','" + editDireccion.getText() + "','" + spinnerCarrera + "');";
         return queryInsert;
     }
+
+    public void mostrarInformacionGuardada(EditText editTextDni){
+        Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni ='" + editTextDni.getText()+"'",null);
+        if(c.getCount() == 0){
+            showMessage("Error","No se almaceno ningun estudiante");
+            return;
+        }
+
+        StringBuffer bufferAlumno = new StringBuffer();
+        while (c.moveToNext()) {
+            bufferAlumno.append("DNI: " + c.getString(0) + "\n");
+            bufferAlumno.append("Nombre: " + c.getString(1) + "\n");
+            bufferAlumno.append("Apellido: " + c.getString(2) + "\n");
+            bufferAlumno.append("Nombre Usuario: " + c.getString(3) + "\n");
+            bufferAlumno.append("Correo: " + c.getString(4) + "\n");
+            bufferAlumno.append("Contraseña: " + c.getString(5) + "\n");
+            bufferAlumno.append("Nacionalidad: " + c.getString(6) + "\n");
+            bufferAlumno.append("País: " + c.getString(7) + "\n");
+            bufferAlumno.append("Provincia: " + c.getString(8) + "\n");
+            bufferAlumno.append("Localidad: " + c.getString(9) + "\n");
+            bufferAlumno.append("Dirección: " + c.getString(10) + "\n");
+            bufferAlumno.append("Carrera: " + c.getString(11) + "\n");
+            bufferAlumno.append("___________________" + "\n");
+        }
+        showMessage("Alumno ingresado", bufferAlumno.toString());
+
+
+    }
+
 
     public boolean comprobarCamposVacios(){
         boolean result =    editNombre.getText().toString().trim().length() == 0 ||
@@ -116,6 +147,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                             editContrasenia2.getText().toString().trim().length() == 0;
                             //Por mas que los spinners sean EditText no se ha agregado la comprobacion
                             //Falta la comprobacion de los spinners por el estado "vacio"
+                            // Importante: Falta que se haga foco en el primer campo Nombre para que la vista se valla arriba
         return result;
     }
 

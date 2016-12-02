@@ -1,16 +1,19 @@
 # To Do:
 
 ## Alta
-- Funcion de agregar alumno (falta testear)
-- Mensaje de comprobacion de agregacion de alumno (mostrar en pantalla los dato$
-- Limpiar los datos de los campos.
+(Listo)- Funcion de agregar alumno 
+(Listo)- Mensaje de comprobacion de agregacion de alumno (mostrar en pantalla los dato$
+(Listo)- Limpiar los datos de los campos.
 - Agregar verificacion de datos (verificacion de contrasenia, correo, etc)
+- Agregar foco en el primer campo luego de agregar un alumno
+- Antes de ingresar un alumno se debe comprobar que ese DNI no ha sido previamente ingresado en la DB.
 
 ## Ver
 - Funcion de mostrar alumno por DNI
 
 ## Baja
 - Baja de alumno por DNI (cambiar el nombre, dice "Legajo")
+- Acomodar el boton "Volver"
 
 ## Otros
 - Funcion de DROP TABLE que se realice con un boton manual. Esto es para evitar$
