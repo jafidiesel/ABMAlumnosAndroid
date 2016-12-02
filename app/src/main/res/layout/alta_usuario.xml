@@ -92,7 +92,7 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinnerNacionalidad" />
+                android:id="@+id/spinnerPaisOrigen" />
 
             <TextView
                 android:text="Datos de Residencia"
@@ -103,19 +103,6 @@
                 android:layout_marginLeft="100dp"
                 android:textColor="#055ae6"
                 android:textAllCaps="true" />
-
-            <TextView
-                android:text="Pais:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="normal|bold"
-                android:layout_marginTop="10dp"
-                android:id="@+id/textView7"/>
-
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerPais" />
 
             <TextView
                 android:text="Provincia:"

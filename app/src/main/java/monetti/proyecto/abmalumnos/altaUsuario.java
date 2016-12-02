@@ -25,7 +25,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
     EditText editNombre, editApellido, editNombreUsuario, editDni, editLocalidad, editDireccion, editCorreo, editContrasenia, editContrasenia2;
     //Hasta que se solucone lo del llenado de Spinners se trataran como EditText
-    //Spinner spinnerNacionalidad, spinnerPais, spinnerProvincia, spinnerCarrera;
+    //Spinner spinnerPaisOrigen, spinnerProvincia, spinnerCarrera;
     Button buttonGuardar, buttonVolver;
     SQLiteDatabase db;
 
@@ -44,8 +44,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         editCorreo          = (EditText)findViewById(R.id.correo);
         editContrasenia     = (EditText)findViewById(R.id.contrasenia);
         editContrasenia2    = (EditText)findViewById(R.id.contrasenia2);
-        //spinnerNacionalidad = (Spinner) findViewById(R.id.spinnerNacionalidad);
-        //spinnerPais         = (Spinner) findViewById(R.id.spinnerPais);
+        //spinnerPaisOrigen = (Spinner) findViewById(R.id.spinnerPaisOrigen);
         //spinnerProvincia    = (Spinner) findViewById(R.id.spinnerProvincia);
 
         editLocalidad       = (EditText)findViewById(R.id.localidad);
@@ -64,7 +63,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         //<<A agregar>>
         // Se podria agregar una linea que si exite la DB DBAlumnos la dropee.
         //Esto se deberia hacer con un boton, cosa de no estar borrando la cache desde el administrador de aplicaciones
-        //db.execSQL("CREATE TABLE IF NOT EXISTS alumno(dni VARCHAR, nombre VARCHAR, apellido VARCHAR,nombreUsuario VARCHAR,correo VARCHAR, contrasenia VARCHAR, nacionalidad VARCHAR, pais VARCHAR, provincia VARCHAR, localidad VARCHAR, direccion VARCHAR, carrera VARCHAR);");
+
 
         //armarSpinners();
 
@@ -83,7 +82,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
             } else {
 
                 try {
-                    db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, "spinnerNacionalidad", "spinnerPais", "spinnerProvincia", editLocalidad, editDireccion, "spinnerCarrera"));
+                    db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, "spinnerPaisOrigen", "spinnerProvincia", editLocalidad, editDireccion, "spinnerCarrera"));
                 }catch(Exception e){
                     showMessage("Title","Error en la Query Insert");
                 }
@@ -105,16 +104,16 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, String spinnerNacionalidad,String spinnerPais, String spinnerProvincia, EditText editLocalidad, EditText editDireccion, String spinnerCarrera ){
+    public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, String spinnerPaisOrigen, String spinnerProvincia, EditText editLocalidad, EditText editDireccion, String spinnerCarrera ){
 
-        String queryInsert = "INSERT INTO alumno VALUES('" + editDni.getText() + "','" + editNombre.getText() + "','" + editApellido.getText() + "','" + editNombreUsuario.getText() + "','" + editCorreo.getText() + "','" + editContrasenia.getText() + "','" + spinnerNacionalidad + "','" + spinnerPais + "','" + spinnerProvincia + "','" + editLocalidad.getText() + "','" + editDireccion.getText() + "','" + spinnerCarrera + "');";
+        String queryInsert = "INSERT INTO alumno VALUES('" + editDni.getText() + "','" + editNombre.getText() + "','" + editApellido.getText() + "','" + editNombreUsuario.getText() + "','" + editCorreo.getText() + "','" + editContrasenia.getText() + "','" + spinnerPaisOrigen + "','" + spinnerProvincia + "','" + editLocalidad.getText() + "','" + editDireccion.getText() + "','" + spinnerCarrera + "');";
         return queryInsert;
     }
 
     public void mostrarInformacionGuardada(EditText editTextDni){
         Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni ='" + editTextDni.getText()+"'",null);
         if(c.getCount() == 0){
-            showMessage("Error","No se almaceno ningun estudiante");
+            showMessage("Error","No se encontro ningun estudiante");
             return;
         }
 
@@ -126,12 +125,11 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
             bufferAlumno.append("Nombre Usuario: " + c.getString(3) + "\n");
             bufferAlumno.append("Correo: " + c.getString(4) + "\n");
             bufferAlumno.append("Contraseña: " + c.getString(5) + "\n");
-            bufferAlumno.append("Nacionalidad: " + c.getString(6) + "\n");
-            bufferAlumno.append("País: " + c.getString(7) + "\n");
-            bufferAlumno.append("Provincia: " + c.getString(8) + "\n");
-            bufferAlumno.append("Localidad: " + c.getString(9) + "\n");
-            bufferAlumno.append("Dirección: " + c.getString(10) + "\n");
-            bufferAlumno.append("Carrera: " + c.getString(11) + "\n");
+            bufferAlumno.append("Pais de Origen: " + c.getString(6) + "\n");
+            bufferAlumno.append("Provincia: " + c.getString(7) + "\n");
+            bufferAlumno.append("Localidad: " + c.getString(8) + "\n");
+            bufferAlumno.append("Dirección: " + c.getString(9) + "\n");
+            bufferAlumno.append("Carrera: " + c.getString(10) + "\n");
             bufferAlumno.append("___________________" + "\n");
         }
         showMessage("Alumno ingresado", bufferAlumno.toString());
@@ -200,8 +198,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         editCorreo.setText("");
         editContrasenia.setText("");
         editContrasenia2.setText("");
-        //spinnerNacionalidad.setText("");
-        //spinnerPais.setText("");
+        //spinnerPaisOrigen.setText("");
         //spinnerProvincia.setText("");
         editLocalidad.setText("");
         editDireccion.setText("");
@@ -225,8 +222,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         editCorreo
         editContrasenia
         editContrasenia2
-        spinnerNacionalidad
-        spinnerPais
+        spinnerPaisOrigen
         spinnerProvincia
         editLocalidad
         editDireccion

@@ -10,10 +10,12 @@
 
 ## Ver
 - Funcion de mostrar alumno por DNI
+- Agregar activity de Ver.
 
 ## Baja
-- Baja de alumno por DNI (cambiar el nombre, dice "Legajo")
+(Listo)- Baja de alumno por DNI (cambiar el nombre, dice "Legajo")
 (Listo)- Acomodar el boton "Volver"
+- Funcion de dar de Baja alumno por DNI
 
 ## Otros
 (Listo)- Funcion de DROP TABLE que se realice con un boton manual. Esto es para evitar$
