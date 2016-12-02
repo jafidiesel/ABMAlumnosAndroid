@@ -26,7 +26,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
     EditText editNombre, editApellido, editNombreUsuario, editDni, editLocalidad, editDireccion, editCorreo, editContrasenia, editContrasenia2;
     //Hasta que se solucone lo del llenado de Spinners se trataran como EditText
     //Spinner spinnerNacionalidad, spinnerPais, spinnerProvincia, spinnerCarrera;
-    Button buttonGuardar;
+    Button buttonGuardar, buttonVolver;
     SQLiteDatabase db;
 
     @Override
@@ -54,15 +54,17 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         //spinnerCarrera      = (Spinner) findViewById(R.id.spinnerCarrera);
 
         buttonGuardar       = (Button) findViewById(R.id.buttonGuardar);
+        buttonVolver        = (Button) findViewById(R.id.buttonVolver) ;
         //Se le indica al boton guardar que este escuchando en la activity designada
         buttonGuardar.setOnClickListener(this);
+        buttonVolver.setOnClickListener(this);
 
         //Creacion de la BD
         db=openOrCreateDatabase("DBAlumnos", Context.MODE_PRIVATE, null);
         //<<A agregar>>
         // Se podria agregar una linea que si exite la DB DBAlumnos la dropee.
         //Esto se deberia hacer con un boton, cosa de no estar borrando la cache desde el administrador de aplicaciones
-        db.execSQL("CREATE TABLE IF NOT EXISTS alumno(dni VARCHAR, nombre VARCHAR, apellido VARCHAR,nombreUsuario VARCHAR,correo VARCHAR, contrasenia VARCHAR, nacionalidad VARCHAR, pais VARCHAR, provincia VARCHAR, localidad VARCHAR, direccion VARCHAR, carrera VARCHAR);");
+        //db.execSQL("CREATE TABLE IF NOT EXISTS alumno(dni VARCHAR, nombre VARCHAR, apellido VARCHAR,nombreUsuario VARCHAR,correo VARCHAR, contrasenia VARCHAR, nacionalidad VARCHAR, pais VARCHAR, provincia VARCHAR, localidad VARCHAR, direccion VARCHAR, carrera VARCHAR);");
 
         //armarSpinners();
 
@@ -89,6 +91,9 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 mostrarInformacionGuardada(editDni);
                 clearText();
             }
+        }else if(view == buttonVolver){
+            Intent i = new Intent(this, MainActivity.class );
+            startActivity(i);
         }
 
     }
@@ -147,7 +152,6 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                             editContrasenia2.getText().toString().trim().length() == 0;
                             //Por mas que los spinners sean EditText no se ha agregado la comprobacion
                             //Falta la comprobacion de los spinners por el estado "vacio"
-                            // Importante: Falta que se haga foco en el primer campo Nombre para que la vista se valla arriba
         return result;
     }
 
@@ -158,13 +162,6 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         builder.setMessage(message);
         builder.show();
     }
-
-
- public void volver(View view){
-        Intent i = new Intent(this, MainActivity.class );
-        startActivity(i);
-    }
-
 
 
 /* Seccion comentada hasta realizar la correccion de Spinners
@@ -210,6 +207,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         editDireccion.setText("");
         //spinnerCarrera.setText("");
         //spinnerCarrera.setSelection(0);
+        editNombre.requestFocus();
 
     }
 

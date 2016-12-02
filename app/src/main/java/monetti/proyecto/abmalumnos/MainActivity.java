@@ -1,7 +1,9 @@
 package monetti.proyecto.abmalumnos;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
+    SQLiteDatabase db;
 
     @Override //Constructor por defecto
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
 
         setContentView(R.layout.activity_main);
-
+        db=openOrCreateDatabase("DBAlumnos", Context.MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS alumno(dni VARCHAR, nombre VARCHAR, apellido VARCHAR,nombreUsuario VARCHAR,correo VARCHAR, contrasenia VARCHAR, nacionalidad VARCHAR, pais VARCHAR, provincia VARCHAR, localidad VARCHAR, direccion VARCHAR, carrera VARCHAR);");
     }
 
     //Cambio de MainActivity a altaUsuario
@@ -33,19 +37,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-
-    public void imprimirMensaje(View view){ //Funcion para imprimir una alerta (mensaje sobre la pantalla)
-        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-        alertDialog.setTitle("Alert");
-        alertDialog.setMessage("Alert message to be shown");
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
+    public void deleteAll(View view){
+        try {
+            db.execSQL("DELETE FROM alumno WHERE 1");
+            Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+        } catch (Exception e){
+            messageBox("Error","Error eliminando la DB");
+        }
     }
+
 
     //*********************************************************
     //generic dialog, takes in the method name and error message
