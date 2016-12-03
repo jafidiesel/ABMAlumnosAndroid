@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +23,7 @@ public class verUsuario extends AppCompatActivity implements View.OnClickListene
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.ver_usuario);
 
-        editDni         = (EditText) findViewById(R.id.dni);
+        editDni         = (EditText) findViewById(R.id.editTextDni);
         buttonVer       = (Button) findViewById(R.id.buttonVer);
         buttonVolver    = (Button) findViewById(R.id.buttonvolver);
 

@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/dni"
+                android:id="@+id/editTextDni"
                 android:hint="Ingrese su DNI" />
 
             <TextView
@@ -124,13 +124,10 @@
                 android:textStyle="normal|bold"
                 android:id="@+id/textView12" />
 
-            <EditText
-                android:layout_width="wrap_content"
+            <Spinner
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/localidad"
-                android:hint="Ingrese su localidad" />
+                android:id="@+id/spinnerLocalidad" />
 
             <EditText
                 android:layout_width="wrap_content"

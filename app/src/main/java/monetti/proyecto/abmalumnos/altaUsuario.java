@@ -2,8 +2,10 @@ package monetti.proyecto.abmalumnos;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,19 +15,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.SpinnerAdapter;
 
-import static java.sql.Types.VARCHAR;
+import java.util.ArrayList;
 
 
-// Comentario importante todo lo referente a spinnerNacionalidad, spinnerPais, spinnerProvincia, spinnerCarrera;
-// se encuentra comentado para que no interrumpa en nada.
+
 
 public class altaUsuario extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
-    EditText editNombre, editApellido, editNombreUsuario, editDni, editLocalidad, editDireccion, editCorreo, editContrasenia, editContrasenia2;
+    EditText editNombre, editApellido, editNombreUsuario, editDni, editDireccion, editCorreo, editContrasenia, editContrasenia2;
     //Hasta que se solucone lo del llenado de Spinners se trataran como EditText
-    //Spinner spinnerPaisOrigen, spinnerProvincia, spinnerCarrera;
+    Spinner spinnerNacionalidad, spinnerCarreraGrado, spinnerLocalidadResidencia, spinnerProvinciaResidencia;
     Button buttonGuardar, buttonVolver;
     SQLiteDatabase db;
 
@@ -37,20 +38,14 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         //Con esta linea aseguramos que nos muestre el mensaje de error sin que se cierre la aplicacion
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
 
-        editDni             = (EditText)findViewById(R.id.dni);
+        editDni             = (EditText)findViewById(R.id.editTextDni);
         editNombre          = (EditText)findViewById(R.id.nombre);
         editApellido        = (EditText)findViewById(R.id.apellido);
         editNombreUsuario   = (EditText)findViewById(R.id.nombreUsuario);
         editCorreo          = (EditText)findViewById(R.id.correo);
         editContrasenia     = (EditText)findViewById(R.id.contrasenia);
         editContrasenia2    = (EditText)findViewById(R.id.contrasenia2);
-        //spinnerPaisOrigen = (Spinner) findViewById(R.id.spinnerPaisOrigen);
-        //spinnerProvincia    = (Spinner) findViewById(R.id.spinnerProvincia);
-
-        editLocalidad       = (EditText)findViewById(R.id.localidad);
         editDireccion       = (EditText)findViewById(R.id.direccion);
-
-        //spinnerCarrera      = (Spinner) findViewById(R.id.spinnerCarrera);
 
         buttonGuardar       = (Button) findViewById(R.id.buttonGuardar);
         buttonVolver        = (Button) findViewById(R.id.buttonVolver) ;
@@ -65,11 +60,47 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         //Esto se deberia hacer con un boton, cosa de no estar borrando la cache desde el administrador de aplicaciones
 
 
-        //armarSpinners();
+        //Armado de Spinners;
+        spinnerNacionalidad = (Spinner) findViewById(R.id.spinnerPaisOrigen);
+        spinnerCarreraGrado = (Spinner) findViewById(R.id.spinnerCarrera);
+        spinnerLocalidadResidencia = (Spinner) findViewById(R.id.spinnerLocalidad);
+        spinnerProvinciaResidencia = (Spinner) findViewById(R.id.spinnerProvincia);
+
+        SetSpinners setSpinnerNacionalidad = new SetSpinners(this);
+
+        setSpinnerNacionalidad.execute(0);
+
+        SetSpinners setSpinnerProvincia = new SetSpinners(this);
+
+        setSpinnerProvincia.execute(1);
+
+        this.spinnerProvinciaResidencia.setOnItemSelectedListener(this);
+
+        SetSpinners setSpinnerCarrera = new SetSpinners(this);
+
+        setSpinnerCarrera.execute(3);
 
     }
 
-    public void onItemSelected(AdapterView <? > parent, View view, int pos, long id) {}
+    public void onItemSelected(AdapterView <? > parent, View view, int pos, long id) {
+        switch (parent.getId()) {
+            case R.id.spinnerProvincia:
+                if (pos == 0){
+
+                }
+
+                else {
+                    SetSpinners setSpinnerLocalidad = new SetSpinners(this);
+                    setSpinnerLocalidad.execute(2, pos);
+                }
+
+                break;
+
+            case R.id.spinnerLocalidad:
+
+                break;
+        }
+    }
     public void onNothingSelected(AdapterView <? > parent) {}
 
     public void onClick(View view) {
@@ -82,7 +113,8 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
             } else {
 
                 try {
-                    db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, "spinnerPaisOrigen", "spinnerProvincia", editLocalidad, editDireccion, "spinnerCarrera"));
+
+                    db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, spinnerNacionalidad, spinnerProvinciaResidencia, spinnerLocalidadResidencia, editDireccion, spinnerCarreraGrado));
                 }catch(Exception e){
                     showMessage("Title","Error en la Query Insert");
                 }
@@ -97,16 +129,11 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    public String getSpinnerValue(Spinner spinner1){
-        String resultado = spinner1.getSelectedItem().toString();
 
-        return resultado ;
-    }
+    public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, Spinner spinnerPaisOrigen, Spinner spinnerProvincia, Spinner spinnerLocalidad, EditText editDireccion, Spinner spinnerCarrera ){
 
-
-    public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, String spinnerPaisOrigen, String spinnerProvincia, EditText editLocalidad, EditText editDireccion, String spinnerCarrera ){
-
-        String queryInsert = "INSERT INTO alumno VALUES('" + editDni.getText() + "','" + editNombre.getText() + "','" + editApellido.getText() + "','" + editNombreUsuario.getText() + "','" + editCorreo.getText() + "','" + editContrasenia.getText() + "','" + spinnerPaisOrigen.toString() + "','" + spinnerProvincia.toString() + "','" + editLocalidad.getText() + "','" + editDireccion.getText() + "','" + spinnerCarrera.toString() + "');";
+        String queryInsert = "INSERT INTO alumno VALUES('" + editDni.getText() + "','" + editNombre.getText() + "','" + editApellido.getText() + "','" + editNombreUsuario.getText() + "','" + editCorreo.getText() + "','" + editContrasenia.getText() + "','" + spinnerPaisOrigen.getSelectedItem() + "','" +
+                spinnerProvincia.getSelectedItem() + "','" + spinnerLocalidad.getSelectedItem() + "','" + editDireccion.getText() + "','" + spinnerCarrera.getSelectedItem() + "');";
         showMessage("Query construida", queryInsert);
         return queryInsert;
     }
@@ -144,13 +171,15 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                             editApellido.getText().toString().trim().length() == 0 ||
                             editNombreUsuario.getText().toString().trim().length() == 0 ||
                             editDni.getText().toString().trim().length() == 0 ||
-                            editLocalidad.getText().toString().trim().length() == 0 ||
                             editDireccion.getText().toString().trim().length() == 0 ||
                             editCorreo.getText().toString().trim().length() == 0 ||
                             editContrasenia.getText().toString().trim().length() == 0 ||
-                            editContrasenia2.getText().toString().trim().length() == 0;
-                            //Por mas que los spinners sean EditText no se ha agregado la comprobacion
-                            //Falta la comprobacion de los spinners por el estado "vacio"
+                            editContrasenia2.getText().toString().trim().length() == 0 ||
+                            spinnerNacionalidad.getSelectedItemPosition() == 0 ||
+                            spinnerProvinciaResidencia.getSelectedItemPosition() ==0 ||
+                            spinnerLocalidadResidencia.getSelectedItemPosition() == 0 ||
+                            spinnerCarreraGrado.getSelectedItemPosition() == 0;
+
         return result;
     }
 
@@ -163,33 +192,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
     }
 
 
-/* Seccion comentada hasta realizar la correccion de Spinners
-    private void armarSpinners(){
-        //Armamos spinner nacionalidad
-        ArrayAdapter<CharSequence> adapterNacionalidad = ArrayAdapter.createFromResource(this, R.array.arraySpinnerNacionalidad, android.R.layout.simple_spinner_item);
-        adapterNacionalidad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.spinnerNacionalidad.setAdapter(adapterNacionalidad);
-        this.spinnerNacionalidad.setOnItemSelectedListener(this);
 
-        //Armamos spinner pais
-        ArrayAdapter<CharSequence> adapterPais = ArrayAdapter.createFromResource(this, R.array.arraySpinnerPais, android.R.layout.simple_spinner_item);
-        adapterPais.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.spinnerPais.setAdapter(adapterPais);
-        this.spinnerPais.setOnItemSelectedListener(this);
-
-        //Armamos spinner provincia
-        ArrayAdapter<CharSequence> adapterProvincia = ArrayAdapter.createFromResource(this, R.array.arraySpinnerProvincia, android.R.layout.simple_spinner_item);
-        adapterProvincia.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.spinnerProvincia.setAdapter(adapterProvincia);
-        this.spinnerProvincia.setOnItemSelectedListener(this);
-
-        //Armamos spinner carrera
-        ArrayAdapter<CharSequence> adapterCarrera = ArrayAdapter.createFromResource(this, R.array.arraySpinnerCarrera, android.R.layout.simple_spinner_item);
-        adapterCarrera.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.spinnerCarrera.setAdapter(adapterCarrera);
-        this.spinnerCarrera.setOnItemSelectedListener(this);
-    }
-*/
 
     public void clearText(){
         editDni.setText("");
@@ -199,14 +202,101 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         editCorreo.setText("");
         editContrasenia.setText("");
         editContrasenia2.setText("");
-        //spinnerPaisOrigen.setText("");
-        //spinnerProvincia.setText("");
-        editLocalidad.setText("");
         editDireccion.setText("");
-        //spinnerCarrera.setText("");
-        //spinnerCarrera.setSelection(0);
+        spinnerNacionalidad.setSelection(0);
+        spinnerProvinciaResidencia.setSelection(0);
+        spinnerLocalidadResidencia.setSelection(0);
+        spinnerCarreraGrado.setSelection(0);
         editNombre.requestFocus();
+    }
+    private class SetSpinners extends AsyncTask<Integer, Void, ArrayList> {
 
+        ArrayList objectArrayList = new ArrayList();
+
+        Context context;
+
+        SetSpinners(Context context) {
+            this.context = context;
+        }
+
+
+        @Override
+        protected ArrayList doInBackground(Integer... params) {
+
+            if (params[0] == 0) {
+                ArrayAdapter<CharSequence> adapterNacionalidad = ArrayAdapter.createFromResource(context, R.array.setNacionalidad, android.R.layout.simple_spinner_item);
+                adapterNacionalidad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                objectArrayList.add(0, params[0]);
+                objectArrayList.add(1, adapterNacionalidad);
+
+            }
+
+            if (params[0] == 1) {
+                ArrayAdapter<CharSequence> adapterProvincia = ArrayAdapter.createFromResource(context, R.array.setProvincia, android.R.layout.simple_spinner_item);
+                adapterProvincia.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                objectArrayList.add(0, params[0]);
+                objectArrayList.add(1, adapterProvincia);
+
+            }
+
+            if (params[0]==2){
+                TypedArray arrayCiudades = getResources().obtainTypedArray(R.array.parProvinciaLocalidad);
+                CharSequence[] ciudadLista = arrayCiudades.getTextArray(params[1]);
+                arrayCiudades.recycle();
+
+
+                ArrayAdapter<CharSequence> adapterLocalidad = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item,android.R.id.text1, ciudadLista);
+
+                // Specify the layout to use when the list of choices appears
+                adapterLocalidad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                objectArrayList.add(0, params[0]);
+                objectArrayList.add(1, adapterLocalidad);
+
+            }
+
+            if (params[0] == 3) {
+
+                ArrayAdapter<CharSequence> adapterCarrera= ArrayAdapter.createFromResource(context, R.array.setCarrera, android.R.layout.simple_spinner_item);
+                adapterCarrera.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                objectArrayList.add(0, params[0]);
+                objectArrayList.add(1, adapterCarrera);
+
+            }
+
+
+            return objectArrayList;
+        }
+
+        protected void onPostExecute(ArrayList result) {
+
+            if ((Integer) result.get(0) == 0) {
+
+                spinnerNacionalidad.setAdapter((SpinnerAdapter) result.get(1));
+
+            }
+
+            if ((Integer) result.get(0) == 1) {
+
+                spinnerProvinciaResidencia.setAdapter((SpinnerAdapter) result.get(1));
+
+            }
+
+            if ((Integer) result.get(0) == 2) {
+
+                spinnerLocalidadResidencia.setAdapter((SpinnerAdapter) result.get(1));
+
+            }
+
+            if ((Integer) result.get(0) == 3) {
+
+                spinnerCarreraGrado.setAdapter((SpinnerAdapter) result.get(1));
+
+            }
+        }
     }
 
 

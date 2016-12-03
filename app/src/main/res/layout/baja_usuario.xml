@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/dni"
+        android:id="@+id/editTextDni"
         android:hint="Ingrese el DNI.."
         android:layout_alignBaseline="@+id/title2"
         android:layout_alignBottom="@+id/title2"
@@ -47,9 +47,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonBajar"
         android:layout_marginTop="63dp"
-        android:layout_below="@+id/dni"
+        android:layout_below="@+id/editTextDni"
         android:layout_alignLeft="@+id/title1"
-        android:layout_alignStart="@+id/title1" />
+        android:layout_alignStart="@+id/title1"
+        android:onClick="onClick" />
 
     <Button
         android:text="Volver"
@@ -60,6 +61,7 @@
         android:layout_marginEnd="31dp"
         android:layout_alignTop="@+id/buttonBajar"
         android:layout_alignRight="@+id/title1"
-        android:layout_alignEnd="@+id/title1" />
+        android:layout_alignEnd="@+id/title1"
+        android:onClick="volver" />
 
 </RelativeLayout>
