@@ -19,6 +19,7 @@
         <activity android:name=".bajaUsuario" />
         <activity android:name=".crashReport" />
         <activity android:name=".forceClose" />
+        <activity android:name=".verUsuario"></activity>
     </application>
 
 </manifest>
