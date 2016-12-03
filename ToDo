@@ -1,18 +1,23 @@
 # To Do:
 
 ## Alta
-- Funcion de agregar alumno (falta testear)
-- Mensaje de comprobacion de agregacion de alumno (mostrar en pantalla los dato$
-- Limpiar los datos de los campos.
+(Listo)- Funcion de agregar alumno 
+(Listo)- Mensaje de comprobacion de agregacion de alumno (mostrar en pantalla los dato$
+(Listo)- Limpiar los datos de los campos.
 - Agregar verificacion de datos (verificacion de contrasenia, correo, etc)
+(Listo)- Agregar foco en el primer campo luego de agregar un alumno
+- Antes de ingresar un alumno se debe comprobar que ese DNI no ha sido previamente ingresado en la DB.
 
 ## Ver
 - Funcion de mostrar alumno por DNI
+- Agregar activity de Ver.
 
 ## Baja
-- Baja de alumno por DNI (cambiar el nombre, dice "Legajo")
+(Listo)- Baja de alumno por DNI (cambiar el nombre, dice "Legajo")
+(Listo)- Acomodar el boton "Volver"
+- Funcion de dar de Baja alumno por DNI
 
 ## Otros
-- Funcion de DROP TABLE que se realice con un boton manual. Esto es para evitar$
+(Listo)- Funcion de DROP TABLE que se realice con un boton manual. Esto es para evitar$
 - Efecto visual slide entre activity y activity
 - Llenar spinners mediante hilos, o manejar spinners mediante hilos.

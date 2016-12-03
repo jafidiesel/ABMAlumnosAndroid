@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
-        android:text="Baja de Usuario por legajo"
+        android:text="Baja de Usuario por DNI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/title1"
@@ -19,7 +19,7 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:text="Ingrese legajo :"
+        android:text="Ingrese DNI :"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/title2"
@@ -34,8 +34,8 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editText1"
-        android:hint="Ingrese el legajo.."
+        android:id="@+id/dni"
+        android:hint="Ingrese el DNI.."
         android:layout_alignBaseline="@+id/title2"
         android:layout_alignBottom="@+id/title2"
         android:layout_alignParentRight="true"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/botonGuardar"
         android:layout_marginTop="63dp"
-        android:layout_below="@+id/editText1"
+        android:layout_below="@+id/dni"
         android:layout_alignLeft="@+id/title1"
         android:layout_alignStart="@+id/title1" />
 
@@ -58,9 +58,9 @@
         android:id="@+id/bptonvolver"
         android:layout_marginRight="31dp"
         android:layout_marginEnd="31dp"
-        android:layout_alignBottom="@+id/buttonGuardar"
+        android:onClick="volver"
+        android:layout_alignTop="@+id/botonGuardar"
         android:layout_alignRight="@+id/title1"
-        android:layout_alignEnd="@+id/title1"
-        android:onClick="volver"/>
+        android:layout_alignEnd="@+id/title1" />
 
 </RelativeLayout>
