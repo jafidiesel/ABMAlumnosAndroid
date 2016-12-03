@@ -1,32 +1,52 @@
 <resources>
     <string name="app_name">ABM Alumnos</string>
-    <string-array name="arraySpinnerNacionalidad">
-        <item>Ingrese su nacionalidad de origen</item>
-        <item>argentino/a</item>
-        <item>peruano/a</item>
-        <item>venezolano/a</item>
-    </string-array>
-
-    <string-array name="arraySpinnerPais">
-        <item>Ingrese su pais de residencia</item>
+    <string-array name="setNacionalidad">
+        <item>Seleccione pais de origen</item>
         <item>Argentina</item>
-        <item>Angola</item>
-        <item>África</item>
+        <item>Chile</item>
     </string-array>
 
-    <string-array name="arraySpinnerProvincia">
-        <item>Ingrese su provincia de residencia</item>
-        <item>Mendoza</item>
+    <string-array name="setProvincia">
+        <item>Seleccione provincia de residencia</item>
         <item>Buenos Aires</item>
-        <item>Cordoba</item>
+        <item>Mendoza</item>
     </string-array>
 
-    <string-array name="arraySpinnerCarrera">
-        <item>Ingrese su carrera</item>
+    <string-array name="setLocalidadBuenosAires">
+        <item>Ingrese localidad de residencia</item>
+        <item>Ciudad</item>
+        <item>Belgrano</item>
+        <item>Recoleta</item>
+        <item>San Isidro</item>
+    </string-array>
+
+    <string-array name="setLocalidadMendoza">
+        <item>Seleccione localidad de residencia</item>
+        <item>Ciudad de Mendoza</item>
+        <item>Godoy Cruz</item>
+        <item>Guaymallen</item>
+        <item>Lujan de Cuyo</item>
+    </string-array>
+
+    <string-array name="setCarrera">
+        <item>Seleccione Carrera de Grado</item>
         <item>Ing. en Sistemas de Información</item>
         <item>Ing. Civil</item>
         <item>Ing. Electromecánica</item>
         <item>Ing. Electrónica</item>
         <item>Ing. Quimica</item>
     </string-array>
+
+    <string-array name="setMensaje">
+        <item> </item>
+    </string-array>
+
+    <array name="parProvinciaLocalidad">
+        <item>@array/setMensaje</item>
+        <item>@array/setLocalidadBuenosAires</item>
+        <item>@array/setLocalidadMendoza</item>
+    </array>
+
+
+
 </resources>

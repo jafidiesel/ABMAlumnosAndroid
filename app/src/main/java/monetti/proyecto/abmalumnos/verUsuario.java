@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +30,8 @@ public class verUsuario extends AppCompatActivity implements View.OnClickListene
         editDni             = (EditText) findViewById(R.id.dni);
         tvInformacionAlumno = (TextView) findViewById(R.id.tvInformacionAlumno);
         buttonVer           = (Button) findViewById(R.id.buttonVer);
-        buttonVolver        = (Button) findViewById(R.id.buttonvolver);
+        buttonVolver        = (Button) findViewById(R.id.buttonVolver);
+
 
         buttonVer.setOnClickListener(this);
         buttonVolver.setOnClickListener(this);
