@@ -106,7 +106,8 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
     public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, String spinnerPaisOrigen, String spinnerProvincia, EditText editLocalidad, EditText editDireccion, String spinnerCarrera ){
 
-        String queryInsert = "INSERT INTO alumno VALUES('" + editDni.getText() + "','" + editNombre.getText() + "','" + editApellido.getText() + "','" + editNombreUsuario.getText() + "','" + editCorreo.getText() + "','" + editContrasenia.getText() + "','" + spinnerPaisOrigen + "','" + spinnerProvincia + "','" + editLocalidad.getText() + "','" + editDireccion.getText() + "','" + spinnerCarrera + "');";
+        String queryInsert = "INSERT INTO alumno VALUES('" + editDni.getText() + "','" + editNombre.getText() + "','" + editApellido.getText() + "','" + editNombreUsuario.getText() + "','" + editCorreo.getText() + "','" + editContrasenia.getText() + "','" + spinnerPaisOrigen.toString() + "','" + spinnerProvincia.toString() + "','" + editLocalidad.getText() + "','" + editDireccion.getText() + "','" + spinnerCarrera.toString() + "');";
+        showMessage("Query construida", queryInsert);
         return queryInsert;
     }
 

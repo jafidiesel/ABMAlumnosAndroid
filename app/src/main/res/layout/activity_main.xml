@@ -4,40 +4,50 @@
     android:layout_height="match_parent">
 
 
+
+
     <Button
         android:text="Dar de alta alumno"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button1"
-        android:layout_marginBottom="53dp"
-        android:layout_above="@+id/button2"
+        android:id="@+id/buttonAlta"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="altaUsuario" />
+        android:layout_marginTop="48dp" />
 
     <Button
         android:text="Dar de baja alumno"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:id="@+id/button2"
+        android:id="@+id/buttonBaja"
+        android:layout_below="@+id/buttonAlta"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginTop="36dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="bajaUsuario" />
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Ver datos alumno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonVer"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="DROP TABLE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button4"
+        android:id="@+id/buttonDeleteAll"
         android:layout_marginBottom="47dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="12dp"
         android:layout_marginEnd="12dp"
-        android:onClick="deleteAll" />
+        />
 
 </RelativeLayout>

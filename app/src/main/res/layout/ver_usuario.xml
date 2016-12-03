@@ -44,25 +44,25 @@
         android:layout_alignParentEnd="true" />
 
     <Button
+        android:text="Volver"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonvolver"
+        android:layout_alignBaseline="@+id/buttonVer"
+        android:layout_alignBottom="@+id/buttonVer"
+        android:layout_toLeftOf="@+id/dni"
+        android:layout_toStartOf="@+id/dni" />
+
+    <Button
         android:text="Ver"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/buttonVer"
         android:layout_marginTop="63dp"
         android:layout_below="@+id/dni"
-        android:layout_alignLeft="@+id/title1"
-        android:layout_alignStart="@+id/title1" />
-
-    <Button
-        android:text="Volver"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonvolver"
-        android:layout_marginRight="31dp"
-        android:layout_marginEnd="31dp"
-        android:onClick="volver"
-        android:layout_alignTop="@+id/buttonVer"
-        android:layout_alignRight="@+id/title1"
-        android:layout_alignEnd="@+id/title1" />
+        android:layout_toRightOf="@+id/buttonvolver"
+        android:layout_toEndOf="@+id/buttonvolver"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp" />
 
 </RelativeLayout>
