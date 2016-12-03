@@ -11,11 +11,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class verUsuario extends AppCompatActivity implements View.OnClickListener{
 
     Button buttonVolver, buttonVer;
     EditText editDni;
+    TextView tvInformacionAlumno;
     SQLiteDatabase db;
 
     @Override
@@ -24,9 +28,10 @@ public class verUsuario extends AppCompatActivity implements View.OnClickListene
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.ver_usuario);
 
-        editDni         = (EditText) findViewById(R.id.dni);
-        buttonVer       = (Button) findViewById(R.id.buttonVer);
-        buttonVolver    = (Button) findViewById(R.id.buttonvolver);
+        editDni             = (EditText) findViewById(R.id.dni);
+        tvInformacionAlumno = (TextView) findViewById(R.id.tvInformacionAlumno);
+        buttonVer           = (Button) findViewById(R.id.buttonVer);
+        buttonVolver        = (Button) findViewById(R.id.buttonvolver);
 
         buttonVer.setOnClickListener(this);
         buttonVolver.setOnClickListener(this);
@@ -51,7 +56,7 @@ public class verUsuario extends AppCompatActivity implements View.OnClickListene
     public void mostrarInformacionGuardada(EditText editTextDni){
         Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni ='" + editTextDni.getText()+"'",null);
         if(c.getCount() == 0){
-            showMessage("Error","No se encontro ningun estudiante");
+            showMessage("Error","No se encontro ningun estudiante con dni "+editTextDni.getText().toString());
             return;
         }
 
@@ -68,9 +73,9 @@ public class verUsuario extends AppCompatActivity implements View.OnClickListene
             bufferAlumno.append("Localidad: " + c.getString(8) + "\n");
             bufferAlumno.append("Dirección: " + c.getString(9) + "\n");
             bufferAlumno.append("Carrera: " + c.getString(10) + "\n");
-            bufferAlumno.append("___________________" + "\n");
         }
-        showMessage("Alumno ingresado", bufferAlumno.toString());
+        tvInformacionAlumno.setText(bufferAlumno.toString());
+        editDni.setText("");
 
 
     }

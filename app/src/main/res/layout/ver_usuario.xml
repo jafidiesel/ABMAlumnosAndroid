@@ -34,7 +34,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:ems="10"
         android:id="@+id/dni"
         android:hint="Ingrese el DNI.."
@@ -64,5 +64,26 @@
         android:layout_toEndOf="@+id/buttonvolver"
         android:layout_marginLeft="50dp"
         android:layout_marginStart="50dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/buttonvolver"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tvInformacionAlumno"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textSize="24sp"
+            android:typeface="normal"
+            android:lineSpacingExtra="8sp"
+            android:textColor="@android:color/holo_blue_dark"
+             />
+    </ScrollView>
+
 
 </RelativeLayout>
