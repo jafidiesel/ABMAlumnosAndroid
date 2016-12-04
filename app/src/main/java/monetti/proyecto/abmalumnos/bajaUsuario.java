@@ -40,23 +40,19 @@ public class bajaUsuario extends AppCompatActivity implements View.OnClickListen
 
         if (view == buttonBajar) {
             if (editTextDni.getText().toString().trim().length() == 0) {
-                showMessage("Error", "Por favor, ingrese DNI");
+                showMessage("Error", "Por favor, ingrese un DNI");
                 return;
-            }
-
-            Cursor c = db.rawQuery("SELECT * FROM DBAlumnos WHERE dni = '" + editTextDni.getText() + "'", null);
-
-            if (c.moveToFirst()) {
-                db.execSQL("DELETE FROM DBAlumnos WHERE dni='" + editTextDni.getText() + "'");
-                showMessage("Exito", "Registro borrado");
             } else {
-                showMessage("Error", "DNI no valido");
-            }
 
-        }
-        if (view == buttonVolver){
-            Intent i = new Intent(this, MainActivity.class );
-            startActivity(i);
+                    db.execSQL("DELETE FROM alumno WHERE dni='" + editTextDni.getText().toString() + "'");
+                    showMessage("Exito", "Registro borrado");
+                    editTextDni.setText("");
+
+            }
+            if (view == buttonVolver) {
+                Intent i = new Intent(this, MainActivity.class);
+                startActivity(i);
+            }
         }
     }
 
