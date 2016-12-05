@@ -56,11 +56,16 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         setOnFocusChangeListener(editNombreUsuario);
 
         editCorreo          = (EditText)findViewById(R.id.correo);
+        setOnFocusChangeListener(editCorreo);
 
         editContrasenia     = (EditText)findViewById(R.id.contrasenia);
+        setOnFocusChangeListener(editContrasenia);
 
         editContrasenia2    = (EditText)findViewById(R.id.contrasenia2);
+        setOnFocusChangeListener(editContrasenia2);
+
         editDireccion       = (EditText)findViewById(R.id.direccion);
+        setOnFocusChangeListener(editDireccion);
 
         buttonGuardar       = (Button) findViewById(R.id.buttonGuardar);
         buttonVolver        = (Button) findViewById(R.id.buttonVolver) ;
@@ -147,19 +152,37 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                             if (!(editText.getText().length() == 8 || editText.getText().length() == 7)){
                                 editText.setError("Formato DNI incorrecto");
                             } else {
-                              //  ValidarExistenciaRegistro validacionDNI = new ValidarExistenciaRegistro(editDni.getText());
-                              // validacionDNI.execute();
+                              //ValidarExistenciaRegistro validacionDNI = new ValidarExistenciaRegistro(editDni.getText());
+                              //validacionDNI.execute();
                             }
                             break;
 
                         case R.id.correo:
 
-                            Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+                            Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
-                            Matcher mather = pattern.matcher(editCorreo.getText());
+                            Matcher mather = pattern.matcher(editText.getText());
 
                             if (mather.matches() == false) {
                                 editText.setError("El email ingresado es inválido.");
+                            }
+
+                            break;
+
+                        case R.id.contrasenia:
+                            validarEspacios(editText);
+
+                            if (editText.getText().length()>8 ){
+                               // editContrasenia2.setEnabled(true);
+                            } else{
+                                editText.setError("La contraseña debe contener mas de 8 caracteres");
+                            }
+
+                            break;
+                        case R.id.contrasenia2:
+
+                            if (!(editText.getText().toString()==editContrasenia.getText().toString())){
+                                editText.setError("Las contraseñas no coinciden");
                             }
 
                             break;
@@ -175,6 +198,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
 
     public void validarEspacios (EditText editTextaValidar){
+
 
         if  (editTextaValidar.getText().toString().contains(" ")){
             editTextaValidar.setError("El campo no puede contener espacios en blanco");
