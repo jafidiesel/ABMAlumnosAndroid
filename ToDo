@@ -7,21 +7,22 @@
 - Agregar verificacion de datos formatos de textos (contraseñas iguales, correo, etc)
 (Listo)- Agregar foco en el primer campo luego de agregar un alumno
 - Antes de ingresar un alumno se debe comprobar que ese DNI no ha sido previamente ingresado en la DB.
-- Setear teclado numerico a los campos que correspondan
+(Listo)- Setear teclado numerico a los campos que correspondan
+- Mejorar el aspecto visual (Opcional)
 
 ## Ver
 (Listo)- Funcion de mostrar alumno por DNI
 (Listo)- Agregar activity de Ver.
-- Agregar clear field
-- Setear teclado numerico
+(Listo)- Agregar clear field
+(Listo)- Setear teclado numerico
 
 ## Baja
 (Listo)- Baja de alumno por DNI (cambiar el nombre, dice "Legajo")
 (Listo)- Acomodar el boton "Volver"
-- Funcion de dar de Baja alumno por DNI
-- Setear teclado numerico
+(Listo)- Funcion de dar de Baja alumno por DNI
+(Listo)- Setear teclado numerico
 
 ## Otros
 (Listo)- Funcion de DROP TABLE que se realice con un boton manual. Esto es para evitar$
-- Efecto visual slide entre activity y activity
-- Llenar spinners mediante hilos, o manejar spinners mediante hilos.
+(Listo)- Efecto visual slide entre activity y activity
+(Listo)- Llenar spinners mediante hilos, o manejar spinners mediante hilos.

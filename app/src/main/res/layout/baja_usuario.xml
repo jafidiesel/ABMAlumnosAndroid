@@ -49,8 +49,7 @@
         android:layout_marginTop="63dp"
         android:layout_below="@+id/dni"
         android:layout_alignLeft="@+id/title1"
-        android:layout_alignStart="@+id/title1"
-        android:onClick="onClick" />
+        android:layout_alignStart="@+id/title1"/>
 
     <Button
         android:text="Volver"
