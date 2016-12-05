@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,19 +18,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
-
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class altaUsuario extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
     EditText editNombre, editApellido, editNombreUsuario, editDni, editDireccion, editCorreo, editContrasenia, editContrasenia2;
-    //Hasta que se solucone lo del llenado de Spinners se trataran como EditText
     Spinner spinnerNacionalidad, spinnerCarreraGrado, spinnerLocalidadResidencia, spinnerProvinciaResidencia;
     Button buttonGuardar, buttonVolver;
     SQLiteDatabase db;
+    TextView txtDni;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +44,21 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
 
         editDni             = (EditText)findViewById(R.id.editTextDni);
+        setOnFocusChangeListener(editDni);
+
         editNombre          = (EditText)findViewById(R.id.nombre);
+        setOnFocusChangeListener(editNombre);
+
         editApellido        = (EditText)findViewById(R.id.apellido);
+        setOnFocusChangeListener(editApellido);
+
         editNombreUsuario   = (EditText)findViewById(R.id.nombreUsuario);
+        setOnFocusChangeListener(editNombreUsuario);
+
         editCorreo          = (EditText)findViewById(R.id.correo);
+
         editContrasenia     = (EditText)findViewById(R.id.contrasenia);
+
         editContrasenia2    = (EditText)findViewById(R.id.contrasenia2);
         editDireccion       = (EditText)findViewById(R.id.direccion);
 
@@ -60,7 +75,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         //Esto se deberia hacer con un boton, cosa de no estar borrando la cache desde el administrador de aplicaciones
 
 
-        //Armado de Spinners;
+        //LLamadas para armar los Spinners;
         spinnerNacionalidad = (Spinner) findViewById(R.id.spinnerPaisOrigen);
         spinnerCarreraGrado = (Spinner) findViewById(R.id.spinnerCarrera);
         spinnerLocalidadResidencia = (Spinner) findViewById(R.id.spinnerLocalidad);
@@ -79,6 +94,91 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         SetSpinners setSpinnerCarrera = new SetSpinners(this);
 
         setSpinnerCarrera.execute(3);
+
+
+
+    }
+
+
+
+
+    //Validacion de los campos
+    private void setOnFocusChangeListener(final EditText editText){
+
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    switch(v.getId()){
+                        case R.id.nombre:
+                        case R.id.apellido:
+
+                            for (int i = 0 ; i < editText.length(); ++i ){
+
+                                if (!Character.isLetter(editText.getText().charAt(i))){
+                                    editText.setError("Solo se pueden ingresar letras");
+
+                                }
+                            }
+                            validarEspacios(editText);
+
+                            break;
+
+                        case R.id.nombreUsuario:
+
+                            for (int i = 0 ; i < editText.length(); ++i ){
+                                if (!Character.isLetterOrDigit(editText.getText().charAt(i))){
+                                    editText.setError("Solo se pueden ingresar caracteres alfanumericos");
+                                }
+
+                            }
+
+                            validarEspacios(editText);
+
+                           // ValidarExistenciaRegistro validacion = new ValidarExistenciaRegistro(editText.getText());
+                            //validacion.execute();
+
+                            break;
+
+                        case R.id.editTextDni:
+
+                            validarEspacios(editText);
+
+                            if (!(editText.getText().length() == 8 || editText.getText().length() == 7)){
+                                editText.setError("Formato DNI incorrecto");
+                            } else {
+                              //  ValidarExistenciaRegistro validacionDNI = new ValidarExistenciaRegistro(editDni.getText());
+                              // validacionDNI.execute();
+                            }
+                            break;
+
+                        case R.id.correo:
+
+                            Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+
+                            Matcher mather = pattern.matcher(editCorreo.getText());
+
+                            if (mather.matches() == false) {
+                                editText.setError("El email ingresado es inválido.");
+                            }
+
+                            break;
+                    }
+
+
+                    }
+                }
+            });
+        }
+
+
+
+
+    public void validarEspacios (EditText editTextaValidar){
+
+        if  (editTextaValidar.getText().toString().contains(" ")){
+            editTextaValidar.setError("El campo no puede contener espacios en blanco");
+        }
 
     }
 
@@ -209,16 +309,16 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         spinnerCarreraGrado.setSelection(0);
         editNombre.requestFocus();
     }
+
+
+    //Armado de Spinners mediante hilo
     private class SetSpinners extends AsyncTask<Integer, Void, ArrayList> {
 
         ArrayList objectArrayList = new ArrayList();
-
         Context context;
-
         SetSpinners(Context context) {
             this.context = context;
         }
-
 
         @Override
         protected ArrayList doInBackground(Integer... params) {
@@ -246,10 +346,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 CharSequence[] ciudadLista = arrayCiudades.getTextArray(params[1]);
                 arrayCiudades.recycle();
 
-
                 ArrayAdapter<CharSequence> adapterLocalidad = new ArrayAdapter<CharSequence>(context, android.R.layout.simple_spinner_item,android.R.id.text1, ciudadLista);
-
-                // Specify the layout to use when the list of choices appears
                 adapterLocalidad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 objectArrayList.add(0, params[0]);
@@ -267,38 +364,63 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
             }
 
-
             return objectArrayList;
         }
 
         protected void onPostExecute(ArrayList result) {
 
             if ((Integer) result.get(0) == 0) {
-
                 spinnerNacionalidad.setAdapter((SpinnerAdapter) result.get(1));
-
             }
 
             if ((Integer) result.get(0) == 1) {
-
                 spinnerProvinciaResidencia.setAdapter((SpinnerAdapter) result.get(1));
-
             }
 
             if ((Integer) result.get(0) == 2) {
-
                 spinnerLocalidadResidencia.setAdapter((SpinnerAdapter) result.get(1));
-
             }
 
             if ((Integer) result.get(0) == 3) {
-
                 spinnerCarreraGrado.setAdapter((SpinnerAdapter) result.get(1));
-
             }
         }
     }
 
+
+    private class ValidarExistenciaRegistro extends AsyncTask<Integer, Void, Cursor> {
+
+        Editable campo;
+        Cursor cursorResult;
+
+        ValidarExistenciaRegistro(Editable contenidoCampo){
+            campo = contenidoCampo;
+        }
+
+        @Override
+        protected Cursor doInBackground(Integer... params) {
+
+            if (params[0]==0) {
+                Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni ='" + campo +"'",null);
+                cursorResult=c;
+            }
+
+            if (params[0]==1) {
+                Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni = '" + campo + "'", null);
+                cursorResult=c;
+            }
+
+            return cursorResult;
+
+        }
+
+        protected void onPostExecute(Cursor c) {
+
+            if (!(c.getCount()==0)) {
+                editNombreUsuario.setError("El nombre de usuario ya existe");
+            }
+        }
+    }
 
 }
 

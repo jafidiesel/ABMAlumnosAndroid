@@ -79,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
+                android:digits="0123456789"
                 android:id="@+id/editTextDni"
                 android:hint="Ingrese su DNI" />
 
@@ -152,7 +153,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:ems="10"
                 android:id="@+id/correo"
                 android:hint="Ingrese su correo" />
