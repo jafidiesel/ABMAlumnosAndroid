@@ -24,5 +24,5 @@
 
 ## Otros
 (Listo)- Funcion de DROP TABLE que se realice con un boton manual. Esto es para evitar$
-- Efecto visual slide entre activity y activity
-- Llenar spinners mediante hilos, o manejar spinners mediante hilos.
+(Listo)- Efecto visual slide entre activity y activity
+(Listo)- Llenar spinners mediante hilos, o manejar spinners mediante hilos.

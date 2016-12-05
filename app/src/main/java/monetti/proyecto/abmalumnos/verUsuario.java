@@ -50,6 +50,7 @@ public class verUsuario extends AppCompatActivity implements View.OnClickListene
         if (view == buttonVolver){
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
+            overridePendingTransition(R.anim.right_in, R.anim.right_out);
         }
     }
 

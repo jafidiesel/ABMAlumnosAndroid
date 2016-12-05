@@ -42,14 +42,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view == buttonAlta){
             Intent intent = new Intent(this, altaUsuario.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.left_in, R.anim.left_out);
         }
         if(view == buttonBaja){
             Intent i = new Intent(this, bajaUsuario.class );
             startActivity(i);
+            overridePendingTransition(R.anim.left_in, R.anim.left_out);
         }
         if (view == buttonVer){
             Intent i = new Intent(this, verUsuario.class);
             startActivity(i);
+            overridePendingTransition(R.anim.left_in, R.anim.left_out);
         }
         if (view == buttonDeleteAll){
             try {

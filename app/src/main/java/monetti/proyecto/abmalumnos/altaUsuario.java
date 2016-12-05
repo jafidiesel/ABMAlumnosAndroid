@@ -125,6 +125,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         }else if(view == buttonVolver){
             Intent i = new Intent(this, MainActivity.class );
             startActivity(i);
+            overridePendingTransition(R.anim.right_in, R.anim.right_out);
         }
 
     }
@@ -301,21 +302,3 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
 
 }
-
-
-
-        /*
-        Este bloque es para tener los nombres de las variables en una lista, me ha servido bastante tenerlo asi para copypastear jaja
-        editDni
-        editNombre
-        editApellido
-        editNombreUsuario
-        editCorreo
-        editContrasenia
-        editContrasenia2
-        spinnerPaisOrigen
-        spinnerProvincia
-        editLocalidad
-        editDireccion
-        spinnerCarrera
-        */

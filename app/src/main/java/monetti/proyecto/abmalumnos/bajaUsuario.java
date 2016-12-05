@@ -49,11 +49,13 @@ public class bajaUsuario extends AppCompatActivity implements View.OnClickListen
                     editTextDni.setText("");
 
             }
+        }
             if (view == buttonVolver) {
                 Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
+                overridePendingTransition(R.anim.right_in, R.anim.right_out);
             }
-        }
+
     }
 
     public void showMessage(String title, String message) {
