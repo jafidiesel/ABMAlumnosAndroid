@@ -8,18 +8,26 @@
         android:supportsRtl="true"
         android:icon="@drawable/abm"
         android:theme="@style/NewAppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+                    android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
-        <activity android:name=".altaUsuario"/>
-        <activity android:name=".bajaUsuario" />
-        <activity android:name=".crashReport" />
-        <activity android:name=".forceClose" />
-        <activity android:name=".verUsuario"></activity>
+        <activity android:name=".altaUsuario"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".bajaUsuario"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".crashReport"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".forceClose"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".verUsuario"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

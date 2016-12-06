@@ -270,11 +270,13 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
 
         if(view  == buttonGuardar) {
-            if (comprobarCamposVacios() || !recorrerFlags()) {
+            if (comprobarCamposVacios()) {
                 showMessage("Error", "Todos los campos deben estar completos");
 
                 //En este mensaje seria mejor mostrar cual o cuales campos no estan completados
 
+            }else if(!recorrerFlags()){
+                showMessage("Error", "Los campos estan ingresados incorrectamente.");
             } else if(recorrerFlags()){
 
                 try {
@@ -286,7 +288,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
                 mostrarInformacionGuardada(editDni);
                 clearText();
-            } 
+            }
         }else if(view == buttonVolver){
             Intent i = new Intent(this, MainActivity.class );
             startActivity(i);
