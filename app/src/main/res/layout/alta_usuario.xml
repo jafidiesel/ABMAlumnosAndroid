@@ -38,73 +38,110 @@
             android:orientation="vertical" >
 
 
-            <TextView
-                android:text="Nombre:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                style="@style/editText"
-                android:id="@+id/tv1" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/nombre"
-                android:fontFamily="sans-serif-light"
-                android:hint="Ingrese su nombre"/>
-
-            <TextView
-                android:text="Apellido:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                style="@style/editText"
-                android:id="@+id/tv2" />
-
-            <EditText
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/apellido"
-                android:fontFamily="sans-serif-light"
-                android:hint="Ingrese su apellido" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:text="Nombre de Usuario:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                style="@style/editText"
-                android:id="@+id/tv3" />
+                <TextView
+                    android:text="Nombre:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    style="@style/editText"
+                    android:id="@+id/tv1" />
 
-            <EditText
+                <EditText
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName|textCapWords"
+                    android:ems="10"
+                    android:id="@+id/nombre"
+                    android:maxLength="14"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Ingrese su nombre"
+                    android:layout_width="wrap_content" />
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/nombreUsuario"
-                android:fontFamily="sans-serif-light"
-                android:hint="Ingrese su nombre de usuario" />
+                android:layout_height="match_parent">
 
-            <TextView
-                android:text="DNI:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                style="@style/editText"
-                android:id="@+id/tv3" />
+                <TextView
+                    android:text="Apellido:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    style="@style/editText"
+                    android:id="@+id/tv2" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/editTextDni"
-                android:fontFamily="sans-serif-light"
-                android:hint="Ingrese su DNI" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName|textCapWords"
+                    android:ems="10"
+                    android:maxLength="14"
+                    android:id="@+id/apellido"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Ingrese su apellido" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="Nombre de Usuario:"
+                    android:layout_width="142dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    style="@style/editText"
+                    android:id="@+id/tv3" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName"
+                    android:maxLength="14"
+                    android:ems="10"
+                    android:id="@+id/nombreUsuario"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Ingrese usuario" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1">
+
+                <TextView
+                    android:text="DNI:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    style="@style/editText"
+                    android:id="@+id/tvdni"
+                    android:layout_weight="0.30" />
+
+                <EditText
+                    android:layout_width="188dp"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:maxLength="8"
+                    android:ems="10"
+                    android:id="@+id/editTextDni"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Ingrese su DNI" />
+
+
+            </LinearLayout>
 
             <TextView
                 android:text="Nacionalidad:"
@@ -135,7 +172,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 style="@style/editText"
-                android:id="@+id/spinnerProvincia" />
+                android:id="@+id/spinnerProvincia"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
 
             <TextView
                 android:text="Localidad:"
@@ -160,14 +199,46 @@
                 style="@style/editText"
                 android:id="@+id/tv7" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/direccion"
-                android:fontFamily="sans-serif-light"
-                android:hint="Ingrese su dirección" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Calle"
+                    android:layout_width="89dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView10" />
+
+                <EditText
+                    android:layout_width="163dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName|textCapWords"
+                    android:maxLength="14"
+                    android:ems="10"
+                    android:id="@+id/editDireccionCalle"
+                    android:hint="Nombre de la calle" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="N°"
+                    android:layout_width="86dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView11" />
+
+                <EditText
+                    android:layout_width="248dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/editDireccionNumeracion"
+                    android:hint="Numero de la vivienda" />
+            </LinearLayout>
 
             <TextView
                 android:text="Carrera:"
@@ -195,7 +266,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:ems="10"
                 android:id="@+id/correo"
                 android:fontFamily="sans-serif-light"

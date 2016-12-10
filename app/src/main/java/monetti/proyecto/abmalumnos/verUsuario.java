@@ -4,15 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 public class verUsuario extends AppCompatActivity implements View.OnClickListener{
 
@@ -72,8 +70,8 @@ public class verUsuario extends AppCompatActivity implements View.OnClickListene
             bufferAlumno.append("Pais de Origen: " + c.getString(6) + "\n");
             bufferAlumno.append("Provincia: " + c.getString(7) + "\n");
             bufferAlumno.append("Localidad: " + c.getString(8) + "\n");
-            bufferAlumno.append("Dirección: " + c.getString(9) + "\n");
-            bufferAlumno.append("Carrera: " + c.getString(10) + "\n");
+            bufferAlumno.append("Dirección: " + "\n\tCalle: "+ c.getString(9) + "\tN°: " + c.getString(10) +"\n");
+            bufferAlumno.append("Carrera: " + c.getString(11) + "\n");
         }
         tvInformacionAlumno.setText(bufferAlumno.toString());
         editDni.setText("");
