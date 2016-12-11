@@ -11,7 +11,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     SQLiteDatabase db;
-    Button buttonAlta, buttonBaja, buttonVer, buttonDeleteAll;
+    Button buttonAlta, buttonBaja, buttonVer, buttonOpciones;
 
     @Override //Constructor por defecto
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +23,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonAlta      = (Button) findViewById(R.id.buttonAlta);
         buttonBaja      = (Button) findViewById(R.id.buttonBaja);
         buttonVer       = (Button) findViewById(R.id.buttonVer);
-        buttonDeleteAll = (Button) findViewById(R.id.buttonDeleteAll);
+        buttonOpciones = (Button) findViewById(R.id.buttonOpciones);
 
         buttonAlta.setOnClickListener(this);
         buttonBaja.setOnClickListener(this);
         buttonVer.setOnClickListener(this);
-        buttonDeleteAll.setOnClickListener(this);
+        buttonOpciones.setOnClickListener(this);
 
         db=openOrCreateDatabase("DBAlumnos", Context.MODE_PRIVATE, null);
         db.execSQL("CREATE TABLE IF NOT EXISTS alumno(dni VARCHAR, nombre VARCHAR, apellido VARCHAR,nombreUsuario VARCHAR,correo VARCHAR, password VARCHAR, paisOrigen VARCHAR, provincia VARCHAR, localidad VARCHAR, direccionCalle VARCHAR, numeracion VARCHAR, carrera VARCHAR);");
@@ -52,14 +52,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(i);
             overridePendingTransition(R.anim.left_in, R.anim.left_out);
         }
-        if (view == buttonDeleteAll){
-            try {
-                db.execSQL("DELETE FROM alumno WHERE 1");
-                Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
-                showMessage("Drop Table","Datos de tabla alumno eliminados exitosamente");
-            } catch (Exception e){
-                showMessage("Error","Error eliminando la DB");
-            }
+        if (view == buttonOpciones){
+            Intent i = new Intent(this, opciones.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.left_in, R.anim.left_out);
+
         }
 
     }
