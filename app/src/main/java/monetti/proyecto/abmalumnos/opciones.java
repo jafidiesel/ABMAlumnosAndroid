@@ -3,6 +3,7 @@ package monetti.proyecto.abmalumnos;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,24 +26,43 @@ public class opciones extends AppCompatActivity implements View.OnClickListener{
 
         buttonAddRandom.setOnClickListener(this);
         buttonDeleteAll.setOnClickListener(this);
+        buttonVolver.setOnClickListener(this);
     }
 
 
     public void onClick(View view){
         if (view == buttonDeleteAll) {
-        /*try {
+        try {
             db.execSQL("DELETE FROM alumno WHERE 1");
             Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
-            showMessage("Drop Table","Datos de tabla alumno eliminados exitosamente");
+            showMessage("Drop Table","La BD ha sido limpiada exitosamente.");
         } catch (Exception e){
             showMessage("Error","Error eliminando la DB");
-        }*/
+        }
         }else if(view == buttonAddRandom){
-            // Metodo en el que se agregan datos random y se lo muestra por pantalla
+
+            try {
+                //Falta la comprobacion que ya ha sido ingresado el valor
+                String queryInsert = "INSERT INTO alumno VALUES('1234567','NOMBREPRUEBA','APELLIDOPRUEBA','NOMBREUSUARIOPRUEBA','Correo@prueba.com','contrasenia','Argentina','Mendoza','Guaymallen','CALLEPRUEBA','123','Ing. en Sistemas de Información');";
+                showMessage("Query construida",queryInsert);
+                db.execSQL(queryInsert);
+            }catch(Exception e){
+                showMessage("Title","Error en la Query Insert");
+            }
+
+
         } else if(view == buttonVolver){
             Intent i = new Intent(this, MainActivity.class );
             startActivity(i);
             overridePendingTransition(R.anim.right_in, R.anim.right_out);
         }
+    }
+
+    public void showMessage(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
     }
 }
