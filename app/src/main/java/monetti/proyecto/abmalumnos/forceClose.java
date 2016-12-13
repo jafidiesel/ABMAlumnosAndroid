@@ -21,7 +21,7 @@ public class forceClose extends Activity {
         // if you get force close error it will be redirected to the CrashActivity.
     }
     private void volver(View view){
-        Intent i = new Intent(this, MainActivity.class );
+        Intent i = new Intent(this, SecondActivity.class );
         startActivity(i);
     }
 }

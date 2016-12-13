@@ -18,6 +18,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SecondActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".altaUsuario"
             android:screenOrientation="portrait" />
         <activity
@@ -32,7 +35,8 @@
         <activity
             android:name=".verUsuario"
             android:screenOrientation="portrait" />
-        <activity android:name=".opciones"></activity>
+        <activity android:name=".opciones" />
+        <activity android:name=".ModificarDatosAlumno"></activity>
     </application>
 
 </manifest>

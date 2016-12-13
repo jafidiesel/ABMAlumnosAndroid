@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -33,7 +32,8 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
     Button buttonGuardar, buttonVolver;
     SQLiteDatabase db;
     Boolean[] saveFlag = new Boolean[9];
-    private TextInputLayout tilNombre;
+    String tipoUsuario = "usrAlm";
+
 
 
     @Override
@@ -92,27 +92,17 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         spinnerProvinciaResidencia = (Spinner) findViewById(R.id.spinnerProvincia);
 
         SetSpinners setSpinnerNacionalidad = new SetSpinners(this);
-
         setSpinnerNacionalidad.execute(0);
 
         SetSpinners setSpinnerProvincia = new SetSpinners(this);
-
         setSpinnerProvincia.execute(1);
 
         this.spinnerProvinciaResidencia.setOnItemSelectedListener(this);
-
         SetSpinners setSpinnerCarrera = new SetSpinners(this);
-
         setSpinnerCarrera.execute(3);
-
-
-
     }
 
-
-
-
-    //Validacion de los campos al cambiar el foco
+    //Validacion de los campos al cambiar el foco de campo
     private void setOnFocusChangeListener(final EditText editText){
 
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -267,7 +257,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
                 try {
 
-                    db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, spinnerNacionalidad, spinnerProvinciaResidencia, spinnerLocalidadResidencia, editDireccionCalle, editDireccionNumeracion, spinnerCarreraGrado));
+                    db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, spinnerNacionalidad, spinnerProvinciaResidencia, spinnerLocalidadResidencia, editDireccionCalle, editDireccionNumeracion, spinnerCarreraGrado,tipoUsuario));
                 }catch(Exception e){
                     showMessage("Title","Error en la Query Insert");
                 }
@@ -276,7 +266,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 clearText();
             }
         }else if(view == buttonVolver){
-            Intent i = new Intent(this, MainActivity.class );
+            Intent i = new Intent(this, SecondActivity.class );
             startActivity(i);
             overridePendingTransition(R.anim.right_in, R.anim.right_out);
         }
@@ -284,10 +274,10 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, Spinner spinnerPaisOrigen, Spinner spinnerProvincia, Spinner spinnerLocalidad, EditText editDireccionCalle, EditText editDireccionNumeracion, Spinner spinnerCarrera ){
+    public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, Spinner spinnerPaisOrigen, Spinner spinnerProvincia, Spinner spinnerLocalidad, EditText editDireccionCalle, EditText editDireccionNumeracion, Spinner spinnerCarrera, String tipoUsuario ){
 
         String queryInsert = "INSERT INTO alumno VALUES('" + editDni.getText() + "','" + editNombre.getText().toString().toUpperCase() + "','" + editApellido.getText().toString().toUpperCase() + "','" + editNombreUsuario.getText().toString().toUpperCase() + "','" + editCorreo.getText().toString().toUpperCase() + "','" + editContrasenia.getText().toString() + "','" + spinnerPaisOrigen.getSelectedItem() + "','" +
-                spinnerProvincia.getSelectedItem() + "','" + spinnerLocalidad.getSelectedItem() + "','" + editDireccionCalle.getText().toString().toUpperCase()+ "','" + editDireccionNumeracion.getText() + "','" + spinnerCarrera.getSelectedItem() + "');";
+                spinnerProvincia.getSelectedItem() + "','" + spinnerLocalidad.getSelectedItem() + "','" + editDireccionCalle.getText().toString().toUpperCase()+ "','" + editDireccionNumeracion.getText() + "','" + spinnerCarrera.getSelectedItem() +"','" + tipoUsuario+ "');";
         showMessage("Query construida", queryInsert);
         return queryInsert;
     }

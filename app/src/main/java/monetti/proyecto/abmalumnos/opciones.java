@@ -28,7 +28,7 @@ public class opciones extends AppCompatActivity implements View.OnClickListener{
         buttonAddRandom      = (Button) findViewById(R.id.buttonAddRandom);
         buttonVolver      = (Button) findViewById(R.id.buttonVolver);
 
-        //se abre la conexion con la BD creada en MainActivity.java
+        //se abre la conexion con la BD creada en SecondActivity.java
         db=openOrCreateDatabase("DBAlumnos", Context.MODE_PRIVATE, null);
 
         //Los botones estan escuchando para cuando sean clickeados
@@ -48,7 +48,7 @@ public class opciones extends AppCompatActivity implements View.OnClickListener{
             * Si cliqueo el boton 'buttonAddRandom' ingresa datos de prueba
                 * Si no existen datos con el nombre de usuario 'NOMBREUSUARIOPRUEBA' agrega dos alumnos con dastos de prueba
                 * Si existe al menos un alumno con nombre de usuario 'NOMBREUSUARIOPRUEBA' nos impide agregarlos y nos muestra los datos existentes
-            * Si cliqueo el boton 'buttonVolver' vuelve a la activity_main.xml
+            * Si cliqueo el boton 'buttonVolver' vuelve a la activity_second.xmlml
         *
         * */
     public void onClick(View view){
@@ -121,7 +121,7 @@ public class opciones extends AppCompatActivity implements View.OnClickListener{
             }
 
         } else if(view == buttonVolver){
-            Intent i = new Intent(this, MainActivity.class );
+            Intent i = new Intent(this, SecondActivity.class );
             startActivity(i);
             overridePendingTransition(R.anim.right_in, R.anim.right_out);
         }

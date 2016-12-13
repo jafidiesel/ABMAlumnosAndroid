@@ -10,63 +10,86 @@
 
 
     <Button
-        android:text="Ver datos alumno"
+        android:text="Ingresar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonVer"
-        style="@style/buttonStyle"
-        android:layout_below="@+id/buttonBaja"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Dar de baja alumno"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonBaja"
-
-        style="@style/buttonStyle"
-        android:layout_below="@+id/buttonAlta"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="Modificar datos alumno"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonModificar"
-        style="@style/buttonStyle"
-        android:layout_below="@+id/buttonVer"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Opciones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonOpciones"
+        android:id="@+id/buttonIngresar"
         style="@style/buttonStyle"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="26dp"
+        android:onClick="onClick" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_above="@+id/buttonIngresar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="57dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="Usuario:"
+                android:layout_width="142dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                style="@style/editText"
+                android:id="@+id/tv3" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"
+                android:maxLength="14"
+                android:ems="10"
+                android:id="@+id/nombreUsuarioBD"
+                android:fontFamily="sans-serif-light"
+                android:hint="Ingrese usuario" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="Contraseña:"
+                android:layout_width="142dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                style="@style/editText"
+                android:id="@+id/tv4" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPassword"
+                android:maxLength="14"
+                android:ems="10"
+                android:id="@+id/passwordBD"
+                android:fontFamily="sans-serif-light"
+                android:hint="Ingrese contraseña" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/abm"
         android:id="@+id/imageView"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="Dar de alta alumno"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonAlta"
-        style="@style/buttonStyle"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp" />
 
 </RelativeLayout>
