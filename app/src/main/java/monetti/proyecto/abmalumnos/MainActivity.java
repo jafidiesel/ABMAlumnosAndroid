@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     DataBase dataBase;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         DataBase dataBase = new DataBase(this,"DBAlumnos" +"",null, 1);
         db = dataBase.getReadableDatabase();
+        ArrayList datosUsuario = new ArrayList();
 
         if (view == buttonIngresar){
 
@@ -59,12 +62,16 @@ public class MainActivity extends AppCompatActivity {
                        db.close();
 
                     } else if (!(c.getCount() == 0)){
-                        ComunicadorClases.setObjeto("usrAdm");
+                        datosUsuario.add(0,"usrAdm");
+                        datosUsuario.add(1,nombreUsuario.getText().toString());
+                        ComunicadorClases.setObject(datosUsuario);
                         Intent i = new Intent(this, SecondActivity.class);
                         startActivity(i);
                         overridePendingTransition(R.anim.left_in, R.anim.left_out);
                     } else if (!(q.getCount()==0)){
-                        ComunicadorClases.setObjeto("usrAlm");
+                        datosUsuario.add(0,"usrAlm");
+                        datosUsuario.add(1,nombreUsuario.getText().toString());
+                        ComunicadorClases.setObject(datosUsuario);
                         Intent i = new Intent(this, SecondActivity.class);
                         startActivity(i);
                         overridePendingTransition(R.anim.left_in, R.anim.left_out);

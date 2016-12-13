@@ -1,19 +1,21 @@
 package monetti.proyecto.abmalumnos;
 
+import java.util.ArrayList;
+
 /**
  * Created by root on 13/12/16.
  */
 
 public class ComunicadorClases {
 
-        private static Object objeto = null;
+        private static ArrayList object = null;
 
-        public static void setObjeto(Object newObjeto) {
-            objeto = newObjeto;
+        public static void setObject(ArrayList newObject) {
+            object = newObject;
         }
 
-        public static Object getObjeto() {
-            return objeto;
+        public static ArrayList getObject() {
+            return object;
         }
 
 

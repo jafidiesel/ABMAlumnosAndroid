@@ -89,32 +89,6 @@
                     android:hint="Ingrese su apellido" />
             </LinearLayout>
 
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:text="Nombre de Usuario:"
-                    android:layout_width="142dp"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    style="@style/editText"
-                    android:id="@+id/tv3" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="textPersonName"
-                    android:maxLength="14"
-                    android:ems="10"
-                    android:id="@+id/nombreUsuario"
-                    android:fontFamily="sans-serif-light"
-                    android:hint="Ingrese usuario" />
-
-            </LinearLayout>
-
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -271,6 +245,31 @@
                 android:id="@+id/correo"
                 android:fontFamily="sans-serif-light"
                 android:hint="Ingrese su correo" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="Nombre de Usuario:"
+                    android:layout_width="142dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    style="@style/editText"
+                    android:id="@+id/tv3" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName"
+                    android:maxLength="14"
+                    android:ems="10"
+                    android:id="@+id/nombreUsuario"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Ingrese usuario" />
+
+            </LinearLayout>
 
             <TextView
                 android:text="Ingrese su contraseña:"

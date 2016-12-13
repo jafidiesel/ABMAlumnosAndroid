@@ -1,2 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.4.0_2131ecdc2d296d4307bb66e76e33ea3f53e27785.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.4.0_e7439dfd85654d857c2f93eaa91093012a699ff5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/root/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/support-annotations-23.4.0_f6239821904b8bd6abe8ab66c1e2e11c76623210.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="295a95f23fc11e1edc09c6406ac98e19d64bec51">
+        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_91c59fc15c73b33740295fdb8f6d4cdc12f0589b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.4.0_6824a6bf192de10a22cc56bd67a6f6a6a422ad27.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.1.1_ed4bf83db49567381cdc8b8c17a66bcaca6b13ee.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.1.1_efa6ff7ce7790a3f27a814058526b5ac0a906f41.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="0322a8a40c8ddfd1f1184932b84e7ca3e7e918b7">
+        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/instant-run_2292a7d60757cc0aac01619cba35269e550910e7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/internal_impl-23.4.0_dd9cd3d1e2ab117590d9d78b8ee403994a6741d2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.4.0_dc7630266b606880920b3b4a8f45ba2fb8141211.jar" />
+    </item>
+
+</items>

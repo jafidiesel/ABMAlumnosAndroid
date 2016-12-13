@@ -42,7 +42,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:weightSum="1">
 
                     <TextView
                         android:text="Nombre:"
@@ -59,7 +60,8 @@
                         android:id="@+id/nombre"
                         android:maxLength="14"
                         android:fontFamily="sans-serif-light"
-                        android:layout_width="wrap_content" />
+                        android:layout_width="wrap_content"
+                        android:layout_weight="0.60" />
                 </LinearLayout>
 
 
@@ -87,32 +89,6 @@
                         android:fontFamily="sans-serif-light" />
                 </LinearLayout>
 
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:text="Nombre de Usuario:"
-                        android:layout_width="142dp"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        style="@style/editText"
-                        android:id="@+id/tv3" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="textPersonName"
-                        android:maxLength="14"
-                        android:ems="10"
-                        android:id="@+id/nombreUsuario"
-                        android:fontFamily="sans-serif-light"
-                        android:hint="Ingrese usuario" />
-
-                </LinearLayout>
-
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -128,17 +104,15 @@
                         android:id="@+id/tvdni"
                         android:layout_weight="0.30" />
 
-                    <EditText
+                    <TextView
                         android:layout_width="188dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="36dp"
                         android:inputType="number"
                         android:maxLength="8"
                         android:ems="10"
-                        android:id="@+id/editTextDni"
+                        android:id="@+id/textDni"
                         android:fontFamily="sans-serif-light"
                         android:hint="Ingrese su DNI" />
-
-
                 </LinearLayout>
 
                 <TextView
@@ -269,6 +243,32 @@
                     android:id="@+id/correo"
                     android:fontFamily="sans-serif-light"
                     android:hint="Ingrese su correo" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:text="Nombre de Usuario:"
+                        android:layout_width="142dp"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        style="@style/editText"
+                        android:id="@+id/tv3" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="textPersonName"
+                        android:maxLength="14"
+                        android:ems="10"
+                        android:id="@+id/nombreUsuario"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="Ingrese usuario" />
+
+                </LinearLayout>
+
 
                 <TextView
                     android:text="Ingrese su contraseña:"

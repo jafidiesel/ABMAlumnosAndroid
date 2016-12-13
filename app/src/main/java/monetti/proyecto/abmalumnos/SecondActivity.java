@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 public class SecondActivity extends AppCompatActivity implements View.OnClickListener{
     SQLiteDatabase db;
     Button buttonAlta, buttonBaja, buttonVer, buttonOpciones, buttonModificar;
@@ -26,10 +28,10 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
         buttonOpciones = (Button) findViewById(R.id.buttonOpciones);
         buttonModificar = (Button) findViewById(R.id.buttonModificar);
 
-        Object tipoUsuarioDB = ComunicadorClases.getObjeto();
-        String tipoUsuarioCod = tipoUsuarioDB.toString();
+        ArrayList tipoUsuarioCod = ComunicadorClases.getObject();
 
-        if (tipoUsuarioCod == "usrAlm"){
+
+        if (tipoUsuarioCod.get(0) == "usrAlm"){
             buttonAlta.setVisibility(View.INVISIBLE);
             buttonBaja.setVisibility(View.INVISIBLE);
             buttonOpciones.setVisibility(View.INVISIBLE);
@@ -40,6 +42,7 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
         buttonBaja.setOnClickListener(this);
         buttonVer.setOnClickListener(this);
         buttonOpciones.setOnClickListener(this);
+        buttonModificar.setOnClickListener(this);
 
         db=openOrCreateDatabase("DBAlumnos", Context.MODE_PRIVATE, null);
        // db.execSQL("CREATE TABLE IF NOT EXISTS alumno(dni VARCHAR, nombre VARCHAR, apellido VARCHAR,nombreUsuario VARCHAR,correo VARCHAR, password VARCHAR, paisOrigen VARCHAR, provincia VARCHAR, localidad VARCHAR, direccionCalle VARCHAR, numeracion VARCHAR, carrera VARCHAR, tipoUsuario VARCHAR);");
@@ -70,6 +73,12 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
 
         }
 
+        if (view == buttonModificar){
+            Intent i = new Intent(this, ModificarDatosAlumno.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.left_in, R.anim.left_out);
+
+        }
 
 
     }
