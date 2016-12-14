@@ -8,50 +8,6 @@
     android:textAlignment="center"
     >
 
-
-    <Button
-        android:text="Ver datos alumno"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonVer"
-        style="@style/buttonStyle"
-        android:layout_below="@+id/buttonBaja"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Dar de baja alumno"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonBaja"
-
-        style="@style/buttonStyle"
-        android:layout_below="@+id/buttonAlta"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="Modificar datos alumno"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonModificar"
-        style="@style/buttonStyle"
-        android:layout_below="@+id/buttonVer"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Opciones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonOpciones"
-        style="@style/buttonStyle"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,14 +15,70 @@
         android:id="@+id/imageView"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:text="Dar de alta alumno"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonAlta"
-        style="@style/buttonStyle"
+        android:orientation="vertical"
         android:layout_below="@+id/imageView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:id="@+id/LinearLayoutPrincipal"
+        android:weightSum="1">
+
+
+            <Button
+                android:text="Dar de alta alumno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonAlta"
+                style="@style/buttonStyle"
+                android:layout_below="@+id/imageView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+
+        <Button
+                    android:text="Ver datos alumno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonVer"
+                    style="@style/buttonStyle"
+                    android:layout_below="@+id/buttonBaja"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <Button
+                    android:text="Modificar datos alumno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonModificar"
+                    style="@style/buttonStyle"
+                    android:layout_below="@+id/buttonVer"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+        <Button
+            android:text="Dar de baja alumno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonBaja"
+
+            style="@style/buttonStyle"
+            android:layout_below="@+id/linearLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+             />
+
+        <Button
+            android:text="Opciones"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonOpciones"
+            style="@style/buttonStyle"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </LinearLayout>
 
 </RelativeLayout>

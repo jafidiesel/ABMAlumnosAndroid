@@ -53,15 +53,17 @@
                         style="@style/editText"
                         android:id="@+id/tv1" />
 
-                    <TextView
+                    <EditText
                         android:layout_height="match_parent"
                         android:inputType="textPersonName|textCapWords"
                         android:ems="10"
                         android:id="@+id/nombre"
                         android:maxLength="14"
                         android:fontFamily="sans-serif-light"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="0.60" />
+                        android:layout_width="163dp"
+                        android:layout_weight="0.87" />
+
+
                 </LinearLayout>
 
 
@@ -70,7 +72,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:id="@+id/LinearLayoutApellido">
 
                     <TextView
                         android:text="Apellido:"
@@ -80,8 +83,8 @@
                         style="@style/editText"
                         android:id="@+id/tv2" />
 
-                    <TextView
-                        android:layout_width="match_parent"
+                    <EditText
+                        android:layout_width="257dp"
                         android:layout_height="match_parent"
                         android:ems="10"
                         android:maxLength="14"
@@ -111,8 +114,7 @@
                         android:maxLength="8"
                         android:ems="10"
                         android:id="@+id/textDni"
-                        android:fontFamily="sans-serif-light"
-                        android:hint="Ingrese su DNI" />
+                        android:fontFamily="sans-serif-light" />
                 </LinearLayout>
 
                 <TextView
@@ -163,17 +165,35 @@
                     style="@style/editText"
                     android:id="@+id/spinnerLocalidad" />
 
-                <TextView
-                    android:text="Domicilio:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    style="@style/editText"
-                    android:id="@+id/tv7" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+                        <TextView
+                            android:text="Domicilio:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            style="@style/editText"
+                            android:id="@+id/tv7" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <RadioButton
+                        android:text="Editar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/radioButtonEditDireccion"
+                        android:layout_weight="0.01"
+                        android:onClick="onRadioButtonClicked" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/LinearLayoutCalle">
 
                     <TextView
                         android:text="Calle"
@@ -195,7 +215,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:id="@+id/LinearLayoutNumeracion">
 
                     <TextView
                         android:text="N°"
@@ -210,6 +231,9 @@
                         android:ems="10"
                         android:id="@+id/editDireccionNumeracion"
                         android:hint="Numero de la vivienda" />
+
+
+
                 </LinearLayout>
 
                 <TextView

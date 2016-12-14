@@ -19,8 +19,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,14 +28,10 @@
         android:layout_below="@+id/title1"
         android:id="@+id/scrollView1">
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     style="@style/editText"
-                    android:id="@+id/tv1" />
+                    android:id="@+id/tvNombre" />
 
                 <EditText
                     android:layout_height="match_parent"
@@ -59,7 +53,14 @@
                     android:maxLength="14"
                     android:fontFamily="sans-serif-light"
                     android:hint="Ingrese su nombre"
-                    android:layout_width="wrap_content" />
+                    android:layout_width="173dp" />
+
+                <RadioButton
+                    android:text="Editar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/radioButtonNombre"
+                    android:onClick="onRadioButtonClicked" />
             </LinearLayout>
 
 
@@ -76,10 +77,10 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     style="@style/editText"
-                    android:id="@+id/tv2" />
+                    android:id="@+id/tvApellido" />
 
                 <EditText
-                    android:layout_width="match_parent"
+                    android:layout_width="170dp"
                     android:layout_height="match_parent"
                     android:inputType="textPersonName|textCapWords"
                     android:ems="10"
@@ -87,6 +88,13 @@
                     android:id="@+id/apellido"
                     android:fontFamily="sans-serif-light"
                     android:hint="Ingrese su apellido" />
+
+                <RadioButton
+                    android:text="Editar"
+                    android:layout_width="162dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButtonApellido"
+                    android:onClick="onRadioButtonClicked" />
             </LinearLayout>
 
             <LinearLayout
@@ -101,29 +109,57 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     style="@style/editText"
-                    android:id="@+id/tvdni"
-                    android:layout_weight="0.30" />
+                    android:id="@+id/tvDni"
+                    android:layout_weight="0.44" />
 
                 <EditText
-                    android:layout_width="188dp"
+                    android:layout_width="142dp"
                     android:layout_height="match_parent"
                     android:inputType="number"
                     android:maxLength="8"
                     android:ems="10"
                     android:id="@+id/editTextDni"
                     android:fontFamily="sans-serif-light"
-                    android:hint="Ingrese su DNI" />
+                    android:hint="Ingrese su DNI"
+                    android:layout_weight="0.31" />
 
+                <RadioButton
+                    android:text="Editar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButtonDni"
+                    android:onClick="onRadioButtonClicked" />
 
             </LinearLayout>
 
-            <TextView
-                android:text="Nacionalidad:"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                style="@style/editText"
-                android:id="@+id/tv4" />
+                android:id="@+id/contenedorSpinnerNacionalidad">
+
+                <TextView
+                        android:text="Nacionalidad:"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        style="@style/editText"
+                        android:id="@+id/tvNacionalidad" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.83" />
+
+                <RadioButton
+                    android:text="Editar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButtonNacionalidad"
+                    android:onClick="onRadioButtonClicked"
+                    android:layout_weight="0.12" />
+
+            </LinearLayout>
 
             <Spinner
                 android:layout_width="match_parent"
@@ -132,14 +168,34 @@
                 style="@style/editText"
                 android:id="@+id/spinnerPaisOrigen" />
 
-            <TextView
-                android:text="Provincia:"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="normal|bold"
-                android:layout_marginTop="13dp"
-                style="@style/editText"
-                android:id="@+id/tv5" />
+                android:id="@+id/contenedorSpinnerProvincia">
+
+                <TextView
+                    android:text="Provincia:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal|bold"
+                    android:layout_marginTop="13dp"
+                    style="@style/editText"
+                    android:id="@+id/tvProvincia" />
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.83" />
+
+                <RadioButton
+                    android:text="Editar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButtonProvincia"
+                    android:onClick="onRadioButtonClicked"
+                    android:layout_weight="0.12" />
+
+            </LinearLayout>
 
             <Spinner
                 android:layout_width="match_parent"
@@ -150,13 +206,32 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true" />
 
-            <TextView
-                android:text="Localidad:"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="normal|bold"
-                style="@style/editText"
-                android:id="@+id/tv6" />
+                android:id="@+id/contenedorSpinnerLocalidad">
+
+                <TextView
+                    android:text="Localidad:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal|bold"
+                    style="@style/editText"
+                    android:id="@+id/tvLocalidad" />
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.83" />
+
+                <RadioButton
+                    android:text="Editar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButtonLocalidad"
+                    android:onClick="onRadioButtonClicked"
+                    android:layout_weight="0.12" />
+            </LinearLayout>
 
             <Spinner
                 android:layout_width="match_parent"
@@ -165,23 +240,43 @@
                 style="@style/editText"
                 android:id="@+id/spinnerLocalidad" />
 
-            <TextView
-                android:text="Domicilio:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                style="@style/editText"
-                android:id="@+id/tv7" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:text="Domicilio:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    style="@style/editText"
+                    android:id="@+id/tvDomicilio" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:text="Editar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButtonDomicilio"
+                    android:layout_weight="0.13"
+                    android:onClick="onRadioButtonClicked" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/contenedorCalle">
 
                 <TextView
                     android:text="Calle"
                     android:layout_width="89dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView10" />
+                    android:id="@+id/tvCalle" />
 
                 <EditText
                     android:layout_width="163dp"
@@ -197,13 +292,14 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/contenedorNumeracion">
 
                 <TextView
                     android:text="N°"
                     android:layout_width="86dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView11" />
+                    android:id="@+id/tvNumeracion" />
 
                 <EditText
                     android:layout_width="248dp"
@@ -214,13 +310,33 @@
                     android:hint="Numero de la vivienda" />
             </LinearLayout>
 
-            <TextView
-                android:text="Carrera:"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="normal|bold"
-                style="@style/editText"
-                android:id="@+id/tv9" />
+                android:id="@+id/contenedorCarrera">
+
+                <TextView
+                    android:text="Carrera:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal|bold"
+                    style="@style/editText"
+                    android:id="@+id/tvCarrera" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:text="Editar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButtonCarrera"
+                    android:layout_weight="0.13"
+                    android:onClick="onRadioButtonClicked" />
+            </LinearLayout>
 
             <Spinner
                 android:layout_width="match_parent"
@@ -229,13 +345,33 @@
                 style="@style/editText"
                 android:id="@+id/spinnerCarrera" />
 
-            <TextView
-                android:text="Correo:"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                style="@style/editText"
-                android:id="@+id/tv10" />
+                android:id="@+id/contenedorTextoCorreo">
+
+                <TextView
+                    android:text="Correo:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    style="@style/editText"
+                    android:id="@+id/tvCorreo" />
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:text="Editar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButtonCorreo"
+                    android:layout_weight="0.13"
+                    android:onClick="onRadioButtonClicked" />
+
+            </LinearLayout>
 
             <EditText
                 android:layout_width="wrap_content"
@@ -249,35 +385,63 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:weightSum="1">
 
                 <TextView
-                    android:text="Nombre de Usuario:"
-                    android:layout_width="142dp"
+                    android:text="Usuario:"
+                    android:layout_width="76dp"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     style="@style/editText"
-                    android:id="@+id/tv3" />
+                    android:id="@+id/tvUsuario" />
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="114dp"
+                    android:layout_height="40dp"
                     android:inputType="textPersonName"
                     android:maxLength="14"
                     android:ems="10"
                     android:id="@+id/nombreUsuario"
                     android:fontFamily="sans-serif-light"
-                    android:hint="Ingrese usuario" />
+                    android:hint="Ingrese usuario"
+                    android:layout_weight="0.90" />
+
+                <RadioButton
+                    android:text="Editar"
+                    android:layout_width="97dp"
+                    android:layout_height="51dp"
+                    android:id="@+id/radioButtonUsuario"
+                    android:onClick="onRadioButtonClicked" />
 
             </LinearLayout>
 
-            <TextView
-                android:text="Ingrese su contraseña:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="normal|bold"
-                style="@style/editText"
-                android:id="@+id/textView14" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="Contraseña:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal|bold"
+                    style="@style/editText"
+                    android:id="@+id/tvPassword" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <RadioButton
+                    android:text="Editar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButtonPassword"
+                    android:layout_weight="0.13"
+                    android:onClick="onRadioButtonClicked" />
+            </LinearLayout>
 
             <EditText
                 android:layout_width="match_parent"
@@ -293,7 +457,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="normal|bold"
                 style="@style/editText"
-                android:id="@+id/textView15" />
+                android:id="@+id/tvRepetirPassword" />
 
             <EditText
                 android:layout_width="match_parent"

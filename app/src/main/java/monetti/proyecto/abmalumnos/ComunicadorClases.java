@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class ComunicadorClases {
 
         private static ArrayList object = null;
+        private static String opcion;
 
         public static void setObject(ArrayList newObject) {
             object = newObject;
@@ -16,6 +17,14 @@ public class ComunicadorClases {
 
         public static ArrayList getObject() {
             return object;
+        }
+
+        public static void setOpcion(String opcionNombre){
+            opcion = opcionNombre;
+        }
+
+        public static String getOpcion(){
+            return opcion;
         }
 
 

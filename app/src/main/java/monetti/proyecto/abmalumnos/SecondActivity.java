@@ -35,7 +35,6 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
             buttonAlta.setVisibility(View.INVISIBLE);
             buttonBaja.setVisibility(View.INVISIBLE);
             buttonOpciones.setVisibility(View.INVISIBLE);
-
         }
 
         buttonAlta.setOnClickListener(this);
@@ -45,11 +44,12 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
         buttonModificar.setOnClickListener(this);
 
         db=openOrCreateDatabase("DBAlumnos", Context.MODE_PRIVATE, null);
-       // db.execSQL("CREATE TABLE IF NOT EXISTS alumno(dni VARCHAR, nombre VARCHAR, apellido VARCHAR,nombreUsuario VARCHAR,correo VARCHAR, password VARCHAR, paisOrigen VARCHAR, provincia VARCHAR, localidad VARCHAR, direccionCalle VARCHAR, numeracion VARCHAR, carrera VARCHAR, tipoUsuario VARCHAR);");
+
     }
 
 
     public void onClick(View view) {
+
 
         if(view == buttonAlta){
             Intent intent = new Intent(this, altaUsuario.class);
@@ -74,7 +74,8 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if (view == buttonModificar){
-            Intent i = new Intent(this, ModificarDatosAlumno.class);
+            ComunicadorClases.setOpcion("Modificar");
+            Intent i = new Intent(this, altaUsuario.class);
             startActivity(i);
             overridePendingTransition(R.anim.left_in, R.anim.left_out);
 

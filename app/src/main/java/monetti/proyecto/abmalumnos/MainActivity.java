@@ -63,14 +63,14 @@ public class MainActivity extends AppCompatActivity {
 
                     } else if (!(c.getCount() == 0)){
                         datosUsuario.add(0,"usrAdm");
-                        datosUsuario.add(1,nombreUsuario.getText().toString());
+                        datosUsuario.add(1,nombreUsuario.getText());
                         ComunicadorClases.setObject(datosUsuario);
                         Intent i = new Intent(this, SecondActivity.class);
                         startActivity(i);
                         overridePendingTransition(R.anim.left_in, R.anim.left_out);
                     } else if (!(q.getCount()==0)){
                         datosUsuario.add(0,"usrAlm");
-                        datosUsuario.add(1,nombreUsuario.getText().toString());
+                        datosUsuario.add(1,nombreUsuario.getText());
                         ComunicadorClases.setObject(datosUsuario);
                         Intent i = new Intent(this, SecondActivity.class);
                         startActivity(i);
