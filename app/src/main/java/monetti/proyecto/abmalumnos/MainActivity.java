@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(i);
                         overridePendingTransition(R.anim.left_in, R.anim.left_out);
                     }
+
             }
         }
     }

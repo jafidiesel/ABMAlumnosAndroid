@@ -36,7 +36,7 @@
             android:name=".verUsuario"
             android:screenOrientation="portrait" />
         <activity android:name=".opciones" />
-        <activity android:name=".ModificarDatosAlumno"></activity>
+        <activity android:name=".ModificarAlumno"></activity>
     </application>
 
 </manifest>

@@ -13,7 +13,7 @@
     </string-array>
 
     <string-array name="setLocalidadBuenosAires">
-        <item>Ingrese localidad de residencia</item>
+        <item>Ingrese localidad de residenciaBA</item>
         <item>Ciudad</item>
         <item>Belgrano</item>
         <item>Recoleta</item>

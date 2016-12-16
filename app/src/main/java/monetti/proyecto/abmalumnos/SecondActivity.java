@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class SecondActivity extends AppCompatActivity implements View.OnClickListener{
     SQLiteDatabase db;
     Button buttonAlta, buttonBaja, buttonVer, buttonOpciones, buttonModificar;
-
+    ArrayList tipoUsuarioCod;
     @Override //Constructor por defecto
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +28,7 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
         buttonOpciones = (Button) findViewById(R.id.buttonOpciones);
         buttonModificar = (Button) findViewById(R.id.buttonModificar);
 
-        ArrayList tipoUsuarioCod = ComunicadorClases.getObject();
+        tipoUsuarioCod = ComunicadorClases.getObject();
 
 
         if (tipoUsuarioCod.get(0) == "usrAlm"){
@@ -52,6 +52,7 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
 
 
         if(view == buttonAlta){
+            ComunicadorClases.setOpcion("Alta");
             Intent intent = new Intent(this, altaUsuario.class);
             startActivity(intent);
             overridePendingTransition(R.anim.left_in, R.anim.left_out);
@@ -75,10 +76,16 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
 
         if (view == buttonModificar){
             ComunicadorClases.setOpcion("Modificar");
-            Intent i = new Intent(this, altaUsuario.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.left_in, R.anim.left_out);
+            if (tipoUsuarioCod.get(0) == "usrAlm") {
+                Intent i = new Intent(this, altaUsuario.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
+            }else if(tipoUsuarioCod.get(0) == "usrAdm"){
 
+                Intent i = new Intent(this, ModificarAlumno.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
+            }
         }
 
 

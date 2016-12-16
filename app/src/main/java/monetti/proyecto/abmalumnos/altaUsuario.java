@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -29,17 +30,18 @@ import java.util.regex.Pattern;
 
 public class altaUsuario extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
-    EditText editNombre, editApellido, editNombreUsuario, editDni, editDireccionCalle, editDireccionNumeracion, editCorreo, editContrasenia, editContrasenia2;
+    EditText dniUsuario,editNombre, editApellido, editNombreUsuario, editDni, editDireccionCalle, editDireccionNumeracion, editCorreo, editContrasenia, editContrasenia2;
     Spinner spinnerNacionalidad, spinnerCarreraGrado, spinnerLocalidadResidencia, spinnerProvinciaResidencia;
     Button buttonGuardar, buttonVolver;
     SQLiteDatabase db;
-    Boolean[] saveFlag = new Boolean[9];
+    Boolean[] saveFlag = {true,true,true,true,true,true,true,true,true};
     String tipoUsuario = "usrAlm";
-    View contenedorCalle, contenedorNumeracion;
+    View contenedorCalle, contenedorNumeracion,contenedorDatos;
     String opcion;
     Editable nombreU;
     RadioButton editarNombre,editarApellido,editarDni,editarUsuario,editarPassword, editarCorreo,editarProvincia, editarNacionalidad, editarLocalidad, editarCarrera,editarDireccion;
     TextView titulo, tvEditarPassword;
+    int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,15 +83,20 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         editDireccionNumeracion = (EditText) findViewById(R.id.editDireccionNumeracion);
         setOnFocusChangeListener(editDireccionNumeracion);
 
+
         buttonGuardar       = (Button) findViewById(R.id.buttonGuardar);
         buttonVolver        = (Button) findViewById(R.id.buttonVolver) ;
         //Se le indica al boton guardar que este escuchando en la activity designada
+
         buttonGuardar.setOnClickListener(this);
         buttonVolver.setOnClickListener(this);
 
+        dniUsuario = (EditText) findViewById(R.id.editTextDniUsuario);
         tvEditarPassword = (TextView)findViewById(R.id.tvRepetirPassword);
         contenedorCalle = (View) findViewById(R.id.contenedorCalle);
         contenedorNumeracion = (View) findViewById(R.id.contenedorNumeracion);
+
+        contenedorDatos = (View) findViewById(R.id.scrollView1);
         //Creacion de la BD
         db=openOrCreateDatabase("DBAlumnos", Context.MODE_PRIVATE, null);
         //<<A agregar>>
@@ -123,18 +130,22 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
             if (tipoUsuarioCod.get(0) == "usrAlm"){
                 ValidarExistenciaRegistro data = new ValidarExistenciaRegistro(nombreU);
                 data.execute(2);
-                //editNombre.setEnabled(false);
-                editApellido.setEnabled(false);
-                editDni.setEnabled(false);
+
                 editarNombre.setVisibility(View.INVISIBLE);
                 editarApellido.setVisibility(View.INVISIBLE);
                 editarDni.setVisibility(View.INVISIBLE);
 
+
+
             }else if (tipoUsuarioCod.get(0) == "usrAdm"){
-                ValidarExistenciaRegistro data = new ValidarExistenciaRegistro(nombreU);
-                data.execute(2);
+                Editable dniUsuarioIngresado = ComunicadorClases.getDniUsuario();
+                //Primero debe ingresar en algun lado el nombre del usurio que desae modificar
+                ValidarExistenciaRegistro dataUsr = new ValidarExistenciaRegistro(dniUsuarioIngresado);
+                dataUsr.execute(3);
+
+
             }
-        } else {
+        } else if (opcion == "Alta"){
             titulo.setText("Alta Alumno");
             editarNombre.setVisibility(View.INVISIBLE);
             editarApellido.setVisibility(View.INVISIBLE);
@@ -147,6 +158,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
             editarCorreo.setVisibility(View.INVISIBLE);
             editarCarrera.setVisibility(View.INVISIBLE);
             editarDireccion.setVisibility(View.INVISIBLE);
+
         }
 
     }
@@ -174,19 +186,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
                         case R.id.nombreUsuario:
 
-                            for (int i = 0 ; i < editText.length(); ++i ){
-                                if (!Character.isLetterOrDigit(editText.getText().toString().charAt(i))){
-                                    editText.setError("Solo se pueden ingresar caracteres alfanumericos");
-                                    changeSaveFlag(false,2);
-                                } else{
-                                    editText.setError(null);
-                                    changeSaveFlag(true,2);
-                                }
-
-                            }
-
-                            ValidarExistenciaRegistro validacion = new ValidarExistenciaRegistro(editText.getText());
-                            validacion.execute(0);
+                            validarNombreUsuario(editText,2);
 
                             break;
 
@@ -266,8 +266,26 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
         };
 
+    }
+
+    public void validarNombreUsuario (EditText editTextaValidar, int banderaN){
+
+        for (int i = 0 ; i < editTextaValidar.length(); ++i ){
+            if (!Character.isLetterOrDigit(editTextaValidar.getText().toString().charAt(i))){
+                editTextaValidar.setError("Solo se pueden ingresar caracteres alfanumericos");
+                changeSaveFlag(false,2);
+            } else{
+                editTextaValidar.setError(null);
+                changeSaveFlag(true,2);
+            }
+
+        }
+
+        ValidarExistenciaRegistro validacion = new ValidarExistenciaRegistro(editTextaValidar.getText());
+        validacion.execute(0);
 
     }
+
 
 
     public void onItemSelected(AdapterView <? > parent, View view, int pos, long id) {
@@ -294,12 +312,30 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
     public void onClick(View view) {
 
+        if (opcion == "Modificar"){
+            validarString(editNombre,0);
+            validarString(editApellido,1);
+            validarNombreUsuario(editNombreUsuario,2);
+        }
+
         if(view  == buttonGuardar) {
             if (comprobarCamposVacios()) {
                 showMessage("Error", "Todos los campos deben estar completos");
 
                 //En este mensaje seria mejor mostrar cual o cuales campos no estan completados
 
+            }else if (recorrerFlags() && opcion=="Modificar"){
+                showMessage("Exito", "RegistroAccedido");
+
+                Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni = '"+ editDni.getText()+"'", null);
+                if (c.moveToFirst()) {
+                    db.execSQL("UPDATE alumno SET dni= '" + editDni.getText()+ "',nombre='"+ editNombre.getText()+"',apellido='"  + editApellido.getText() + "', nombreUsuario='" + editNombreUsuario.getText()+ "',correo='"+ editCorreo.getText()+"',password='"+ editContrasenia.getText()+"',paisOrigen='"+ spinnerNacionalidad.getSelectedItem().toString()+"',provincia='"+ spinnerProvinciaResidencia.getSelectedItem()+"',localidad='"+ spinnerLocalidadResidencia.getSelectedItem()+"',direccionCalle='"+editDireccionCalle.getText()+"',numeracion='"+ editDireccionNumeracion.getText()+"',carrera='"+spinnerCarreraGrado.getSelectedItem()+"',tipoUsuario='"+ tipoUsuario+ "' WHERE dni='" + editDni.getText() + "'");
+                    Toast.makeText(this,"Usuario actualizado con exito",Toast.LENGTH_LONG).show();
+                    ComunicadorClases.setOpcion("Alta");
+                    Intent i = new Intent(this, SecondActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.right_in, R.anim.right_out);
+                }
             }else if(!recorrerFlags()){
                 showMessage("Error", "Los campos estan ingresados incorrectamente.");
             } else if(recorrerFlags()){
@@ -315,10 +351,12 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 clearText();
             }
         }else if(view == buttonVolver){
+            ComunicadorClases.setOpcion("Alta");
             Intent i = new Intent(this, SecondActivity.class );
             startActivity(i);
             overridePendingTransition(R.anim.right_in, R.anim.right_out);
         }
+
 
     }
 
@@ -330,6 +368,14 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         showMessage("Query construida", queryInsert);
         return queryInsert;
     }
+
+   /* public String armarQueryUpdate(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, Spinner spinnerPaisOrigen, Spinner spinnerProvincia, Spinner spinnerLocalidad, EditText editDireccionCalle, EditText editDireccionNumeracion, Spinner spinnerCarrera, String tipoUsuario ){
+
+        String queryUpdate ="UPDATE alumno SET('" + editDni.getText() + "','" + editNombre.getText().toString().toUpperCase() + "','" + editApellido.getText().toString().toUpperCase() + "','" + editNombreUsuario.getText().toString().toUpperCase() + "','" + editCorreo.getText().toString().toUpperCase() + "','" + editContrasenia.getText().toString() + "','" + spinnerPaisOrigen.getSelectedItem() + "','" +
+                spinnerProvincia.getSelectedItem() + "','" + spinnerLocalidad.getSelectedItem() + "','" + editDireccionCalle.getText().toString().toUpperCase()+ "','" + editDireccionNumeracion.getText() + "','" + spinnerCarrera.getSelectedItem() +"','" + tipoUsuario+ "') WHERE ("+editDni.getText().toString()+"');";
+
+        return queryUpdate;
+    }*/
 
     public void mostrarInformacionGuardada(EditText editTextDni){
         Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni ='" + editTextDni.getText()+"'",null);
@@ -371,7 +417,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                             editContrasenia2.getText().toString().trim().length() == 0 ||
                             spinnerNacionalidad.getSelectedItemPosition() == 0 ||
                             spinnerProvinciaResidencia.getSelectedItemPosition() ==0 ||
-                            spinnerLocalidadResidencia.getSelectedItemPosition() == 0 ||
+                            //spinnerLocalidadResidencia.getSelectedItemPosition() == 0 ||
                             spinnerCarreraGrado.getSelectedItemPosition() == 0;
 
         return result;
@@ -479,6 +525,9 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+
+
+
     private class ValidarExistenciaRegistro extends AsyncTask<Integer, Void, ArrayList> {
 
         Editable campo;
@@ -509,12 +558,19 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 resultIndex.add(0,params[0]);
                 resultIndex.add(1, c);
             }
+
+            if (params[0] == 3) {
+                Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni = '" + campo.toString() + "'", null);
+                resultIndex.add(0,params[0]);
+                resultIndex.add(1, c);;
+            }
+
             return resultIndex;
 
         }
 
         protected void onPostExecute(ArrayList result) {
-        int pos;
+
             if ((Integer) result.get(0) == 0) {
                 cSQL = (Cursor) result.get(1);
                 if (!(cSQL.getCount() == 0)) {
@@ -535,42 +591,40 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 }
             }
 
-            if ((Integer) result.get(0) == 2) {
-                cSQL = (Cursor) result.get(1);
-                while(cSQL.moveToNext()) {
-                    editDni.setText(cSQL.getString(0));
-                    editNombre.setText(cSQL.getString(1));
-                    editApellido.setText(cSQL.getString(2));
-                    editNombreUsuario.setText(cSQL.getString(3));
-                    editCorreo.setText(cSQL.getString(4));
-                    editContrasenia.setText(cSQL.getString(5));
-                    editDireccionCalle.setText(cSQL.getString(9));
-                    editDireccionNumeracion.setText(cSQL.getString(10));
+            if (((Integer) result.get(0) == 2)||((Integer) result.get(0) == 3)) {
+                    cSQL = (Cursor) result.get(1);
+                    while (cSQL.moveToNext()) {
+                        editDni.setText(cSQL.getString(0));
+                        editNombre.setText(cSQL.getString(1));
+                        editApellido.setText(cSQL.getString(2));
+                        editNombreUsuario.setText(cSQL.getString(3));
+                        editCorreo.setText(cSQL.getString(4));
+                        editContrasenia.setText(cSQL.getString(5));
+                        editContrasenia2.setText(cSQL.getString(5));
+                        editDireccionCalle.setText(cSQL.getString(9));
+                        editDireccionNumeracion.setText(cSQL.getString(10));
 
-                    //setDatosSpinner(spinnerNacionalidad, cSQL.getString(6));
-                    setDatosSpinner(spinnerProvinciaResidencia, cSQL.getString(7));
+                        setDatosSpinner(spinnerNacionalidad, cSQL.getString(6));
+                        setDatosSpinner(spinnerProvinciaResidencia, cSQL.getString(7)); // Al estar activado el metodo OnItemListener se crea el spinnerLocalidad
+                        setDatosSpinner(spinnerCarreraGrado, cSQL.getString(11));
 
-                    //editNombre.setText(pos);
-                    //getSppinerLocalidad(pos);
+                    }
 
-                    //cargar la lista correspondiente a la Provincia seteada, luego comparar con el valor obtenido para setearlo
+                    editNombre.setEnabled(false);
+                    editApellido.setEnabled(false);
+                    editDni.setEnabled(false);
+                    editNombreUsuario.setEnabled(false);
+                    spinnerNacionalidad.setEnabled(false);;
+                    spinnerProvinciaResidencia.setEnabled(false);
+                    spinnerLocalidadResidencia.setEnabled(false);
+                    spinnerCarreraGrado.setEnabled(false);
+                    editCorreo.setEnabled(false);
+                    editContrasenia.setVisibility(View.INVISIBLE);
+                    tvEditarPassword.setVisibility(View.INVISIBLE);
+                    editContrasenia2.setVisibility(View.INVISIBLE);
+                    contenedorCalle.setVisibility(View.INVISIBLE);
+                    contenedorNumeracion.setVisibility(View.INVISIBLE);
 
-                    //setDatosSpinner(spinnerLocalidadResidencia, cSQL.getString(8));
-                    //setDatosSpinner(spinnerCarreraGrado, cSQL.getString(11));
-
-                }
-
-
-                spinnerNacionalidad.setEnabled(false);
-                spinnerProvinciaResidencia.setEnabled(false);
-                spinnerLocalidadResidencia.setEnabled(false);
-                spinnerCarreraGrado.setEnabled(false);
-                editCorreo.setEnabled(false);
-                editContrasenia.setVisibility(View.INVISIBLE);
-                tvEditarPassword.setVisibility(View.INVISIBLE);
-                editContrasenia2.setVisibility(View.INVISIBLE);
-                contenedorCalle.setVisibility(View.INVISIBLE);
-                contenedorNumeracion.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -587,18 +641,6 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         }
         return pos;
 
-    }
-
-    private void getSppinerLocalidad(int pos){
-
-        TypedArray arrayCiudades = getResources().obtainTypedArray(R.array.parProvinciaLocalidad);
-        CharSequence[] ciudadLista = arrayCiudades.getTextArray(pos);
-        arrayCiudades.recycle();
-
-        ArrayAdapter<CharSequence> adapterLocalidad = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item,android.R.id.text1, ciudadLista);
-        adapterLocalidad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerLocalidadResidencia.setAdapter(adapterLocalidad);
     }
 
 
@@ -622,12 +664,87 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         boolean marcado = ((RadioButton) view).isChecked();
 
         switch (view.getId()) {
+            case R.id.radioButtonNombre:
+                if (marcado){
+                    editNombre.setEnabled(true);
+                    editNombre.setText("");
+                    editNombre.setHint("Ingrese nombre");
+                    editNombre.requestFocus();
+                }
+                break;
+            case R.id.radioButtonApellido:
+                if (marcado){
+                    editApellido.setEnabled(true);
+                    editApellido.setText("");
+                    editApellido.setHint("Ingrese apellido");
+                    editApellido.requestFocus();
+                }
+                break;
+            case R.id.radioButtonDni:
+                if (marcado){
+                    editDni.setEnabled(true);
+                    editDni.setText("");
+                    editDni.setHint("Ingrese DNI");
+                    editDni.requestFocus();
+                }
+                break;
+            case R.id.radioButtonNacionalidad:
+                if (marcado) {
+                    spinnerNacionalidad.setEnabled(true);
+                    spinnerNacionalidad.setSelection(0);
+                }
+                break;
+            case R.id.radioButtonProvincia:
+                if (marcado) {
+                    spinnerProvinciaResidencia.setEnabled(true);
+                    spinnerProvinciaResidencia.setSelection(0);
+                    spinnerLocalidadResidencia.setSelection(0);
+                }
+                break;
+            case R.id.radioButtonLocalidad:
+                if (marcado) {
+                    spinnerLocalidadResidencia.setEnabled(true);
+                    spinnerLocalidadResidencia.setSelection(0);
+                }
+                break;
+
             case R.id.radioButtonDomicilio:
                 if (marcado) {
                     contenedorCalle.setVisibility(View.VISIBLE);
                     contenedorNumeracion.setVisibility(View.VISIBLE);
                     editDireccionCalle.requestFocus();
 
+                }
+                break;
+            case R.id.radioButtonCarrera:
+                if (marcado) {
+                    spinnerCarreraGrado.setEnabled(true);
+                    spinnerCarreraGrado.setSelection(0);
+                }
+                break;
+            case R.id.radioButtonCorreo:
+                if (marcado){
+                    editCorreo.setEnabled(true);
+                    editCorreo.setText("");
+                    editCorreo.setHint("Ingrese correo");
+                    editCorreo.requestFocus();
+                }
+                break;
+            case R.id.radioButtonUsuario:
+                if (marcado){
+                    editNombreUsuario.setEnabled(true);
+                    editNombreUsuario.setText("");
+                    editNombreUsuario.setHint("Ingrese usuario");
+                    editNombreUsuario.requestFocus();
+                }
+                break;
+            case R.id.radioButtonPassword:
+                if (marcado){
+                    editContrasenia.setVisibility(View.VISIBLE);
+                    tvEditarPassword.setVisibility(View.VISIBLE);
+                    editContrasenia2.setVisibility(View.VISIBLE);
+                    editContrasenia.setHint("Ingrese contreseña");
+                    editContrasenia2.setHint("Repita contreseña");
                 }
                 break;
 
