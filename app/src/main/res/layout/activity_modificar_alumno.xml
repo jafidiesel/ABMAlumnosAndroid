@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/title1"
-        style="@style/titleH1"
+        style="@style/titleH2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -27,7 +27,7 @@
         android:layout_below="@+id/title1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="59dp">
+        android:layout_marginTop="64dp">
 
         <TextView
             android:text="Ingrese el DNI del alumno a modificar"
@@ -72,6 +72,7 @@
             android:text="Aceptar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/buttonStyle"
             android:id="@+id/buttonAceptar"
             android:layout_weight="0.81" />
 
@@ -79,8 +80,9 @@
 
     <Button
         android:text="Volver"
-        android:layout_width="349dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/buttonStyle"
         android:id="@+id/buttonVolver"
         android:layout_below="@+id/modificarAdmin" />
 
