@@ -3,6 +3,33 @@
 
     <item
         is-multidex="false"
+        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.4.0_6824a6bf192de10a22cc56bd67a6f6a6a422ad27.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.1.1_efa6ff7ce7790a3f27a814058526b5ac0a906f41.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="3bbf47e8e1e8286b85cc499e4b0dcd119e9dc75e">
+        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/instant-run_2292a7d60757cc0aac01619cba35269e550910e7.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
@@ -34,17 +61,8 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="60f866b93183e8c892bf9943c67d4bdaa1d1e0fb">
+        sha1="669f5927fde5214aa1b8f929280137198975c166">
         <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_91c59fc15c73b33740295fdb8f6d4cdc12f0589b.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
-        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.4.0_6824a6bf192de10a22cc56bd67a6f6a6a422ad27.jar" />
     </item>
     <item
         is-multidex="false"
@@ -54,24 +72,6 @@
         revision="24.0.2"
         sha1="379471b2bd17d9737c050345c08e8c7d16589784">
         <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.1.1_ed4bf83db49567381cdc8b8c17a66bcaca6b13ee.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
-        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.1.1_efa6ff7ce7790a3f27a814058526b5ac0a906f41.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="03d20513ccaf4f4532b8e80434203342d7dfb58f">
-        <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/instant-run_2292a7d60757cc0aac01619cba35269e550910e7.jar" />
     </item>
     <item
         is-multidex="false"

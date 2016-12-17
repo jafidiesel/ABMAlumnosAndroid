@@ -26,22 +26,21 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
-
-
 public class altaUsuario extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
     EditText dniUsuario,editNombre, editApellido, editNombreUsuario, editDni, editDireccionCalle, editDireccionNumeracion, editCorreo, editContrasenia, editContrasenia2;
     Spinner spinnerNacionalidad, spinnerCarreraGrado, spinnerLocalidadResidencia, spinnerProvinciaResidencia;
     Button buttonGuardar, buttonVolver;
     SQLiteDatabase db;
-    Boolean[] saveFlag = {true,true,true,true,true,true,true,true,true};
+    Boolean[] saveFlag = {true,true,true,true,true,true,true,true,true,true},saveButton={true,true,true,true,true,true,true};
     String tipoUsuario = "usrAlm";
     View contenedorCalle, contenedorNumeracion,contenedorDatos;
     String opcion;
     Editable nombreU;
     RadioButton editarNombre,editarApellido,editarDni,editarUsuario,editarPassword, editarCorreo,editarProvincia, editarNacionalidad, editarLocalidad, editarCarrera,editarDireccion;
     TextView titulo, tvEditarPassword;
-    int pos;
+    int buttonFlag=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,69 +174,44 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
                         case R.id.nombre:
 
-                            validarString(editText,0);
+                            validarDatosUsuario(editText,0, saveFlag,1);
                             break;
 
                         case R.id.apellido:
 
-                            validarString(editText,1);
+                            validarDatosUsuario(editText,1, saveFlag,1);
 
                             break;
 
                         case R.id.nombreUsuario:
 
-                            validarNombreUsuario(editText,2);
+                            validarDatosUsuario(editText,2, saveFlag,2);
+
+                            ValidarExistenciaRegistro validacion = new ValidarExistenciaRegistro(editText.getText());
+                            validacion.execute(0);
 
                             break;
 
                         case R.id.editTextDni:
-                            if (!(editText.getText().length() == 8 || editText.getText().length() == 7)){
-                                editText.setError("Formato DNI incorrecto");
-                                changeSaveFlag(false,3);
-                            } else {
-                              ValidarExistenciaRegistro validacionDNI = new ValidarExistenciaRegistro(editDni.getText());
-                              validacionDNI.execute(1);
-
-                            }
+                            validarDatosUsuario(editText,4,saveFlag,3);
                             break;
 
                         case R.id.correo:
-
-                            if (!Patterns.EMAIL_ADDRESS.matcher(editCorreo.getText().toString()).matches()) {
-                                editText.setError("El email ingresado no es válido. Example@example.com");
-                                changeSaveFlag(false,5);
-                            } else{
-                                editText.setError(null);
-                                changeSaveFlag(true,5);
-                            }
+                                validarDatosUsuario(editText,6,saveFlag,4);
 
                             break;
 
                         case R.id.contrasenia:
-                            if (editText.getText().length()<8 ){
-                                editText.setError("La contraseña debe contener 8 o más caracteres");
-                                changeSaveFlag(false,6);
-                            }else{
-                                editText.setError(null);
-                                changeSaveFlag(true,6);
-                            }
 
+                            validarDatosUsuario(editText,7,saveFlag,5);
                             break;
                         case R.id.contrasenia2:
-
-                            if (!(editText.getText().toString().equals(editContrasenia.getText().toString()))){
-                                editText.setError("Las contraseñas no coinciden");
-                                changeSaveFlag(false,7);
-                            }else{
-                                editText.setError(null);
-                                changeSaveFlag(true,7);
-                            }
-
+                            validarDatosUsuario(editText,8,saveFlag,6);
                             break;
 
                         case R.id.editDireccionCalle:
 
-                            validarString(editText,8);
+                            validarDatosUsuario(editText,9,saveFlag,1);
 
                             break;
                         case R.id.editDireccionNumeracion:
@@ -252,40 +226,89 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
     }
 
 
+    private void validarDatosUsuario (EditText editTextaValidar, int banderaN, Boolean[] list, int id){
+       switch (id){
+           case 1:
+               Pattern patron = Pattern.compile("^[a-zA-Z ]+$");
+               if (!patron.matcher(editTextaValidar.getText().toString()).matches()){
+                   editTextaValidar.setError("Solo se pueden ingresar letras");
+                   changeSaveFlag(false,banderaN,list);
+               }else{
+                   editTextaValidar.setError(null);
+                   changeSaveFlag(true, banderaN, list);
 
-    //Validacion de los campos String
-   public void validarString (EditText editTextaValidar, int banderaN){
+               };
+               break;
+           case 2:
 
-       Pattern patron = Pattern.compile("^[a-zA-Z ]+$");
-        if (!patron.matcher(editTextaValidar.getText().toString()).matches()){
-            editTextaValidar.setError("Solo se pueden ingresar letras");
-            changeSaveFlag(false,banderaN);
-        }else{
-            editTextaValidar.setError(null);
-            changeSaveFlag(true, 0);
+               for (int i = 0 ; i < editTextaValidar.length(); ++i ){
+                   if (!Character.isLetterOrDigit(editTextaValidar.getText().toString().charAt(i))){
+                       editTextaValidar.setError("Solo se pueden ingresar caracteres alfanumericos");
+                       changeSaveFlag(false,2,list);
+                   } else{
+                       editTextaValidar.setError(null);
+                       changeSaveFlag(true,2, list);
+                       if (opcion=="Modificar"){
+                           Cursor c = db.rawQuery("SELECT * FROM alumno WHERE nombreUsuario ='" + editNombreUsuario.getText().toString().toUpperCase() + "'", null);
+                           if (!(c.getCount() == 0)) {
+                               editNombreUsuario.setError("El nombre de usuario ya existe");
+                               changeSaveFlag(false,3,saveFlag);
+                           } else{
+                               changeSaveFlag(true,3,saveFlag);
+                           }
+                       }
 
-        };
+                   }
+               }
+               break;
+           case 3:
+               if (!(editTextaValidar.getText().length() == 8 || editTextaValidar.getText().length() == 7)){
+                   editTextaValidar.setError("Formato DNI incorrecto");
+                   changeSaveFlag(false,4,list);
+               } else {
+                   if (opcion == "Modificar") {
+                       Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni = '" + editDni.toString() + "'", null);
+                       if (!(c.getCount() == 0)) {
+                           editDni.setError("El numero de DNI ingresado ya existe");
+                           changeSaveFlag(false, 5, saveFlag);
+                       } else {
+                           changeSaveFlag(true, 5, saveFlag);
 
+                       }
+                       ValidarExistenciaRegistro validacionDNI = new ValidarExistenciaRegistro(editDni.getText());
+                       validacionDNI.execute(1);
+
+                   }
+               }
+               break;
+           case 4:
+               if (!Patterns.EMAIL_ADDRESS.matcher(editCorreo.getText().toString()).matches()) {
+                   editTextaValidar.setError("El email ingresado no es válido. Example@example.com");
+                   changeSaveFlag(false,6, list);
+               } else{
+                   editTextaValidar.setError(null);
+                   changeSaveFlag(true,6, list);
+               }
+               break;
+           case 5:
+               if (editTextaValidar.getText().length()<8 ){
+                   editTextaValidar.setError("La contraseña debe contener 8 o más caracteres");
+                   changeSaveFlag(false,7,list);
+               }else{
+                  editTextaValidar.setError(null);
+                   changeSaveFlag(true,7,list);
+               }
+               break;
+           case 6:
+               if (!(editTextaValidar.getText().toString().equals(editContrasenia.getText().toString()))){
+                   editTextaValidar.setError("Las contraseñas no coinciden");
+                   changeSaveFlag(false,8,saveFlag);
+               }else{
+                   editTextaValidar.setError(null);
+                   changeSaveFlag(true,8, saveFlag);
+               }
+       }
     }
-
-    public void validarNombreUsuario (EditText editTextaValidar, int banderaN){
-
-        for (int i = 0 ; i < editTextaValidar.length(); ++i ){
-            if (!Character.isLetterOrDigit(editTextaValidar.getText().toString().charAt(i))){
-                editTextaValidar.setError("Solo se pueden ingresar caracteres alfanumericos");
-                changeSaveFlag(false,2);
-            } else{
-                editTextaValidar.setError(null);
-                changeSaveFlag(true,2);
-            }
-
-        }
-
-        ValidarExistenciaRegistro validacion = new ValidarExistenciaRegistro(editTextaValidar.getText());
-        validacion.execute(0);
-
-    }
-
 
 
     public void onItemSelected(AdapterView <? > parent, View view, int pos, long id) {
@@ -312,53 +335,58 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
     public void onClick(View view) {
 
-        if (opcion == "Modificar"){
-            validarString(editNombre,0);
-            validarString(editApellido,1);
-            validarNombreUsuario(editNombreUsuario,2);
-        }
 
-        if(view  == buttonGuardar) {
+        if (view == buttonGuardar) {
+
             if (comprobarCamposVacios()) {
                 showMessage("Error", "Todos los campos deben estar completos");
 
                 //En este mensaje seria mejor mostrar cual o cuales campos no estan completados
 
-            }else if (recorrerFlags() && opcion=="Modificar"){
-                showMessage("Exito", "RegistroAccedido");
-
-                Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni = '"+ editDni.getText()+"'", null);
-                if (c.moveToFirst()) {
-                    db.execSQL("UPDATE alumno SET dni= '" + editDni.getText()+ "',nombre='"+ editNombre.getText().toString().toUpperCase()+"',apellido='"  + editApellido.getText().toString().toUpperCase() + "', nombreUsuario='" + editNombreUsuario.getText().toString().toUpperCase()+ "',correo='"+ editCorreo.getText().toString().toUpperCase()+"',password='"+ editContrasenia.getText()+"',paisOrigen='"+ spinnerNacionalidad.getSelectedItem().toString()+"',provincia='"+ spinnerProvinciaResidencia.getSelectedItem()+"',localidad='"+ spinnerLocalidadResidencia.getSelectedItem()+"',direccionCalle='"+editDireccionCalle.getText().toString().toUpperCase()+"',numeracion='"+ editDireccionNumeracion.getText()+"',carrera='"+spinnerCarreraGrado.getSelectedItem()+"',tipoUsuario='"+ tipoUsuario+ "' WHERE dni='" + editDni.getText() + "'");
-                    Toast.makeText(this,"Usuario actualizado con exito",Toast.LENGTH_LONG).show();
-                    ComunicadorClases.setOpcion("Alta");
-                    Intent i = new Intent(this, SecondActivity.class);
-                    startActivity(i);
-                    overridePendingTransition(R.anim.right_in, R.anim.right_out);
+            } else if (opcion == "Modificar") {
+                recorrerFlagsSaveButton();
+                if (buttonFlag == 7){
+                    showMessage("Error", "Datos ya ingresados");
+                }else if (!recorrerFlags()) {
+                    showMessage("Error", "Los campos estan ingresados incorrectamente.");
+                } else if (!(buttonFlag == 7) && recorrerFlags()) {
+                    showMessage("Exito", "RegistroAccedido");
+                    Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni = '" + editDni.getText() + "'", null);
+                    if (c.moveToFirst()) {
+                        db.execSQL("UPDATE alumno SET dni= '" + editDni.getText() + "',nombre='" + editNombre.getText().toString().toUpperCase() + "',apellido='" + editApellido.getText().toString().toUpperCase() + "', nombreUsuario='" + editNombreUsuario.getText().toString().toUpperCase() + "',correo='" + editCorreo.getText().toString().toUpperCase() + "',password='" + editContrasenia.getText() + "',paisOrigen='" + spinnerNacionalidad.getSelectedItem().toString() + "',provincia='" + spinnerProvinciaResidencia.getSelectedItem() + "',localidad='" + spinnerLocalidadResidencia.getSelectedItem() + "',direccionCalle='" + editDireccionCalle.getText().toString().toUpperCase() + "',numeracion='" + editDireccionNumeracion.getText() + "',carrera='" + spinnerCarreraGrado.getSelectedItem() + "',tipoUsuario='" + tipoUsuario + "' WHERE dni='" + editDni.getText() + "'");
+                        Toast.makeText(this, "Usuario actualizado con exito", Toast.LENGTH_LONG).show();
+                        ComunicadorClases.setOpcion("Alta");
+                        //Intent i = new Intent(this, SecondActivity.class);
+                        //startActivity(i);
+                        //overridePendingTransition(R.anim.right_in, R.anim.right_out);
+                    }
                 }
-            }else if(!recorrerFlags()){
+            } else if (!recorrerFlags()) {
                 showMessage("Error", "Los campos estan ingresados incorrectamente.");
-            } else if(recorrerFlags()){
+            } else if (recorrerFlags()) {
 
                 try {
 
-                    db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, spinnerNacionalidad, spinnerProvinciaResidencia, spinnerLocalidadResidencia, editDireccionCalle, editDireccionNumeracion, spinnerCarreraGrado,tipoUsuario));
-                }catch(Exception e){
-                    showMessage("Title","Error en la Query Insert");
+                    db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, spinnerNacionalidad, spinnerProvinciaResidencia, spinnerLocalidadResidencia, editDireccionCalle, editDireccionNumeracion, spinnerCarreraGrado, tipoUsuario));
+                } catch (Exception e) {
+                    showMessage("Title", "Error en la Query Insert");
                 }
 
                 mostrarInformacionGuardada(editDni);
                 clearText();
+
             }
-        }else if(view == buttonVolver){
-            ComunicadorClases.setOpcion("Alta");
-            Intent i = new Intent(this, SecondActivity.class );
-            startActivity(i);
-            overridePendingTransition(R.anim.right_in, R.anim.right_out);
         }
 
-
+        if (view == buttonVolver) {
+                ComunicadorClases.setOpcion("Alta");
+                Intent i = new Intent(this, SecondActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.right_in, R.anim.right_out);
+        }
     }
+
+
 
 
     public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, Spinner spinnerPaisOrigen, Spinner spinnerProvincia, Spinner spinnerLocalidad, EditText editDireccionCalle, EditText editDireccionNumeracion, Spinner spinnerCarrera, String tipoUsuario ){
@@ -369,13 +397,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         return queryInsert;
     }
 
-   /* public String armarQueryUpdate(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, Spinner spinnerPaisOrigen, Spinner spinnerProvincia, Spinner spinnerLocalidad, EditText editDireccionCalle, EditText editDireccionNumeracion, Spinner spinnerCarrera, String tipoUsuario ){
 
-        String queryUpdate ="UPDATE alumno SET('" + editDni.getText() + "','" + editNombre.getText().toString().toUpperCase() + "','" + editApellido.getText().toString().toUpperCase() + "','" + editNombreUsuario.getText().toString().toUpperCase() + "','" + editCorreo.getText().toString().toUpperCase() + "','" + editContrasenia.getText().toString() + "','" + spinnerPaisOrigen.getSelectedItem() + "','" +
-                spinnerProvincia.getSelectedItem() + "','" + spinnerLocalidad.getSelectedItem() + "','" + editDireccionCalle.getText().toString().toUpperCase()+ "','" + editDireccionNumeracion.getText() + "','" + spinnerCarrera.getSelectedItem() +"','" + tipoUsuario+ "') WHERE ("+editDni.getText().toString()+"');";
-
-        return queryUpdate;
-    }*/
 
     public void mostrarInformacionGuardada(EditText editTextDni){
         Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni ='" + editTextDni.getText()+"'",null);
@@ -541,25 +563,13 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         @Override
         protected ArrayList doInBackground(Integer... params) {
 
-            if (params[0] == 0) {
+            if (params[0] == 0 || params[0]==4 || params[0]==2) {
                 Cursor c = db.rawQuery("SELECT * FROM alumno WHERE nombreUsuario ='" + campo.toString().toUpperCase() + "'", null);
                 resultIndex.add(0,params[0]);
                 resultIndex.add(1, c);
             }
 
-            if (params[0] == 1) {
-                Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni = '" + campo.toString() + "'", null);
-                resultIndex.add(0,params[0]);
-                resultIndex.add(1, c);;
-            }
-
-            if (params[0] == 2) {
-                Cursor c = db.rawQuery("SELECT * FROM alumno WHERE nombreUsuario ='" + campo.toString().toUpperCase() + "'", null);
-                resultIndex.add(0,params[0]);
-                resultIndex.add(1, c);
-            }
-
-            if (params[0] == 3) {
+            if (params[0] == 1 || params[0]==3) {
                 Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni = '" + campo.toString() + "'", null);
                 resultIndex.add(0,params[0]);
                 resultIndex.add(1, c);;
@@ -571,23 +581,23 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
         protected void onPostExecute(ArrayList result) {
 
-            if ((Integer) result.get(0) == 0) {
+            if ((Integer) result.get(0) == 0 || (Integer) result.get(0)==4) {
                 cSQL = (Cursor) result.get(1);
                 if (!(cSQL.getCount() == 0)) {
                     editNombreUsuario.setError("El nombre de usuario ya existe");
-                    changeSaveFlag(false,3);
+                    changeSaveFlag(false,3,saveFlag);
                 } else{
-                    changeSaveFlag(true,3);
+                    changeSaveFlag(true,3,saveFlag);
                 }
             }
 
             if ((Integer) result.get(0) == 1) {
                 cSQL = (Cursor) result.get(1);
                 if (!(cSQL.getCount() == 0)) {
-                    editDni.setError("Alumno ya registrado");
-                    changeSaveFlag(false,4);
+                    editDni.setError("El numero de DNI ingresado ya existe");
+                    changeSaveFlag(false,5,saveFlag);
                 } else {
-                    changeSaveFlag(true,4);
+                    changeSaveFlag(true,5,saveFlag);
                 }
             }
 
@@ -644,8 +654,8 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    public void changeSaveFlag(Boolean b, int i){
-        saveFlag[i] = b;
+    public void changeSaveFlag(Boolean b, int i,Boolean[] list){
+        list[i] = b;
     }
 
     public boolean recorrerFlags(){
@@ -659,6 +669,55 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         return result;
     }
 
+    public void recorrerFlagsSaveButton() {
+        for (int index = 0; index < saveButton.length; index++) {
+            if (Boolean.FALSE.equals(saveButton[index])) {
+                switch (index) {
+                    case 0:
+
+                        validarDatosUsuario(editNombre, 0, saveFlag, 1);
+                        break;
+
+                    case 1:
+
+                        validarDatosUsuario(editApellido, 1, saveFlag, 1);
+
+                        break;
+
+                    case 2:
+                        validarDatosUsuario(editNombreUsuario, 2, saveFlag, 2);
+
+                        break;
+
+                    case 3:
+                        validarDatosUsuario(editDni, 4, saveFlag, 3);
+                        break;
+
+                    case 4:
+                        validarDatosUsuario(editCorreo, 6, saveFlag, 4);
+
+                        break;
+
+                    case 5:
+                        validarDatosUsuario(editContrasenia, 7, saveFlag, 5);
+                        validarDatosUsuario(editContrasenia2, 8, saveFlag, 6);
+                        break;
+
+                    case 6:
+
+                        validarDatosUsuario(editDireccionCalle, 9, saveFlag, 1);
+
+                        break;
+
+                }
+            }else{
+                buttonFlag= +1;
+            }
+
+        }
+    }
+
+
 
     public void onRadioButtonClicked(View view) {
         boolean marcado = ((RadioButton) view).isChecked();
@@ -666,26 +725,32 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.radioButtonNombre:
                 if (marcado){
+                    changeSaveFlag(false,0,saveButton);
                     editNombre.setEnabled(true);
                     editNombre.setText("");
                     editNombre.setHint("Ingrese nombre");
                     editNombre.requestFocus();
+
                 }
                 break;
             case R.id.radioButtonApellido:
                 if (marcado){
+                    changeSaveFlag(false,1,saveButton);
                     editApellido.setEnabled(true);
                     editApellido.setText("");
                     editApellido.setHint("Ingrese apellido");
                     editApellido.requestFocus();
+
                 }
                 break;
             case R.id.radioButtonDni:
                 if (marcado){
+                    changeSaveFlag(false,3,saveButton);
                     editDni.setEnabled(true);
                     editDni.setText("");
                     editDni.setHint("Ingrese DNI");
                     editDni.requestFocus();
+
                 }
                 break;
             case R.id.radioButtonNacionalidad:
@@ -710,9 +775,11 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
             case R.id.radioButtonDomicilio:
                 if (marcado) {
+                    changeSaveFlag(false,6,saveButton);
                     contenedorCalle.setVisibility(View.VISIBLE);
                     contenedorNumeracion.setVisibility(View.VISIBLE);
                     editDireccionCalle.requestFocus();
+
 
                 }
                 break;
@@ -724,27 +791,34 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.radioButtonCorreo:
                 if (marcado){
+                    changeSaveFlag(false,4,saveButton);
                     editCorreo.setEnabled(true);
                     editCorreo.setText("");
                     editCorreo.setHint("Ingrese correo");
                     editCorreo.requestFocus();
+
                 }
                 break;
             case R.id.radioButtonUsuario:
                 if (marcado){
+                    changeSaveFlag(false,2,saveButton);
                     editNombreUsuario.setEnabled(true);
                     editNombreUsuario.setText("");
                     editNombreUsuario.setHint("Ingrese usuario");
                     editNombreUsuario.requestFocus();
+
+
                 }
                 break;
             case R.id.radioButtonPassword:
                 if (marcado){
+                    changeSaveFlag(false,5,saveButton);
                     editContrasenia.setVisibility(View.VISIBLE);
                     tvEditarPassword.setVisibility(View.VISIBLE);
                     editContrasenia2.setVisibility(View.VISIBLE);
                     editContrasenia.setHint("Ingrese contreseña");
                     editContrasenia2.setHint("Repita contreseña");
+
                 }
                 break;
 
