@@ -25,7 +25,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="3bbf47e8e1e8286b85cc499e4b0dcd119e9dc75e">
+        sha1="eca4987e90335d088252b6d4a7e6ab6013b96798">
         <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/instant-run_2292a7d60757cc0aac01619cba35269e550910e7.jar" />
     </item>
     <item
@@ -61,7 +61,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="669f5927fde5214aa1b8f929280137198975c166">
+        sha1="89d76600ba371c9eab4f706485d7bbf33e1589ed">
         <dex dex="/home/chechi/Documentos/git/ABMAlumnosAndroid/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_91c59fc15c73b33740295fdb8f6d4cdc12f0589b.jar" />
     </item>
     <item

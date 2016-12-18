@@ -63,9 +63,11 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
             overridePendingTransition(R.anim.left_in, R.anim.left_out);
         }
         if (view == buttonVer){
-            Intent i = new Intent(this, verUsuario.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.left_in, R.anim.left_out);
+
+                Intent i = new Intent(this, verUsuario.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
+
         }
         if (view == buttonOpciones){
             Intent i = new Intent(this, opciones.class);

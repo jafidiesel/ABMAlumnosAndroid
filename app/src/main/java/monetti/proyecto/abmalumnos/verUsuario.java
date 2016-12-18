@@ -7,10 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class verUsuario extends AppCompatActivity implements View.OnClickListener{
 
@@ -18,7 +21,8 @@ public class verUsuario extends AppCompatActivity implements View.OnClickListene
     EditText editDni;
     TextView tvInformacionAlumno;
     SQLiteDatabase db;
-
+    ArrayList tipoUsuarioCod;
+    Editable nombreU;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,19 +34,26 @@ public class verUsuario extends AppCompatActivity implements View.OnClickListene
         buttonVer           = (Button) findViewById(R.id.buttonVer);
         buttonVolver        = (Button) findViewById(R.id.buttonVolver);
 
-
+        ArrayList tipoUsuarioCod = ComunicadorClases.getObject();
+        nombreU = (Editable) tipoUsuarioCod.get(1);
         buttonVer.setOnClickListener(this);
         buttonVolver.setOnClickListener(this);
 
         db=openOrCreateDatabase("DBAlumnos", Context.MODE_PRIVATE, null);
+
+        if (tipoUsuarioCod.get(0) == "usrAlm"){
+            editDni.setVisibility(View.INVISIBLE);
+            buttonVer.setVisibility(View.INVISIBLE);
+            getInformacionGuardada(nombreU);
+        }
     }
 
     public void onClick(View view){
         if (view == buttonVer){
             if (editDni.getText().toString().trim().length() == 0){
                 showMessage("Error","El campo DNI no puede estar vacio.");
-            } else {
-                mostrarInformacionGuardada(editDni);
+            } else {;
+                getInformacionGuardada(editDni.getText());
             }
         }
         if (view == buttonVolver){
@@ -52,13 +63,24 @@ public class verUsuario extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void mostrarInformacionGuardada(EditText editTextDni){
-        Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni ='" + editTextDni.getText()+"'",null);
-        if(c.getCount() == 0){
-            showMessage("Error","No se encontro ningun estudiante con dni "+editTextDni.getText().toString());
-            return;
+    public void getInformacionGuardada(Editable editTextUsuario){
+
+        if (tipoUsuarioCod.get(0) == "usrAlm"){
+            Cursor c = db.rawQuery("SELECT * FROM alumno WHERE nombreUsuario ='" + editTextUsuario.toString().toUpperCase()+"'",null);
+            mostrarInformacionGuardada(c);
+        }else {
+            Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni ='" + editTextUsuario.toString() + "'", null);
+            if (c.getCount() == 0) {
+                showMessage("Error", "No se encontro ningun estudiante con dni " + editTextUsuario.toString());
+                return;
+            }
+
+            mostrarInformacionGuardada(c);
         }
 
+    }
+
+    public void mostrarInformacionGuardada(Cursor c){
         StringBuffer bufferAlumno = new StringBuffer();
         while (c.moveToNext()) {
             bufferAlumno.append("DNI: " + c.getString(0) + "\n");
@@ -70,13 +92,12 @@ public class verUsuario extends AppCompatActivity implements View.OnClickListene
             bufferAlumno.append("Pais de Origen: " + c.getString(6) + "\n");
             bufferAlumno.append("Provincia: " + c.getString(7) + "\n");
             bufferAlumno.append("Localidad: " + c.getString(8) + "\n");
-            bufferAlumno.append("Dirección: " + "\n\tCalle: "+ c.getString(9) + "\tN°: " + c.getString(10) +"\n");
+            bufferAlumno.append("Dirección: " + "\n\tCalle: " + c.getString(9) + "\tN°: " + c.getString(10) + "\n");
             bufferAlumno.append("Carrera: " + c.getString(11) + "\n");
         }
+
         tvInformacionAlumno.setText(bufferAlumno.toString());
         editDni.setText("");
-
-
     }
 
     public void showMessage(String title, String message) {

@@ -8,13 +8,6 @@
     android:textAlignment="center"
     >
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/abm"
-        android:id="@+id/imageView"
-        android:layout_centerHorizontal="true" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,6 +15,7 @@
         android:layout_below="@+id/imageView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginTop="80dp"
         android:id="@+id/LinearLayoutPrincipal"
         android:weightSum="1">
 
@@ -68,6 +62,16 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
              />
+
+        <Button
+            android:text="Opciones"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonOpciones"
+            style="@style/buttonStyle"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <Button
             android:text="Opciones"

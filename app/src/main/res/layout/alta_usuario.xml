@@ -145,7 +145,9 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         style="@style/editText"
-                        android:id="@+id/tvNacionalidad" />
+                        android:id="@+id/tvNacionalidad"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false" />
 
                 <Space
                     android:layout_width="wrap_content"
@@ -167,7 +169,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 style="@style/editText"
-                android:id="@+id/spinnerPaisOrigen" />
+                android:id="@+id/spinnerPaisOrigen"
+                android:focusableInTouchMode="true"
+                android:focusable="true" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -239,7 +243,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 style="@style/editText"
-                android:id="@+id/spinnerLocalidad" />
+                android:id="@+id/spinnerLocalidad"
+                android:focusableInTouchMode="true"
+                android:focusable="true" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -344,7 +350,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 style="@style/editText"
-                android:id="@+id/spinnerCarrera" />
+                android:id="@+id/spinnerCarrera"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
 
             <LinearLayout
                 android:orientation="horizontal"

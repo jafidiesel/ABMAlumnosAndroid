@@ -89,8 +89,8 @@ public class opciones extends AppCompatActivity implements View.OnClickListener{
                     showMessage("Datos  de prueba existentes", bufferAlumno.toString());
 
                 } else if(c.getCount() == 0){
-                    String queryInsert = "INSERT INTO alumno VALUES('1234567','NOMBREPRUEBA','APELLIDOPRUEBA','NOMBREUSUARIOPRUEBA','Correo@prueba.com','contrasenia','Argentina','Mendoza','Guaymallen','CALLEPRUEBA','123','Ing. en Sistemas de Información');";
-                    String queryInsert2 = "INSERT INTO alumno VALUES('7654321','NOMBREPRUEBA2','APELLIDOPRUEBA2','NOMBREUSUARIOPRUEBA','Correo2@prueba.com','contrasenia2','Argentina','Mendoza','Guaymallen','CALLEPRUEBA2','1234','Ing. en Sistemas de Información');";
+                    String queryInsert = "INSERT INTO alumno VALUES('1234567','NOMBREPRUEBA','APELLIDOPRUEBA','NOMBREUSUARIOPRUEBA','Correo@prueba.com','contrasenia','Argentina','Mendoza','Guaymallen','CALLEPRUEBA','123','Ing. en Sistemas de Información','usrAlm');";
+                    String queryInsert2 = "INSERT INTO alumno VALUES('7654321','NOMBREPRUEBA2','APELLIDOPRUEBA2','NOMBREUSUARIOPRUEBA','Correo2@prueba.com','contrasenia2','Argentina','Mendoza','Guaymallen','CALLEPRUEBA2','1234','Ing. en Sistemas de Información', 'usrAlm');";
                     showMessage("Query construida",queryInsert);
                     showMessage("Query construida",queryInsert2);
                     db.execSQL(queryInsert);

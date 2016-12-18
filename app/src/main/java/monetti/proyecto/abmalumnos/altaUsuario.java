@@ -32,14 +32,14 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
     Spinner spinnerNacionalidad, spinnerCarreraGrado, spinnerLocalidadResidencia, spinnerProvinciaResidencia;
     Button buttonGuardar, buttonVolver;
     SQLiteDatabase db;
-    Boolean[] saveFlag = {true,true,true,true,true,true,true,true,true,true},saveButton={true,true,true,true,true,true,true};
-    String tipoUsuario = "usrAlm";
+    Boolean[] saveFlag = {true,true,true,true,true,true,true,true,true,true},saveButton={true,true,true,true,true,true,true,true,true,true,true};
+    String tipoUsuario = "usrAlm", dniRecuperado;
     View contenedorCalle, contenedorNumeracion,contenedorDatos;
     String opcion;
     Editable nombreU;
     RadioButton editarNombre,editarApellido,editarDni,editarUsuario,editarPassword, editarCorreo,editarProvincia, editarNacionalidad, editarLocalidad, editarCarrera,editarDireccion;
     TextView titulo, tvEditarPassword;
-    int buttonFlag=0;
+
 
 
     @Override
@@ -344,21 +344,26 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 //En este mensaje seria mejor mostrar cual o cuales campos no estan completados
 
             } else if (opcion == "Modificar") {
-                recorrerFlagsSaveButton();
-                if (buttonFlag == 7){
+                if (recorrerFlagsSaveButton()){
                     showMessage("Error", "Datos ya ingresados");
                 }else if (!recorrerFlags()) {
                     showMessage("Error", "Los campos estan ingresados incorrectamente.");
-                } else if (!(buttonFlag == 7) && recorrerFlags()) {
+                } else if (recorrerFlags()) {
                     showMessage("Exito", "RegistroAccedido");
-                    Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni = '" + editDni.getText() + "'", null);
-                    if (c.moveToFirst()) {
-                        db.execSQL("UPDATE alumno SET dni= '" + editDni.getText() + "',nombre='" + editNombre.getText().toString().toUpperCase() + "',apellido='" + editApellido.getText().toString().toUpperCase() + "', nombreUsuario='" + editNombreUsuario.getText().toString().toUpperCase() + "',correo='" + editCorreo.getText().toString().toUpperCase() + "',password='" + editContrasenia.getText() + "',paisOrigen='" + spinnerNacionalidad.getSelectedItem().toString() + "',provincia='" + spinnerProvinciaResidencia.getSelectedItem() + "',localidad='" + spinnerLocalidadResidencia.getSelectedItem() + "',direccionCalle='" + editDireccionCalle.getText().toString().toUpperCase() + "',numeracion='" + editDireccionNumeracion.getText() + "',carrera='" + spinnerCarreraGrado.getSelectedItem() + "',tipoUsuario='" + tipoUsuario + "' WHERE dni='" + editDni.getText() + "'");
-                        Toast.makeText(this, "Usuario actualizado con exito", Toast.LENGTH_LONG).show();
-                        ComunicadorClases.setOpcion("Alta");
-                        //Intent i = new Intent(this, SecondActivity.class);
-                        //startActivity(i);
-                        //overridePendingTransition(R.anim.right_in, R.anim.right_out);
+                    if(dniRecuperado==editDni.getText().toString()) {
+                        Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni = '" + editDni.getText() + "'", null);
+                        if (c.moveToFirst()) {
+                            db.execSQL("UPDATE alumno SET dni= '" + editDni.getText() + "',nombre='" + editNombre.getText().toString().toUpperCase() + "',apellido='" + editApellido.getText().toString().toUpperCase() + "', nombreUsuario='" + editNombreUsuario.getText().toString().toUpperCase() + "',correo='" + editCorreo.getText().toString().toUpperCase() + "',password='" + editContrasenia.getText() + "',paisOrigen='" + spinnerNacionalidad.getSelectedItem().toString() + "',provincia='" + spinnerProvinciaResidencia.getSelectedItem() + "',localidad='" + spinnerLocalidadResidencia.getSelectedItem() + "',direccionCalle='" + editDireccionCalle.getText().toString().toUpperCase() + "',numeracion='" + editDireccionNumeracion.getText() + "',carrera='" + spinnerCarreraGrado.getSelectedItem() + "',tipoUsuario='" + tipoUsuario + "' WHERE dni='" + editDni.getText() + "'");
+                            Toast.makeText(this, "Usuario actualizado con exito", Toast.LENGTH_LONG).show();
+                            ComunicadorClases.setOpcion("Alta");
+                            //Intent i = new Intent(this, SecondActivity.class);
+                            //startActivity(i);
+                            //overridePendingTransition(R.anim.right_in, R.anim.right_out);
+                        }
+                    }else{
+                        db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, spinnerNacionalidad, spinnerProvinciaResidencia, spinnerLocalidadResidencia, editDireccionCalle, editDireccionNumeracion, spinnerCarreraGrado, tipoUsuario));
+                       //Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni = '" + editDni.getText() + "'", null);
+                        db.execSQL("DELETE FROM alumno WHERE dni='" + dniRecuperado + "'");
                     }
                 }
             } else if (!recorrerFlags()) {
@@ -603,8 +608,9 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
             if (((Integer) result.get(0) == 2)||((Integer) result.get(0) == 3)) {
                     cSQL = (Cursor) result.get(1);
-                    while (cSQL.moveToNext()) {
+                    if (cSQL.moveToFirst()) {
                         editDni.setText(cSQL.getString(0));
+                        dniRecuperado = editDni.getText().toString();
                         editNombre.setText(cSQL.getString(1));
                         editApellido.setText(cSQL.getString(2));
                         editNombreUsuario.setText(cSQL.getString(3));
@@ -669,7 +675,8 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         return result;
     }
 
-    public void recorrerFlagsSaveButton() {
+    public boolean recorrerFlagsSaveButton() {
+        boolean flag = true;
         for (int index = 0; index < saveButton.length; index++) {
             if (Boolean.FALSE.equals(saveButton[index])) {
                 switch (index) {
@@ -710,11 +717,11 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                         break;
 
                 }
-            }else{
-                buttonFlag= +1;
+                flag= false;
             }
 
         }
+        return flag;
     }
 
 
@@ -755,12 +762,14 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.radioButtonNacionalidad:
                 if (marcado) {
+                    changeSaveFlag(false,7,saveButton);
                     spinnerNacionalidad.setEnabled(true);
                     spinnerNacionalidad.setSelection(0);
                 }
                 break;
             case R.id.radioButtonProvincia:
                 if (marcado) {
+                    changeSaveFlag(false,8,saveButton);
                     spinnerProvinciaResidencia.setEnabled(true);
                     spinnerProvinciaResidencia.setSelection(0);
                     spinnerLocalidadResidencia.setSelection(0);
@@ -768,6 +777,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.radioButtonLocalidad:
                 if (marcado) {
+                    changeSaveFlag(false,9,saveButton);
                     spinnerLocalidadResidencia.setEnabled(true);
                     spinnerLocalidadResidencia.setSelection(0);
                 }
@@ -785,6 +795,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.radioButtonCarrera:
                 if (marcado) {
+                    changeSaveFlag(false,10,saveButton);
                     spinnerCarreraGrado.setEnabled(true);
                     spinnerCarreraGrado.setSelection(0);
                 }
