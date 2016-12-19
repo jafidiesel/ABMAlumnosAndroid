@@ -15,6 +15,10 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+    /*
+    * Esta clase le permite al administrador buscar el alumno para modificar sus datos.
+    * */
+
 public class ModificarAlumno extends AppCompatActivity implements View.OnClickListener{
 
     Button buttonAceptar,buttonVolver;
@@ -36,15 +40,17 @@ public class ModificarAlumno extends AppCompatActivity implements View.OnClickLi
     }
 
 
+
     @Override
     public void onClick(View v) {
         if (v == buttonAceptar) {
+            //Verifica la existencia del alumno
             ValidarExistenciaRegistro dataUsuario = new ValidarExistenciaRegistro(dniUsuario.getText(), this);
             dataUsuario.execute(0);
         }
         if (v==buttonVolver){
             ComunicadorClases.setOpcion("Alta");
-            Intent i = new Intent(this,altaUsuario.class);
+            Intent i = new Intent(this,SecondActivity.class);
             startActivity(i);
             overridePendingTransition(R.anim.right_in, R.anim.right_out);
         }
@@ -52,6 +58,7 @@ public class ModificarAlumno extends AppCompatActivity implements View.OnClickLi
 
 
     private class ValidarExistenciaRegistro extends AsyncTask<Integer, Void, ArrayList> {
+        //Validacion mediante Hilo
 
         Editable campo;
         ArrayList resultIndex = new ArrayList();

@@ -10,10 +10,20 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
+
+    /*
+    * En esta clase restringe las opciones (botones) segun el nivel de permisos de usuario
+        * Si es Administrador puede acceder a todas las funciones (todos los botones)
+        * Si es Alumno puede acceder a:
+            * VerDatos, Modificar y Volver
+    * */
+
+
 public class SecondActivity extends AppCompatActivity implements View.OnClickListener{
     SQLiteDatabase db;
-    Button buttonAlta, buttonBaja, buttonVer, buttonOpciones, buttonModificar;
+    Button buttonAlta, buttonBaja, buttonVer, buttonOpciones, buttonModificar, buttonVolver;
     ArrayList tipoUsuarioCod;
+
     @Override //Constructor por defecto
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +37,7 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
         buttonVer       = (Button) findViewById(R.id.buttonVer);
         buttonOpciones = (Button) findViewById(R.id.buttonOpciones);
         buttonModificar = (Button) findViewById(R.id.buttonModificar);
+        buttonVolver = (Button) findViewById(R.id.buttonVolver);
 
         tipoUsuarioCod = ComunicadorClases.getObject();
 
@@ -42,11 +53,46 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
         buttonVer.setOnClickListener(this);
         buttonOpciones.setOnClickListener(this);
         buttonModificar.setOnClickListener(this);
+        buttonVolver.setOnClickListener(this);
 
         db=openOrCreateDatabase("DBAlumnos", Context.MODE_PRIVATE, null);
 
     }
 
+    /*
+    * function onClick
+    * @param View view - Recibe un view segun el boton clickeado
+    * Si se es usuario Administrador
+        * Si clickea el boton buttonAlta:
+            *  A traves del ComunicadorClases setea la opcion "Alta" para que usemos el xml "alta_usuario"
+            *  para ingresar un usuario
+            *
+        * Si clickea el boton buttonBaja
+            * se va al activity baja_usuario.xml
+            *
+        * Si clickea el boton buttonVer
+            * se va al activity ver_usuario.xml
+            *
+        * Si clickea el boton buttonModificar
+            * se va al activity activity_modificar_alumno.xml
+            *
+        * Si clickea el boton buttonOpciones
+            * se va al activity activity_opciones.xml
+            *
+        * Si clickea el boton buttonVolver
+            * se va al activity activity_main.xml
+            *
+    * Si se es usuario Alumno
+        * Si clickea el boton buttonVer
+            * se va al activity ver_usuario.xml
+            *
+        * Si clickea el boton buttonModificar
+            *  A traves del ComunicadorClases setea la opcion "Modificar" para que usemos el xml "alta_usuario"
+            *  para poder editar cada campo
+            *
+        * Si clickea el boton buttonVolver
+            * se va al activity activity_main.xml
+    * */
 
     public void onClick(View view) {
 
@@ -88,6 +134,10 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(i);
                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
             }
+        } if  (view == buttonVolver) {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.right_in, R.anim.right_out);
         }
 
 

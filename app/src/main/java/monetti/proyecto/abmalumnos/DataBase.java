@@ -25,12 +25,16 @@ public class DataBase extends SQLiteOpenHelper{
     }
 
     public void onCreate(SQLiteDatabase dbUsuario) {
+        //Creacion de la tabla de usuarios (administradores)
         String CREAT_USUARIO = "CREATE TABLE Usuario (nombreUsuario TEXT NOT NULL UNIQUE, password TEXT NOT NULL,codTipoUsuario TEXT NOT NULL, PRIMARY KEY(nombreUsuario),FOREIGN KEY(`codTipoUsuario`) REFERENCES TipoUsuario )";
         dbUsuario.execSQL(CREAT_USUARIO);
         dbUsuario.execSQL("CREATE TABLE IF NOT EXISTS alumno(dni VARCHAR, nombre VARCHAR, apellido VARCHAR,nombreUsuario VARCHAR,correo VARCHAR, password VARCHAR, paisOrigen VARCHAR, provincia VARCHAR, localidad VARCHAR, direccionCalle VARCHAR, numeracion VARCHAR, carrera VARCHAR, tipoUsuario VARCHAR);");
 
         // dbUsuario.execSQL("CREATE TABLE IF NOT EXISTS tipoUsuario(codTipoUsuario TEXT NOT NULL UNIQUE,descpTipoUsuario TEXT NOT NULL, PRIMARY KEY(codTipoUsuario));");
 
+        /*
+        * Lee los INSERT desde  usuarioDatos.sql
+        * */
         InputStream is = null;
         try {
             is = mContext.getAssets().open("databases/usuarioDatos.sql");
@@ -39,6 +43,7 @@ public class DataBase extends SQLiteOpenHelper{
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                 String line = reader.readLine();
                 while (!TextUtils.isEmpty(line)) {
+                    // Ejecuta los insert recuperados correspondientes a la tabla usuario
                     dbUsuario.execSQL(line);
                     line = reader.readLine();
                 }

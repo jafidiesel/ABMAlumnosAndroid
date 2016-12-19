@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    DataBase dataBase;
+
     EditText nombreUsuario, passwordUsuario;
     Button buttonIngresar;
 
@@ -38,6 +38,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+    * function onClick
+    * @param View view - Recibe una view
+    * verifica que boton ha sido presionado:
+        * Si se presiono  buttonIngresar
+             * Se verifica que el usuario o contraseña sea distinto de vacio
+             * Si los campos no estan vacios verifica  el formato de los datos (ver setOnFocusChangeListener)
+             * Si no son vacios y tienen el formato correcto verifica la existencia del usuario y contraseña en la base de datos.
+             * Consideracion: los usuarios tienen niveles de permisos que habilitan o deshabilitan determinadas funciones.
+    *
+    * */
+
     public void onClick(View view){
 
         DataBase dataBase = new DataBase(this,"DBAlumnos" +"",null, 1);
@@ -54,34 +66,55 @@ public class MainActivity extends AppCompatActivity {
             } else  {
 
                 Cursor c = db.rawQuery("SELECT * FROM Usuario WHERE nombreUsuario ='" + nombreUsuario.getText().toString().toUpperCase()+"'" + "AND password ='" + passwordUsuario.getText().toString()+"'" + "AND codTipoUsuario ='" + "usrAdm"+"'",null);
-                Cursor q = db.rawQuery("SELECT * FROM alumno WHERE nombreUsuario ='" + nombreUsuario.getText().toString().toUpperCase()+"'" + "AND password ='" + passwordUsuario.getText().toString()+"'" + "AND tipoUsuario ='" + "usrAlm"+"'",null);
+                Cursor q = db.rawQuery("SELECT tipoUsuario FROM alumno WHERE nombreUsuario ='" + nombreUsuario.getText().toString().toUpperCase()+"'" + "AND password ='" + passwordUsuario.getText().toString()+"'" + "AND tipoUsuario ='" + "usrAlm"+"'",null);
 
                 if(c.getCount() == 0 & q.getCount() == 0){
-                        Toast.makeText(this, "El usuario ingresado no existe",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "El usuario ingresado no existe",Toast.LENGTH_SHORT).show();
                        db.close();
 
                     } else if (!(c.getCount() == 0)){
-                        datosUsuario.add(0,"usrAdm");
-                        datosUsuario.add(1,nombreUsuario.getText());
-                        ComunicadorClases.setObject(datosUsuario);
-                        Intent i = new Intent(this, SecondActivity.class);
-                        startActivity(i);
-                        overridePendingTransition(R.anim.left_in, R.anim.left_out);
-                    } else if (!(q.getCount()==0)){
-                        datosUsuario.add(0,"usrAlm");
-                        datosUsuario.add(1,nombreUsuario.getText());
-                        ComunicadorClases.setObject(datosUsuario);
-                        Intent i = new Intent(this, SecondActivity.class);
-                        startActivity(i);
-                        overridePendingTransition(R.anim.left_in, R.anim.left_out);
-                    }
+                        if (c.moveToFirst()){
 
+                            if (c.getString(2).equals("usrAdm") ){
+                                datosUsuario.add(0,"usrAdm");
+                                datosUsuario.add(1,nombreUsuario.getText());
+                                ComunicadorClases.setObject(datosUsuario);
+                                // ComunicadorClases es una clase que guarda el tipo de usuario, el usuario y
+                                // la opcion modificar o alta
+                                Intent i = new Intent(this, SecondActivity.class);
+                                startActivity(i);
+                                overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                            }
+                        }
+
+
+                    } else if (!(q.getCount()==0)) {
+                    if (q.moveToFirst()) {
+                        if (q.getString(0).equals("usrAlm")) {
+                            datosUsuario.add(0, "usrAlm");
+                            datosUsuario.add(1, nombreUsuario.getText());
+                            ComunicadorClases.setObject(datosUsuario);
+                            // ComunicadorClases es una clase que guarda el tipo de usuario, el usuario y
+                            // la opcion modificar o alta
+                            Intent i = new Intent(this, SecondActivity.class);
+                            startActivity(i);
+                            overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                        }
+                    }
+                }
             }
         }
     }
 
 
+    /*
+    * function setOnFocusChangeListener
+    *  @param EditText editText
+    *  verifica el formato de lo que se ingreso en los campos por medio del !hasFocus,
+    *  mostrando un mensaje de error y seteando en falso la bandera saveFlag que impide
+    *  que se procese el ingreso a la app.
+    *
+    * */
 
 
     private void setOnFocusChangeListener(final EditText editText){

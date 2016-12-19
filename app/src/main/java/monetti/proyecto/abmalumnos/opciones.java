@@ -41,14 +41,13 @@ public class opciones extends AppCompatActivity implements View.OnClickListener{
 
     /*
         * Funcion onClick
-        * privacidad Public
         * Devuelve void
             * @param View view - recibe una View sobre la cual consulta que boton ha sido clickeado
             * Si cliqueo en el boton 'buttonDeleteAll' elimina todos los datos de la BD
             * Si cliqueo el boton 'buttonAddRandom' ingresa datos de prueba
-                * Si no existen datos con el nombre de usuario 'NOMBREUSUARIOPRUEBA' agrega dos alumnos con dastos de prueba
-                * Si existe al menos un alumno con nombre de usuario 'NOMBREUSUARIOPRUEBA' nos impide agregarlos y nos muestra los datos existentes
-            * Si cliqueo el boton 'buttonVolver' vuelve a la activity_second.xmlml
+                * Si no existen datos con el nombre  'NOMBREPRUEBA' agrega dos alumnos con dastos de prueba
+                * Si existe al menos un alumno con nombre  'NOMBREPRUEBA' nos impide agregarlos y nos muestra los datos existentes
+            * Si cliqueo el boton 'buttonVolver' vuelve a la activity_second.xml
         *
         * */
     public void onClick(View view){
@@ -64,7 +63,7 @@ public class opciones extends AppCompatActivity implements View.OnClickListener{
         }else if(view == buttonAddRandom){
 
             try{
-                String Query = "SELECT * FROM alumno WHERE nombreUsuario = 'NOMBREUSUARIOPRUEBA'";
+                String Query = "SELECT * FROM alumno WHERE nombre = 'NOMBREPRUEBA'";
                 Cursor c = db.rawQuery(Query,null);
                 StringBuffer bufferAlumno = new StringBuffer();
                 if (c.getCount() > 0){
@@ -89,14 +88,13 @@ public class opciones extends AppCompatActivity implements View.OnClickListener{
                     showMessage("Datos  de prueba existentes", bufferAlumno.toString());
 
                 } else if(c.getCount() == 0){
-                    String queryInsert = "INSERT INTO alumno VALUES('1234567','NOMBREPRUEBA','APELLIDOPRUEBA','NOMBREUSUARIOPRUEBA','Correo@prueba.com','contrasenia','Argentina','Mendoza','Guaymallen','CALLEPRUEBA','123','Ing. en Sistemas de Información','usrAlm');";
-                    String queryInsert2 = "INSERT INTO alumno VALUES('7654321','NOMBREPRUEBA2','APELLIDOPRUEBA2','NOMBREUSUARIOPRUEBA','Correo2@prueba.com','contrasenia2','Argentina','Mendoza','Guaymallen','CALLEPRUEBA2','1234','Ing. en Sistemas de Información', 'usrAlm');";
-                    showMessage("Query construida",queryInsert);
-                    showMessage("Query construida",queryInsert2);
+                    String queryInsert = "INSERT INTO alumno VALUES('1234567','NOMBREPRUEBA','APELLIDOPRUEBA','NUPRUEBA','CORREO@PRUEBA.COM','contrasenia','Argentina','Mendoza','Guaymallen','CALLEPRUEBA','123','Ing. en Sistemas de Información','usrAlm');";
+                    String queryInsert2 = "INSERT INTO alumno VALUES('7654321','NOMBREPRUEBA','APELLIDOPRUEBA2','NUPRUEBA2','CORREO2@PRUEBA.COM','contrasenia2','Argentina','Mendoza','Guaymallen','CALLEPRUEBA2','1234','Ing. en Sistemas de Información', 'usrAlm');";
+
                     db.execSQL(queryInsert);
                     db.execSQL(queryInsert2);
 
-                    String postQuery = "SELECT * FROM alumno WHERE nombreUsuario = 'NOMBREUSUARIOPRUEBA'";
+                    String postQuery = "SELECT * FROM alumno WHERE nombre = 'NOMBREPRUEBA'";
                     Cursor c2 = db.rawQuery(postQuery,null);
 
                     while (c2.moveToNext()) {

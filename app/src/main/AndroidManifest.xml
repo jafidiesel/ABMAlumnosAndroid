@@ -35,8 +35,10 @@
         <activity
             android:name=".verUsuario"
             android:screenOrientation="portrait" />
-        <activity android:name=".opciones" />
-        <activity android:name=".ModificarAlumno"></activity>
+        <activity android:name=".opciones"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ModificarAlumno"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

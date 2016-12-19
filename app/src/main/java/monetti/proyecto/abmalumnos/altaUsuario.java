@@ -20,12 +20,23 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+    /*
+       * Esta clase se utiliza para dar de alta asi como para modificar un alumno
+        * A traves de ComunicadorClases se obtiene el nombre de usuario ingresado en MainActivity, su tipo y la opcion Alta/Modificar(Boton seleccionado en SecondActivity)
+           * Si opcion = Modificar
+                *Si el tipo de usuario es alummno,se inhabilitan los campos Nombre,Apellido,Dni para que no pueda modificarlos y se muestran sus datos en los correspondientes campos para que pueda modificarlos
+                * Si el tipo de usuario es administrador,puede buscar por dni al alumno correspondiente a modificar los datos. Se muestran los datos del mismo en los campos correspondientes. El administrador tiene permisos para modificar Nombre, Apellido y DNI
+                    * Si se modifica DNI, se coroobora que el mismo no exista.
+                * Si se modifica el nombre del usuario, se corrobora que el mismo no exista. Si existe, no permite guardar los datos y se pide el ingreso de otro nombre de usuario.
+                * Si no se modifica ningun dato tampoco permite guardar los mismos de nuevo.
+           * Si opcion = Alta
+               * Se deshabilitan los radioButtons que permiten  la edicion de los campos en la opcion Modificar
 
+       * */
 public class altaUsuario extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
     EditText dniUsuario,editNombre, editApellido, editNombreUsuario, editDni, editDireccionCalle, editDireccionNumeracion, editCorreo, editContrasenia, editContrasenia2;
@@ -98,20 +109,14 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         contenedorDatos = (View) findViewById(R.id.scrollView1);
         //Creacion de la BD
         db=openOrCreateDatabase("DBAlumnos", Context.MODE_PRIVATE, null);
-        //<<A agregar>>
-        // Se podria agregar una linea que si exite la DB DBAlumnos la dropee.
-        //Esto se deberia hacer con un boton, cosa de no estar borrando la cache desde el administrador de aplicaciones
-
 
         //LLamadas para armar los Spinners;
         spinnerNacionalidad = (Spinner) findViewById(R.id.spinnerPaisOrigen);
         spinnerCarreraGrado = (Spinner) findViewById(R.id.spinnerCarrera);
         spinnerLocalidadResidencia = (Spinner) findViewById(R.id.spinnerLocalidad);
         spinnerProvinciaResidencia = (Spinner) findViewById(R.id.spinnerProvincia);
-
         SetSpinners setSpinnerNacionalidad = new SetSpinners(this);
         setSpinnerNacionalidad.execute(0);
-
         SetSpinners setSpinnerProvincia = new SetSpinners(this);
         setSpinnerProvincia.execute(1);
 
@@ -125,7 +130,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
 
         if (opcion == "Modificar"){
-            titulo.setText("Modificar");
+            titulo.setText("Modificar Alumno");
             if (tipoUsuarioCod.get(0) == "usrAlm"){
                 ValidarExistenciaRegistro data = new ValidarExistenciaRegistro(nombreU);
                 data.execute(2);
@@ -194,6 +199,8 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
                         case R.id.editTextDni:
                             validarDatosUsuario(editText,4,saveFlag,3);
+                            ValidarExistenciaRegistro validacionDNI = new ValidarExistenciaRegistro(editText.getText());
+                            validacionDNI.execute(1);
                             break;
 
                         case R.id.correo:
@@ -225,7 +232,8 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         });
     }
 
-
+    //Validacion del formato de campos
+    //Validacion de suario y dni unicos
     private void validarDatosUsuario (EditText editTextaValidar, int banderaN, Boolean[] list, int id){
        switch (id){
            case 1:
@@ -275,10 +283,8 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                            changeSaveFlag(true, 5, saveFlag);
 
                        }
-                       ValidarExistenciaRegistro validacionDNI = new ValidarExistenciaRegistro(editDni.getText());
-                       validacionDNI.execute(1);
-
                    }
+
                }
                break;
            case 4:
@@ -310,7 +316,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
        }
     }
 
-
+    //Carga de SpinnerProvincia  y de SpinnerLocalidad de acuerdo a la provincia seleccionada
     public void onItemSelected(AdapterView <? > parent, View view, int pos, long id) {
         switch (parent.getId()) {
             case R.id.spinnerProvincia:
@@ -319,7 +325,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 }
 
                 else {
-                    SetSpinners setSpinnerLocalidad = new SetSpinners(this); //Carga del SpinnerLocalidad de acuerdo a la provincia selecionada
+                    SetSpinners setSpinnerLocalidad = new SetSpinners(this);
                     setSpinnerLocalidad.execute(2, pos);
                 }
 
@@ -333,29 +339,41 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
     public void onNothingSelected(AdapterView <? > parent) {}
 
+        /*
+               * Metodo onClick()
+                * Si button=Guardar
+                    *Se comprueba que no existan campos vacios
+                    *Si los campos no estan vacios y se ingreso para modificar datos
+                        *Se comprueba si se han modificado datos para evitar duplicacion de registros
+                        *Si se modificaron datos, se comprueba que los mismos sean correctos
+                        *Si son correctos:
+                          * Si el DNI no ha sido modificado, se actualiza el registro
+                          *Si DNI ha sido modificado, se crea un registro nuevo con los datos corresṕondientes y se elimina el registro con el Dni anterior.
+                   *Si se ingreso para dar de alta un alumno
+                        *Se comprueba que los datos sean correctos (Formato y dni y nombreUsuario unicos)
+                        *Si la comprobacion es correcta se guarda el alumno en la BD.
+               *Si button=Volver
+                * Vuelve a la SecondActivity
+               * */
     public void onClick(View view) {
 
 
         if (view == buttonGuardar) {
-
             if (comprobarCamposVacios()) {
                 showMessage("Error", "Todos los campos deben estar completos");
-
-                //En este mensaje seria mejor mostrar cual o cuales campos no estan completados
-
             } else if (opcion == "Modificar") {
                 if (recorrerFlagsSaveButton()){
-                    showMessage("Error", "Datos ya ingresados");
+                    showMessage("Error", "Ningun dato ha sido modificado");
                 }else if (!recorrerFlags()) {
                     showMessage("Error", "Los campos estan ingresados incorrectamente.");
                 } else if (recorrerFlags()) {
-                    showMessage("Exito", "RegistroAccedido");
-                    if(dniRecuperado==editDni.getText().toString()) {
+                   // showMessage("Exito", "RegistroAccedido");
+                    if(dniRecuperado.equals(editDni.getText().toString())) {
                         Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni = '" + editDni.getText() + "'", null);
                         if (c.moveToFirst()) {
-                            db.execSQL("UPDATE alumno SET dni= '" + editDni.getText() + "',nombre='" + editNombre.getText().toString().toUpperCase() + "',apellido='" + editApellido.getText().toString().toUpperCase() + "', nombreUsuario='" + editNombreUsuario.getText().toString().toUpperCase() + "',correo='" + editCorreo.getText().toString().toUpperCase() + "',password='" + editContrasenia.getText() + "',paisOrigen='" + spinnerNacionalidad.getSelectedItem().toString() + "',provincia='" + spinnerProvinciaResidencia.getSelectedItem() + "',localidad='" + spinnerLocalidadResidencia.getSelectedItem() + "',direccionCalle='" + editDireccionCalle.getText().toString().toUpperCase() + "',numeracion='" + editDireccionNumeracion.getText() + "',carrera='" + spinnerCarreraGrado.getSelectedItem() + "',tipoUsuario='" + tipoUsuario + "' WHERE dni='" + editDni.getText() + "'");
-                            Toast.makeText(this, "Usuario actualizado con exito", Toast.LENGTH_LONG).show();
+                            db.execSQL("UPDATE alumno SET nombre='" + editNombre.getText().toString().toUpperCase() + "',apellido='" + editApellido.getText().toString().toUpperCase() + "', nombreUsuario='" + editNombreUsuario.getText().toString().toUpperCase() + "',correo='" + editCorreo.getText().toString().toUpperCase() + "',password='" + editContrasenia.getText() + "',paisOrigen='" + spinnerNacionalidad.getSelectedItem().toString() + "',provincia='" + spinnerProvinciaResidencia.getSelectedItem() + "',localidad='" + spinnerLocalidadResidencia.getSelectedItem() + "',direccionCalle='" + editDireccionCalle.getText().toString().toUpperCase() + "',numeracion='" + editDireccionNumeracion.getText() + "',carrera='" + spinnerCarreraGrado.getSelectedItem() + "',tipoUsuario='" + tipoUsuario + "' WHERE dni='" + editDni.getText() + "'");
                             ComunicadorClases.setOpcion("Alta");
+                            showMessage("Exito","Usuario actualizado con exito");
                             //Intent i = new Intent(this, SecondActivity.class);
                             //startActivity(i);
                             //overridePendingTransition(R.anim.right_in, R.anim.right_out);
@@ -364,6 +382,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                         db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, spinnerNacionalidad, spinnerProvinciaResidencia, spinnerLocalidadResidencia, editDireccionCalle, editDireccionNumeracion, spinnerCarreraGrado, tipoUsuario));
                        //Cursor c = db.rawQuery("SELECT * FROM alumno WHERE dni = '" + editDni.getText() + "'", null);
                         db.execSQL("DELETE FROM alumno WHERE dni='" + dniRecuperado + "'");
+                        showMessage("Exito","DNI modificado correctamente =)");
                     }
                 }
             } else if (!recorrerFlags()) {
@@ -371,7 +390,6 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
             } else if (recorrerFlags()) {
 
                 try {
-
                     db.execSQL(armarQueryInsert(editDni, editNombre, editApellido, editNombreUsuario, editCorreo, editContrasenia, spinnerNacionalidad, spinnerProvinciaResidencia, spinnerLocalidadResidencia, editDireccionCalle, editDireccionNumeracion, spinnerCarreraGrado, tipoUsuario));
                 } catch (Exception e) {
                     showMessage("Title", "Error en la Query Insert");
@@ -393,7 +411,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
 
 
-
+//Armado de Quey Insert
     public String armarQueryInsert(EditText editDni,EditText editNombre,EditText editApellido,EditText editNombreUsuario,EditText editCorreo, EditText editContrasenia, Spinner spinnerPaisOrigen, Spinner spinnerProvincia, Spinner spinnerLocalidad, EditText editDireccionCalle, EditText editDireccionNumeracion, Spinner spinnerCarrera, String tipoUsuario ){
 
         String queryInsert = "INSERT INTO alumno VALUES('" + editDni.getText() + "','" + editNombre.getText().toString().toUpperCase() + "','" + editApellido.getText().toString().toUpperCase() + "','" + editNombreUsuario.getText().toString().toUpperCase()+ "','" + editCorreo.getText().toString().toUpperCase() + "','" + editContrasenia.getText().toString() + "','" + spinnerPaisOrigen.getSelectedItem() + "','" +
@@ -431,7 +449,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
     }
 
-
+//Comprobacion de campos no nulos
     public boolean comprobarCamposVacios(){
         boolean result =    editNombre.getText().toString().trim().length() == 0 ||
                             editApellido.getText().toString().trim().length() == 0 ||
@@ -531,7 +549,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
             return objectArrayList;
         }
-
+    //Se setean los adaptadores que contienen las listas de datos a los correspondientes spinners
         protected void onPostExecute(ArrayList result) {
 
             if ((Integer) result.get(0) == 0) {
@@ -554,7 +572,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
 
 
-
+//Validacion de la existencia de DNI, nombreUsuario mediante hilos
     private class ValidarExistenciaRegistro extends AsyncTask<Integer, Void, ArrayList> {
 
         Editable campo;
@@ -606,6 +624,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                 }
             }
 
+            //Si opcion= "Modificar", se muestran todos los datos correspondientes al usuario sobre el cual se desean mofiicar los datos
             if (((Integer) result.get(0) == 2)||((Integer) result.get(0) == 3)) {
                     cSQL = (Cursor) result.get(1);
                     if (cSQL.moveToFirst()) {
@@ -625,7 +644,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
                         setDatosSpinner(spinnerCarreraGrado, cSQL.getString(11));
 
                     }
-
+                    //Se deshabilitan todos los campos, para poder habilitarlos por medio del RadioButton correspondiente
                     editNombre.setEnabled(false);
                     editApellido.setEnabled(false);
                     editDni.setEnabled(false);
@@ -645,21 +664,18 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    private int setDatosSpinner(Spinner spinner,String datoSpinner) {
-        int pos = 0;
+    private void setDatosSpinner(Spinner spinner,String datoSpinner) {
+
         for ( int i = 0; i < spinner.getCount(); i++) {
 
             if (spinner.getItemAtPosition(i).toString().equals(datoSpinner)) {
                 spinner.setSelection(i);
-                pos =spinner.getSelectedItemPosition();
-
+                spinner.getSelectedItemPosition();
             }
         }
-        return pos;
-
     }
 
-
+    //Guarda el estado de los campos---Formato correcto/DNI, nombreuUuario no existente = True, Formato incorrecto/ DNI, nombreUsuario ya existene= False
     public void changeSaveFlag(Boolean b, int i,Boolean[] list){
         list[i] = b;
     }
@@ -674,7 +690,12 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
 
         return result;
     }
-
+        //Metodo utilizado al guardar datos modificados
+   //Recorre el estado de los Radio Buttons
+        //Para cada RadiButton
+            //Si RadioButton esta activado (su bandera esta en falso) se  validan los datos
+         //Si al menos un Radio Button ha sido activado, el metodo devulve False
+        //Si ningun radio button ha sido activado, devuelve True
     public boolean recorrerFlagsSaveButton() {
         boolean flag = true;
         for (int index = 0; index < saveButton.length; index++) {
@@ -725,7 +746,7 @@ public class altaUsuario extends AppCompatActivity implements View.OnClickListen
     }
 
 
-
+//Si el RadioButton ha sido activado, se habilita el campo correspondiente a la espera del ingreso de datos y se setea la bandera en False
     public void onRadioButtonClicked(View view) {
         boolean marcado = ((RadioButton) view).isChecked();
 

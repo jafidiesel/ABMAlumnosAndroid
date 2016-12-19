@@ -33,6 +33,11 @@ public class bajaUsuario extends AppCompatActivity implements View.OnClickListen
 
     }
 
+    /*
+    * function onClick
+    * @param View view
+    * Si se selecciona
+    * */
 
     public void onClick(View view) {
 

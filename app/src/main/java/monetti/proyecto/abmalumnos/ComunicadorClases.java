@@ -5,7 +5,7 @@ import android.text.Editable;
 import java.util.ArrayList;
 
 /**
- * Created by root on 13/12/16.
+ * Contiene los valores de nombreUsuario, tipoUsuario y modificar/alta
  */
 
 public class ComunicadorClases {
